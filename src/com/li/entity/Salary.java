@@ -23,6 +23,11 @@ public class Salary {
     public Salary() {
     }
 
+    public Salary(int sId, double sReal) {
+        this.sId = sId;
+        this.sReal = sReal;
+    }
+
     public Salary(int sId, String sMonth, int eId, String eName, double sBasic, double bonus, double overtimeWeekday, double overtimeWeekend, double overtimePay, double leaveTime, double absentTime, double sDeduct, double backPay, double sReal, String remarks) {
         this.sId = sId;
         this.sMonth = sMonth;

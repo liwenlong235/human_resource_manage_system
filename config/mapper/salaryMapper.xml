@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.dao.SalaryDao">
+    <insert id="addSalary" parameterType="Salary">
+        insert into salaries(s_month,e_id,e_name,s_basic,bonus,overtime_weekday,overtime_weekend,overtime_pay,
+        leave_time,absent_time,s_deduct,back_pay,s_real,remarks) values(#{sMonth},#{eId},#{eName},#{sBasic},
+        bonus,#{overtimeWeekday},#{overtimeWeekend},#{overtimePay},#{leaveTime},#{absentTime},#{sDeduct},#{backPay},
+        sReal,remarks)
+    </insert>
+    <update id="updateSalary" parameterType="Salary">
+        update salaries set s_month=#{s_month},e_id=#{eId},e_name=#{eName},s_basic=#{sBasic},bonus=#{bonus},
+        overtime_weekday=#{overtimeWeekday},overtime_weekend=#{overtimeWeekend},overtime_pay=#{overtimePay},
+        leave_time=#{leaveTime},absent_time=#{absentTime},s_deduct=#{sDeduct},back_pay=#{backPay},s_real=#{sReal},
+        remarks=#{remarks}
+    </update>
+    <delete id="deleteById" parameterType="int">
+        delete from salaries where s_id = #{sId}
+    </delete>
+    <select id="queryByEid" resultMap="salaryMap">
+        select * from salaries where e_id = #{eId}
+    </select>
+    <select id="queryBySid" resultType="Salary">
+        select * from salaries where s_id = #{sId}
+    </select>
+    <select id="querySalaries" resultType="Salary">
+        select * from salaries
+    </select>
+</mapper>

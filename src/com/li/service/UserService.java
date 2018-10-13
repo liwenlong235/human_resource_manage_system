@@ -12,5 +12,6 @@ public interface UserService {
     public void addUser(User user);
     public void deleteById(Integer id);
     public void updateUser(User user);
+    public User queryByName(String name);
     public User queryByNameAndPassword(String name,String password);
 }

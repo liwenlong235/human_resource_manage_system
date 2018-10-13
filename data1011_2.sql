@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS `employees`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employees` (
-  `e_id` bigint(20) NOT NULL COMMENT '员工编号',
+  `e_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '员工编号',
   `e_name` varchar(20) NOT NULL COMMENT '姓名',
   `e_gender` varchar(2) NOT NULL COMMENT '性别',
   `tel` bigint(11) NOT NULL COMMENT '联系方式',
@@ -59,7 +59,7 @@ CREATE TABLE `employees` (
   `education` varchar(20) NOT NULL COMMENT '学历',
   `s_id` int(11) NOT NULL COMMENT '薪资ID',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10003 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +70,29 @@ LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
 INSERT INTO `employees` VALUES (10001,'张三 ','男',15211112222,'zhangsan@163.com',1,2,'2018-10-01','2021-02-13','本科',10000),(10002,'李四','男',15212342345,'lisi@163.com',1,1,'2018-02-11','2099-09-09','本科',2);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `jobs`
+--
+
+DROP TABLE IF EXISTS `jobs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `jobs` (
+  `j_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '招聘信息ID',
+  `p_id` int(11) NOT NULL COMMENT '职位ID',
+  PRIMARY KEY (`j_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jobs`
+--
+
+LOCK TABLES `jobs` WRITE;
+/*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -183,7 +206,7 @@ CREATE TABLE `users` (
   `user_name` varchar(30) NOT NULL COMMENT '游客账号',
   `user_password` varchar(50) NOT NULL COMMENT '游客密码',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -192,7 +215,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'??2','12345'),(2,'张三1','12345'),(3,'张三','12345'),(4,'lisi','12345'),(5,'zhangsan','12345'),(6,'','');
+INSERT INTO `users` VALUES (-1,'aaa','aaa'),(1,'??2','12345'),(2,'张三1','12345'),(3,'张三','12345'),(4,'lisi','12345'),(5,'zhangsan','12345'),(6,'',''),(7,'asd','111'),(8,'wangwu','12345'),(9,'bbb','12345');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -205,4 +228,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-13  9:46:27
+-- Dump completed on 2018-10-13 16:05:56

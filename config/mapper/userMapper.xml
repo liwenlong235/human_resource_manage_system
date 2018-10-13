@@ -13,6 +13,9 @@
     <select id="queryByNameAndPassword" resultMap="userMap">
         select * from users where user_name=#{name} and user_password = #{password}
     </select>
+    <select id="queryByName" resultMap="userMap">
+        select * from users where user_name=#{name}
+    </select>
     <select id="queryUsers" resultMap="userMap">
         select * from users
     </select>

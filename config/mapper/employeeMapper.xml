@@ -2,8 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.li.dao.EmployeeDao">
     <insert id="addEmpl" parameterType="Employee">
-        insert into employees values(#{eId},#{eName},#{gender},#{tel},#{email},#{department.id}#{position.pId},
-        #{entryTime},#{dimissionTime},#{education},#{salary.sId})
+        insert into employees(e_name,e_gender,tel,email,d_id,p_id,entry_time,dimission_time,education,s_id)
+        values(#{eName},#{gender},#{tel},#{email},#{department.id}#{position.pId},#{entryTime},#{dimissionTime},
+        #{education},#{salary.sId})
     </insert>
     <update id="updateEmpl" parameterType="Employee">
         update employees set e_name=#{eName},e_gender=#{gender},tel=#{tel},email=#{email},d_id=#{department.id},
@@ -15,6 +16,12 @@
     </delete>
     <select id="queryById" resultMap="employeeMap">
         select * from employees where e_id = #{eId}
+    </select>
+    <select id="querySameDept" resultMap="employeeMap">
+        select * from employees where d_id = #{dId}
+    </select>
+    <select id="querySamePosition" resultMap="employeeMap">
+        select * from employees where d_id = #{dId} and p_id=#{pId}
     </select>
     <select id="queryEmployees" resultMap="employeeMap">
         select * from employees
@@ -28,7 +35,10 @@
        <result property="entryTime" column="entry_time"/>
        <result property="dimissionTime" column="dimission_time"/>
        <result property="education" column="education"/>
-       <result property="salary" column="salary"/>
+       <association property="salary" javaType="Salary">
+           <id property="sId" column="s_id"/>
+           <result property="sReal" column="s_real"/>
+       </association>
        <association property="department" javaType="Department">
            <id property="id" column="d_id"/>
            <result property="name" column="d_name"/>

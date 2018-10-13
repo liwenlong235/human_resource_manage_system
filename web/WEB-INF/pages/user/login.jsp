@@ -10,67 +10,120 @@
 <html>
   <head>
     <base href="${pageContext.request.contextPath}/">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link href="/bootstrap/css/tableexport.css">
+    <link href="/bootstrap/dist/bootstrap-table.min.css">
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+
+    <script src="/bootstrap/js/Blob.js/Blob.js"></script>
+    <script src="/bootstrap/js/FileSaver.js/FileSaver.js"></script>
+    <script src="/bootstrap/js/js-xlsx/xlsx.core.min.js"></script>
+
+    <script src="/bootstrap/js/Bootstrap/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/TableExport.js/jquery.tableexport.js"></script>
+    <script src="/bootstrap/dist/bootstrap-table.min.css"></script>
+    <script src="/bootstrap/dist/bootstrap-table-export.min.js"></script>
+    <script src="/bootstrap/dist/locale/bootstrap-table-zh-CN.min.js"></script>
     <script>
         $(function () {
-            $("input").blur(function () {
-                var $this = $(this);
-                var value = $(this).val();
-                if(value==null||value==""){
-                    if(!($(".s1").length>0)){
-                        $this.after("<br><span class='s1' style='color: red'>内容不能为空</span>");
+            $("#ip1").blur(function () {
+                var name = $(this).val();
+                $.ajax({
+                    url:"user/ajaxName",
+                    data:{"name":name},
+                    type:"post",
+                    dataType:"text",
+                    success:function (data) {
+                        if(data=="null"){
+                            $("#s1").text("账号不能为空");
+                            $("#submit").attr("disabled",true);
+                        }else if(data=="OK"){
+                            $("#s1").text("账号不存在");
+                            $("#submit").attr("disabled",true);
+                        }else {
+                            $("#s1").text("账号存在");
+                            $("#s1").css("color","lightgreen");
+                            $("#submit").attr("disabled",false);
+                        }
                     }
-                    $("#submit").attr("disabled","true");
+                })
+            })
+            $("#ip2").blur(function () {
+                var password = $(this).val();
+                if(password==""||password==null){
+                    $("#s2").text("密码不能为空");
+                    $("#submit").attr("disabled",true);
                 }else {
-                    if($(".s1").val()!=null){
-                        $(".s1").remove();
+                    $("#s2").text("");
+                    $("#submit").attr("disabled",false);
+                }
+            })
+            $("#ip3").blur(function () {
+                var name = $(this).val();
+                $.ajax({
+                    url:"user/ajaxName",
+                    data:{"name":name},
+                    type:"post",
+                    dataType:"text",
+                    success:function (data) {
+                        if(data=="null"){
+                            $("#s3").text("账号不能为空");
+                            $("#submit").attr("disabled",true);
+                        }else if(data=="OK"){
+                            $("#s3").text("账号不存在");
+                            $("#submit").attr("disabled",true);
+                        }else {
+                            $("#s3").text("账号存在");
+                            $("#s3").css("color","lightgreen");
+                            $("#submit").attr("disabled",false);
+                        }
                     }
-                    $("#submit").removeAttr("disabled");
+                })
+            })
+            $("#ip4").blur(function () {
+                var password = $(this).val();
+                if(password==""||password==null){
+                    $("#s4").text("密码不能为空");
+                    $("#submit").attr("disabled",true);
+                }else {
+                    $("#s4").text("");
+                    $("#submit").attr("disabled",false);
                 }
             })
         })
     </script>
+    <style>
+      span{ color: red;  }
+      .setpg{
+        background: url('img1.jpg');height: 100%;width: 100%;
+      }
+    </style>
   </head>
-  <body>
-  <form action="user/login" method="post">
-    <table border="0px" cellspacing="0px" align="center" style="text-align: center">
-      <c:if test="${empty requestScope.userR1}">
-        <tr>
-          <td>账  号</td>
-          <td><input type="text" name="name"><br>
-          </td>
-        </tr>
-        <tr>
-          <td>密  码</td>
-          <td><input type="password" name="password"></td>
-        </tr>
-      </c:if>
-      <c:if test="${!empty requestScope.userR1}">
-        <tr>
-          <td colspan="2"><span style="color: lightgreen">注册成功，请登录</span></td>
-        </tr>
-        <tr>
-          <td>账  号</td>
-          <td><input type="text" name="name" value="${requestScope.userR1.name}"></td>
-        </tr>
-        <tr>
-          <td>密  码</td>
-          <td><input type="password" name="password" value="${requestScope.userR1.password}"></td>
-        </tr>
-      </c:if>
-      <c:if test="${!empty requestScope.userL1}">
-        <tr>
-          <td colspan="2"><span>账号或密码错误</span></td>
-        </tr>
-      </c:if>
-      <tr>
-        <td colspan="2">
-          <input type="submit" value="登陆">
-          <button><a href="user/jobInfo" style="text-decoration: none">返回</a></button>
-        </td>
-      </tr>
-    </table>
-  </form>
+  <body style="text-align: center">
+  <div class="setpg">
+    <form action="user/login" method="post">
+      <ul style="list-style-type: none;margin-top: 20%">
+        <c:if test="${empty requestScope.userR}">
+          <li>账号：<input id="ip1" type="text" name="name">
+            <span id="s1"></span></li><p/>
+          <li>密码：<input id="ip2" type="password" name="password">
+            <span id="s2"></span></li><p/>
+        </c:if>
+        <c:if test="${!empty requestScope.userR}">
+          <li><h1 style="color: lightgreen">恭喜您，注册成功</h1></li><p/>
+          <li>账号：<input id="ip3" type="text" name="name" value="${requestScope.userR.name}">
+            <span id="s3"></span></li><p/>
+          <li>密码：<input id="ip4" type="password" name="password" value="${requestScope.userR.password}">
+            <span id="s4"></span></li><p/>
+        </c:if>
+        <c:if test="${!empty requestScope.userL1}">
+          <li><h2 style="color: red">登陆失败，密码错误</h2></li><p/>
+        </c:if>
+        <li><input type="submit" id="submit" value="登陆">
+          <button><a href="user/jobInfo" style="text-decoration: none;color: black">返回</a></button></li>
+      </ul>
+    </form>
+  </div>
 
   </body>
 </html>

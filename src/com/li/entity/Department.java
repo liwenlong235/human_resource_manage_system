@@ -9,22 +9,19 @@ public class Department {
     private int id;
     private String name;
     private List<Position> positions;
-    private List<Employee> employees;
 
     public Department() {
+    }
+
+    public Department(int id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Department(int id, String name, List<Position> positions) {
         this.id = id;
         this.name = name;
         this.positions = positions;
-    }
-
-    public Department(int id, String name, List<Position> positions, List<Employee> employees) {
-        this.id = id;
-        this.name = name;
-        this.positions = positions;
-        this.employees = employees;
     }
 
     public int getId() {
@@ -51,13 +48,6 @@ public class Department {
         this.positions = positions;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
-    }
-
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
-    }
 
     @Override
     public String toString() {
@@ -65,7 +55,6 @@ public class Department {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", positions=" + positions +
-                ", employees=" + employees +
                 '}';
     }
 }

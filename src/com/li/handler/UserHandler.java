@@ -21,6 +21,11 @@ public class UserHandler {
     @Qualifier("userService")
     private UserService userService;
 
+    /**
+     * 游客信息查询
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("info")
     public String queryUsers(ModelMap modelMap){
         List<User> users = userService.queryUsers();
@@ -28,16 +33,40 @@ public class UserHandler {
         return "user/show";
     }
 
+    /**
+     * 转入游客登陆界面
+     * @return
+     */
     @RequestMapping("loginInput")
     public String loginInput(){
         return "user/login";
     }
 
+    /**
+     * 转入游客注册界面
+     * @return
+     */
     @RequestMapping("registInput")
     public String registInput(){
         return "user/regist";
     }
 
+    /**
+     * 跳转招聘信息界面
+     * @return
+     */
+    @RequestMapping("jobInfo")
+    public String jobInfo(){
+        return "redirect:/jobInfo.jsp";
+    }
+
+    /**
+     * 登陆提交验证
+     * @param name
+     * @param password
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("login")
     public String login(String name,String password,ModelMap modelMap){
         User user = userService.queryByNameAndPassword(name,password);
@@ -50,22 +79,39 @@ public class UserHandler {
         return "forward:/user/jobInfo";
     }
 
+    /**
+     * 注册提交验证
+     * @param name
+     * @param password
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("regist")
     public String regist(String name,String password,ModelMap modelMap){
-        User user = userService.queryByNameAndPassword(name,password);
-        if(user==null){
-            User user1 = new User(-1,name,password);
-            userService.addUser(user1);
-            modelMap.addAttribute("userR1",user1);
-            return "user/login";
-        }
+        User user = new User(-1,name,password);
+        userService.addUser(user);
         modelMap.addAttribute("userR",user);
-        return "user/regist";
+        return "user/login";
     }
 
-    @RequestMapping("jobInfo")
-    public String jobInfo(){
-        return "redirect:/jobInfo.jsp";
+    /**
+     * 账号内容验证
+     * @param name
+     * @return
+     */
+    @RequestMapping("ajaxName")
+    @ResponseBody
+    public String ajaxName(String name){
+        if(name==""||name==null){
+            return "null";
+        }
+        User user = userService.queryByName(name);
+        if(user!=null){
+            return "NG";
+        }else {
+            return "OK";
+        }
     }
+
 
 }
