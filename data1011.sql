@@ -57,7 +57,7 @@ CREATE TABLE `employees` (
   `entry_time` date NOT NULL COMMENT '入职时间',
   `dimission_time` date NOT NULL COMMENT '离职时间',
   `education` varchar(20) NOT NULL COMMENT '学历',
-  `salary` double NOT NULL COMMENT '薪资',
+  `s_id` int(11) NOT NULL COMMENT '薪资ID',
   PRIMARY KEY (`e_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -68,6 +68,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
+INSERT INTO `employees` VALUES (10001,'张三 ','男',15211112222,'zhangsan@163.com',1,2,'2018-10-01','2021-02-13','本科',10000),(10002,'李四','男',15212342345,'lisi@163.com',1,1,'2018-02-11','2099-09-09','本科',2);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,6 +136,42 @@ LOCK TABLES `resumes` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `salaries`
+--
+
+DROP TABLE IF EXISTS `salaries`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `salaries` (
+  `s_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '工资ID',
+  `s_month` varchar(10) NOT NULL COMMENT '哪月工资',
+  `e_id` int(11) NOT NULL COMMENT '员工ID',
+  `e_name` varchar(20) NOT NULL COMMENT '员工姓名',
+  `s_basic` double NOT NULL COMMENT '基本工资',
+  `bonus` double NOT NULL COMMENT '奖金',
+  `overtime_weekday` double NOT NULL COMMENT '平时加班时间',
+  `overtime_weekend` double NOT NULL COMMENT '周末加班时间',
+  `overtime_pay` double NOT NULL COMMENT '加班费',
+  `leave_time` double unsigned NOT NULL COMMENT '请假时长',
+  `absent_time` double NOT NULL COMMENT '旷工时间',
+  `s_deduct` double NOT NULL COMMENT '工资减项',
+  `back_pay` double NOT NULL COMMENT '补发工资',
+  `s_real` double NOT NULL COMMENT '实发工资',
+  `remarks` varchar(50) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`s_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `salaries`
+--
+
+LOCK TABLES `salaries` WRITE;
+/*!40000 ALTER TABLE `salaries` DISABLE KEYS */;
+/*!40000 ALTER TABLE `salaries` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -168,4 +205,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-12 16:08:22
+-- Dump completed on 2018-10-13  9:46:27

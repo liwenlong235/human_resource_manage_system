@@ -7,14 +7,20 @@ import java.util.List;
  */
 public class Department {
     private int id;
-    private int name;
+    private String name;
     private List<Position> positions;
     private List<Employee> employees;
 
     public Department() {
     }
 
-    public Department(int id, int name, List<Position> positions, List<Employee> employees) {
+    public Department(int id, String name, List<Position> positions) {
+        this.id = id;
+        this.name = name;
+        this.positions = positions;
+    }
+
+    public Department(int id, String name, List<Position> positions, List<Employee> employees) {
         this.id = id;
         this.name = name;
         this.positions = positions;
@@ -29,11 +35,11 @@ public class Department {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -57,7 +63,7 @@ public class Department {
     public String toString() {
         return "Department{" +
                 "id=" + id +
-                ", name=" + name +
+                ", name='" + name + '\'' +
                 ", positions=" + positions +
                 ", employees=" + employees +
                 '}';

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.li.dao.DepartmentDao">
     <select id="queryDepartments" resultMap="departmentMap">
-        select * from departments
+        select * from departments d,positions p where d.d_id = p.d_id
     </select>
     <resultMap id="departmentMap" type="Department">
         <id property="id" column="d_id"/>
@@ -11,6 +11,26 @@
             <id property="pId" column="p_id"/>
             <result property="pName" column="p_name"/>
             <result property="dId" column="d_id"/>
+        </collection>
+        <collection property="employees" ofType="Employee">
+            <id property="eId" column="e_id"/>
+            <result property="eName" column="e_name"/>
+            <result property="gender" column="e_gender"/>
+            <result property="tel" column="tel"/>
+            <result property="email" column="email"/>
+            <result property="entryTime" column="entry_time"/>
+            <result property="dimissionTime" column="dimission_time"/>
+            <result property="education" column="education"/>
+            <result property="salary" column="salary"/>
+            <association property="department" javaType="Department">
+                <id property="id" column="d_id"/>
+                <result property="name" column="d_name"/>
+            </association>
+            <association property="position" javaType="Position">
+                <id property="pId" column="p_id"/>
+                <result property="pName" column="p_name"/>
+                <result property="dId" column="d_id"/>
+            </association>
         </collection>
     </resultMap>
 </mapper>

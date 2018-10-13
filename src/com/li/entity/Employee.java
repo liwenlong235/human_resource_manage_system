@@ -13,15 +13,15 @@ public class Employee {
     private String email;
     private Department department;
     private Position position;
-    private Date enrtyTime;
+    private Date entryTime;
     private Date dimissionTime;
     private String education;
-    private double salary;
+    private Salary salary;
 
     public Employee() {
     }
 
-    public Employee(int eId, String eName, String gender, long tel, String email, Department department, Position position, Date enrtyTime, Date dimissionTime, String education, double salary) {
+    public Employee(int eId, String eName, String gender, long tel, String email, Department department, Position position, Date entryTime, Date dimissionTime, String education, Salary salary) {
         this.eId = eId;
         this.eName = eName;
         this.gender = gender;
@@ -29,7 +29,7 @@ public class Employee {
         this.email = email;
         this.department = department;
         this.position = position;
-        this.enrtyTime = enrtyTime;
+        this.entryTime = entryTime;
         this.dimissionTime = dimissionTime;
         this.education = education;
         this.salary = salary;
@@ -91,12 +91,12 @@ public class Employee {
         this.position = position;
     }
 
-    public Date getEnrtyTime() {
-        return enrtyTime;
+    public Date getEntryTime() {
+        return entryTime;
     }
 
-    public void setEnrtyTime(Date enrtyTime) {
-        this.enrtyTime = enrtyTime;
+    public void setEntryTime(Date entryTime) {
+        this.entryTime = entryTime;
     }
 
     public Date getDimissionTime() {
@@ -115,11 +115,11 @@ public class Employee {
         this.education = education;
     }
 
-    public double getSalary() {
+    public Salary getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(Salary salary) {
         this.salary = salary;
     }
 
@@ -131,9 +131,9 @@ public class Employee {
                 ", gender='" + gender + '\'' +
                 ", tel=" + tel +
                 ", email='" + email + '\'' +
-                ", department=" + department +
-                ", position=" + position +
-                ", enrtyTime=" + enrtyTime +
+                ", department=" + department.getName() +
+                ", position=" + position.getpName() +
+                ", entryTime=" + entryTime +
                 ", dimissionTime=" + dimissionTime +
                 ", education='" + education + '\'' +
                 ", salary=" + salary +
