@@ -21,33 +21,25 @@
         $(function () {
             $("#button1").click(function () {
                 var jId = $("#input1").val();
-                var resume = $("#t1").val();
-                var commitRecords = $("#t2").val();
-                if(resume==null){
+                var rId = "${sessionScope.resume.rId}";
+                if(rId<=0){
                     alert("请先创建简历");
                 }else {
-                    var flag = false;
-                    if(commitRecords!=null){
-                        commitRecords.each(function (index, item) {
-                            if(item.jId==jId){
-                                flag = true;
-                                alert("您已提交过简历，不能重复提交");
-                                return;
-                            }
-                        })
-                    }
                     $.ajax({
                         url:"user/commit",
                         type:"post",
-                        data:{"jId":jId,"resume":resume},
+                        data:{"jId":jId,"rId":rId},
                         dataType:"text",
                         success:function (data) {
-                            if(data=="ok"){
+                            if(data=="OK"){
                                 alert("提交成功");
+                            }else {
+                                alert("您已申请这个职位，请勿重复申请");
                             }
                         }
                     })
                 }
+                return false;
             })
         })
     </script>
@@ -56,13 +48,11 @@
     <jsp:include page="${pageContext.request.contextPath}/baseNav.jsp"/>
     <c:if test="${!empty requestScope.job}">
         <input id="input1" type="hidden" value="${requestScope.job.jId}">
-        <input id="input2" type="hidden" value="${sessionScope.resume}">
-        <input id="input3" type="hidden" value="${sessionScope.commitRecords}">
         <div style="height: 100px;">
             <ul>
                 <li class="li1"><h1>${requestScope.job.position.pName}</h1></li>
                 <li class="li1"><h1 style="color: red">${requestScope.job.salaryRange}元/月</h1></li>
-                <li class="li1"><button id="button1"><a href="#"><h1>立即申请</h1></a></button></li></ul></div>
+                <li class="li1"><button id="button1"><a href=""><h1>立即申请</h1></a></button></li></ul></div>
         <div>
             <ul>
                 <li class="li1" style="display: block">${requestScope.job.company}</li>
@@ -84,5 +74,6 @@
             <ul><li>${requestScope.job.address}</li></ul>
         </div>
     </c:if>
+    <button><a href="/user/jobs">返回</a></button></td>
 </body>
 </html>

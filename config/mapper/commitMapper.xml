@@ -16,7 +16,10 @@
     <select id="queryByRId" resultType="CommitRecord">
         select * from commitrecords where r_id=#{rId}
     </select>
-    <select id="queryAll" resultType="CommitRecord">
+    <select id="queryByRIdAndJId" resultType="CommitRecord">
+        select * from commitrecords where r_id=#{rId} and j_id=#{jId}
+    </select>
+    <select id="queryCommitRecords" resultType="CommitRecord">
         select * from commitrecords
     </select>
 </mapper>

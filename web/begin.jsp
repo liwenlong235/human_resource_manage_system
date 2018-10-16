@@ -25,7 +25,7 @@
 <div style="margin-top: 20%">
 <button><a href="user/loginInput">登陆</a></button><br>
 <button><a href="user/registInput">注册</a></button><br>
-<button><a href="user/info">查看</a></button><br>
+
 
 </div>
 </body>

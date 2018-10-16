@@ -42,6 +42,11 @@ public class CommitRecordServiceImpl implements CommitRecordService{
     }
 
     @Override
+    public CommitRecord queryByRIdAndJId(int rId, int jId) {
+        return commitRecordDao.queryByRIdAndJId(rId,jId);
+    }
+
+    @Override
     public List<CommitRecord> queryCommitRecords() {
         return commitRecordDao.queryCommitRecords();
     }

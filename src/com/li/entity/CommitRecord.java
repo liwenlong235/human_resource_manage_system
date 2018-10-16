@@ -11,18 +11,18 @@ public class CommitRecord {
     private int rId;
     private Date commitTime;
     private Boolean rStatus;
-    private Invitation invitation;
+    private int iId;
 
     public CommitRecord() {
     }
 
-    public CommitRecord(int cId, int jId, int rId, Date commitTime, Boolean rStatus, Invitation invitation) {
+    public CommitRecord(int cId, int jId, int rId, Date commitTime, Boolean rStatus, int iId) {
         this.cId = cId;
         this.jId = jId;
         this.rId = rId;
         this.commitTime = commitTime;
         this.rStatus = rStatus;
-        this.invitation = invitation;
+        this.iId = iId;
     }
 
     public int getcId() {
@@ -57,12 +57,12 @@ public class CommitRecord {
         this.rStatus = rStatus;
     }
 
-    public Invitation getInvitation() {
-        return invitation;
+    public int getiId() {
+        return iId;
     }
 
-    public void setInvitation(Invitation invitation) {
-        this.invitation = invitation;
+    public void setiId(int iId) {
+        this.iId = iId;
     }
 
     public int getjId() {
@@ -81,7 +81,7 @@ public class CommitRecord {
                 ", rId=" + rId +
                 ", commitTime=" + commitTime +
                 ", rStatus=" + rStatus +
-                ", invitation=" + invitation +
+                ", iId=" + iId +
                 '}';
     }
 }

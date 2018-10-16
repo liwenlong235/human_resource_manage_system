@@ -16,6 +16,7 @@
 <body>
 <div style="height: 100px">
     <a href="user/userInfo"><h1>${sessionScope.userL.name}</h1></a>
+    <button><a href="/user/loginInput"><h1>切换账号</h1></a></button>
 </div>
 <table border="0px" cellspacing="0px" cellpadding="10px" align="center" >
     <tr>

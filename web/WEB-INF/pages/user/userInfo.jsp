@@ -7,11 +7,66 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <base href="${pageContext.request.contextPath}/">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function () {
+            $(".button1").click(function () {
+                var $this = $(this);
+                var $td = $(this).parent().parent().children();
+                var iId = $td[5].innerHTML;
+                var flag = "yes";
+                if(iId=="未邀请"){
+                    alert("未收到面试邀请");
+                    return false;
+                }
+                $.ajax({
+                    url:"user/invitationAjax",
+                    type:"post",
+                    data:{"iId":iId,"flag":flag},
+                    dataType:"text",
+                    success:function (data) {
+                        if(data=="OK"){
+                            $this.parent().children()[1].attr("display","none");
+                            $this.attr("disabled",true);
+                        }else {
+                            $this.attr("display","none");
+                            $this.parent().children()[1].attr("disabled",true);
+                        }
+                    }
+                })
+                return false;
+            })
+            $(".button2").click(function () {
+                var $this = $(this);
+                var $td = $(this).parent().parent().children();
+                var iId = $td[5].innerHTML;
+                var flag = "no";
+                if(iId=="未邀请"){
+                    alert("未收到面试邀请");
+                    return false;
+                }
+                $.ajax({
+                    url:"user/invitationAjax",
+                    type:"post",
+                    data:{"iId":iId,"flag":flag},
+                    dataType:"text",
+                    success:function (data) {
+                        $this.parent().children()[0].attr("display","none");
+                        $this.attr("disabled",true);
+                    }
+                })
+                return false;
+            })
+        })
+    </script>
 </head>
 <body style="text-align: center">
+<a href="user/userInfo"><span style="text-decoration: blink">${sessionScope.userL.name}</span></a>
 <h1>基本信息</h1>
     <table border="2px" cellspacing="0" cellpadding="10px" align="center">
         <tr>
@@ -22,8 +77,7 @@
             <td>密码：</td>
             <td>${sessionScope.userL.password}</td>
         </tr>
-    </table>
-<hr>
+    </table><hr>
 <h1>我的简历</h1>
 <c:if test="${empty sessionScope.resume}">
     <h2 style="color: red">您没有创建简历</h2>
@@ -31,7 +85,7 @@
     <button><a href="user/jobs">返回</a></button>
 </c:if>
 <c:if test="${!empty sessionScope.resume}">
-    <table border="0px" cellspacing="0px" cellpadding="15px" align="center">
+    <table border="2px" cellspacing="0px" cellpadding="15px" align="center">
         <input type="hidden" name="userId" value=""/>
         <tr>
             <td colspan="4">${sessionScope.resume.rTitle}</td>
@@ -76,9 +130,50 @@
             <td colspan="3">${sessionScope.resume.hobbies}</td>
         </tr>
         <tr>
-            <td colspan="4"><button><a href="user/resumeInput?rId=${sessionScope.resume.rId}">修改简历</a></button>
+            <td colspan="4" style="text-align: center"><button><a href="user/resumeInput?rId=${sessionScope.resume.rId}">修改简历</a></button>
                 <button><a href="user/jobs">返回</a></button></td>
         </tr>
+    </table><hr>
+</c:if>
+<c:if test="${!empty sessionScope.commitRecords}">
+    <table border="2px" cellspacing="0px" cellpadding="15px" align="center" style="text-align: center">
+        <tr>
+            <td colspan="5">职位申请记录表</td>
+        </tr>
+        <tr>
+            <td>记录ID</td>
+            <td>申请职位</td>
+            <td>申请时间</td>
+            <td>简历是否被阅读</td>
+            <td>邀请面试</td>
+            <td>是否面试</td>
+        </tr>
+    <c:forEach items="${sessionScope.commitRecords}" var="commitRecord">
+        <tr>
+            <input type="hidden" name="dId" value="${commitRecord.iId}"/>
+            <td>${commitRecord.cId}</td>
+            <c:forEach var="job" items="${sessionScope.jobs}">
+                <c:if test="${job.jId==commitRecord.jId}">
+                    <td>${job.position.pName}</td>
+                </c:if>
+            </c:forEach>
+            <td><f:formatDate value="${commitRecord.commitTime}"/></td>
+            <c:if test="${commitRecord.rStatus==false}">
+                <td>未读</td>
+            </c:if>
+            <c:if test="${commitRecord.rStatus==true}">
+                <td>已读</td>
+            </c:if>
+            <c:if test="${commitRecord.iId<=0}">
+                <td>未邀请</td>
+            </c:if>
+            <c:if test="${commitRecord.iId>0}">
+                <td>已邀请</td>
+            </c:if>
+            <td><button class="button1"><a href="">是</a></button>
+                <button class="button2"><a href="">否</a></button></td>
+        </tr>
+    </c:forEach>
     </table>
 </c:if>
 </body>

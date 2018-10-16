@@ -14,5 +14,6 @@ public interface CommitRecordService {
     public void deleteById(int id);
     public CommitRecord queryByCId(int cId);
     public List<CommitRecord> queryByRId(int rId);
+    public CommitRecord queryByRIdAndJId(int rId,int jId);
     public List<CommitRecord> queryCommitRecords();
 }

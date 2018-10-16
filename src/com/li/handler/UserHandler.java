@@ -3,6 +3,7 @@ package com.li.handler;
 import com.alibaba.fastjson.JSON;
 import com.li.entity.*;
 import com.li.service.*;
+import com.li.utils.DateUtil;
 import com.li.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,6 +35,8 @@ public class UserHandler {
     private JobService jobService;
     @Autowired
     private CommitRecordService commitRecordService;
+    @Autowired
+    private InvitationService invitationService;
 
     /**
      * 招聘信息界面
@@ -126,6 +129,8 @@ public class UserHandler {
         educations.add("硕士");
         educations.add("博士及以上");
         session.setAttribute("educations",educations);
+        List<Job> jobs = jobService.queryJobs();
+        session.setAttribute("jobs",jobs);
         Resume resume = resumeService.queryByUserId(user.getId());
         if(resume!=null){
             session.setAttribute("resume",resume);
@@ -141,15 +146,15 @@ public class UserHandler {
      * 注册提交验证
      * @param name
      * @param password
-     * @param modelMap
+     * @param
      * @return
      */
     @RequestMapping("regist")
     public String regist(String name,String password,ModelMap modelMap){
-        User user = new User(-1,name,password);
-        modelMap.addAttribute("userR",user);
-        password = Md5Util.md5(password);
-        user.setPassword(password);
+        User userR = new User(-1,name,password);
+        modelMap.addAttribute("userR",userR);
+        String password1 = Md5Util.md5(password);
+        User user = new User(-1,name,password1);
         userService.addUser(user);
         return "user/login";
     }
@@ -247,13 +252,51 @@ public class UserHandler {
         session.setAttribute("resume",resume);
         return "user/userInfo";
     }
+
+    /**
+     * 职位申请确认验证
+     * @param jId
+     * @param rId
+     * @param session
+     * @return
+     */
     @RequestMapping("commit")
     @ResponseBody
-    public String commit(int jId,Resume resume){
+    public String commit(int jId,int rId,HttpSession session){
+        CommitRecord commitRecord = commitRecordService.queryByRIdAndJId(rId,jId);
+        if(commitRecord!=null){
+            return "NG";
+        }
         Date date = new Date();
-        CommitRecord commitRecord = new CommitRecord(-1,jId,resume.getrId(),date,false,new Invitation(-1));
-        commitRecordService.add(commitRecord);
-        return "ok";
+        CommitRecord commitRecord1 = new CommitRecord(-1,jId,rId,date,false,0);
+        commitRecordService.add(commitRecord1);
+        List<CommitRecord> commitRecords = commitRecordService.queryByRId(rId);
+        session.removeAttribute("commitRecords");
+        session.setAttribute("commitRecords",commitRecords);
+        return "OK";
+    }
+
+    /**
+     * 面试邀请确认
+     * @param iId
+     * @param flag
+     * @return
+     */
+    @RequestMapping("invitationAjax")
+    @ResponseBody
+    public String invitationAjax(int iId,String flag){
+        if("yes".equals(flag)){
+            Invitation invitation = invitationService.queryByIid(iId);
+            Date date = new Date();
+            int time = DateUtil.compareDate(date,invitation.getInviteTime());
+            if(time>=0){
+                invitation.setConfirmed(true);
+                return "OK";
+            }else {return "NG";}
+        }else {
+            return "NG";
+        }
+
     }
 
 }

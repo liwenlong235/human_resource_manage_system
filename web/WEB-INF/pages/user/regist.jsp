@@ -44,7 +44,7 @@
                         }else {
                             $("#s1").text("账号可以使用");
                             $("#s1").css("color","lightgreen");
-                            $("#submit1").attr("disabled",false);
+                            $("#submit1").removeAttr("disabled");
                         }
                     }
                 })
@@ -52,22 +52,34 @@
             $(":password[name='password']").blur(function () {
                 var password = $(this).val();
                 if(password==""||password==null){
+                    $("#s2").css("disabled","inline");
                     $("#s2").text("密码不能为空");
                     $("#submit1").attr("disabled",true);
                 }else {
                     $("#s2").text("");
-                    $("#submit1").attr("disabled",false);
+                    $("#submit1").removeAttr("disabled");
                 }
             })
             $(":password[name='password1']").blur(function () {
                 var password = $(this).val();
                 var password1 = $(":password[name='password']").val()
                 if(password!=password1){
+                    $("#s3").css("disabled","inline");
                     $("#s3").text("两次密码不一致");
                     $("#submit1").attr("disabled",true);
                 }else {
                     $("#s3").text("");
-                    $("#submit1").attr("disabled",false);
+                    $("#submit1").removeAttr("disabled");
+                }
+            })
+            $("#submit1").click(function () {
+                var name = $(":text[name='name']").val();
+                var password = $(":password[name='password']").val();
+                var password1 = $(":password[name='password1']").val();
+                if(name!=""&&password!=""&&password1!=""){
+                    $("#submit1").removeAttr("disabled");
+                }else {
+                    $("#submit1").attr("disabled",true);
                 }
             })
         })
@@ -82,19 +94,28 @@
     </style>
 </head>
 <body>
-<div style="height: 100%;width: 100%;">
     <form action="user/regist" method="post">
-        <ul style="list-style-type: none;margin-top: 20%">
-            <li>账号：<input type="text" name="name" >
-                <span id="s1"></span></li><p/>
-            <li>密码：<input type="password" name="password">
-                <span id="s2"></span></li><p/>
-            <li>确认密码：<input type="password" name="password1">
-                <span id="s3"></span></li><p/>
-            <li><input type="submit" id="submit1" value="注册">
-                <button><a href="user/begin" style="text-decoration: none;color: black">返回</a></button></li>
-        </ul>
+        <table border="0" cellspacing="10px" cellpadding="10px" align="center"style="margin-top: 15%">
+            <tr>
+                <td>账号</td>
+                <td><input type="text" name="name"></td>
+                <td><span id="s1"></span></td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td><input type="password" name="password"></td>
+                <td><span id="s2"></span></td>
+            </tr>
+            <tr>
+                <td>确认密码</td>
+                <td><input type="password" name="password1"></td>
+                <td><span id="s3"></span></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center"><input type="submit" id="submit1" value="注册">
+                    <button><a href="user/begin" style="text-decoration: none;color: black">返回</a></button></td>
+            </tr>
+        </table>
     </form>
-</div>
 </body>
 </html>
