@@ -74,10 +74,15 @@
     </script>
     <style>
         span{ color: red;  }
+         body{
+             background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
+             background-size: 100% 100%;
+             text-align: center;
+         }
     </style>
 </head>
-<body style="text-align: center">
-<div style="background: url('img1.jpg');height: 100%;width: 100%;">
+<body>
+<div style="height: 100%;width: 100%;">
     <form action="user/regist" method="post">
         <ul style="list-style-type: none;margin-top: 20%">
             <li>账号：<input type="text" name="name" >
@@ -87,7 +92,7 @@
             <li>确认密码：<input type="password" name="password1">
                 <span id="s3"></span></li><p/>
             <li><input type="submit" id="submit1" value="注册">
-                <button><a href="user/jobInfo" style="text-decoration: none;color: black">返回</a></button></li>
+                <button><a href="user/begin" style="text-decoration: none;color: black">返回</a></button></li>
         </ul>
     </form>
 </div>

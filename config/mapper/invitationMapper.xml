@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.dao.InvitationDao">
+    <insert id="add" parameterType="Invitation">
+        insert into invitations(r_id,invite_time,manager,address,confirmed,pass) values(#{rId},#{inviteTime},
+        #{manager},#{address},#{confirmed},#{pass})
+    </insert>
+    <update id="update" parameterType="Invitation">
+        update invitations set r_id=#{rId},invite_time=#{inviteTime},manager=#{manager},address=
+        #{address},confirmed=#{confirmed},pass=#{pass} where i_id=#{iId}
+    </update>
+    <delete id="deleteById" parameterType="int">
+        delete from invitations where i_id=#{id}
+    </delete>
+    <select id="queryByIid" resultType="Invitation">
+        select * from invitations where i_id=#{iId}
+    </select>
+    <select id="queryByRid" resultType="Invitation">
+        select * from invitations where r_id=#{rId}
+    </select>
+    <select id="queryAll" resultType="Invitation">
+        select * from invitations
+    </select>
+</mapper>

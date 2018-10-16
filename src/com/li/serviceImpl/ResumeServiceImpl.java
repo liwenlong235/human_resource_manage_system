@@ -36,6 +36,11 @@ public class ResumeServiceImpl implements ResumeService{
     }
 
     @Override
+    public Resume queryByUserId(int userId) {
+        return resumeDao.queryByUserId(userId);
+    }
+
+    @Override
     public List<Resume> queryResumes() {
         return resumeDao.queryResumes();
     }

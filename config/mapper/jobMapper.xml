@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.dao.JobDao">
+    <insert id="addJob" parameterType="Job">
+        insert into jobs(p_id,company,addresss,salary_range,duty,requirements,pubdate) values(#{position.pId},#{company},
+        #{address},#{salaryRange},#{duty},#{requirements},#{pubdate})
+    </insert>
+    <update id="updateJob" parameterType="Job">
+        update jobs set p_id=#{position.pId},company=#{company},address=#{address},salary_rang=#{salaryRange},duty=#{duty},requirements
+        =#{requirements},pubdate=#{pubdate}
+    </update>
+    <delete id="deleteByJId" parameterType="int">
+        delete from jobs where j_id=#{jId}
+    </delete>
+    <select id="queryByJId" resultMap="jobMap">
+        select * from jobs j,positions p where j.p_id=p.p_id and j.j_id = #{jId}
+    </select>
+    <select id="queryJobs" resultMap="jobMap">
+        select * from jobs j,positions p where j.p_id=p.p_id
+    </select>
+    <resultMap id="jobMap" type="Job">
+        <id property="jId" column="j_id"/>
+        <result property="company" column="company"/>
+        <result property="address" column="address"/>
+        <result property="salaryRange" column="salary_range"/>
+        <result property="duty" column="duty"/>
+        <result property="requirements" column="requirements"/>
+        <result property="pubdate" column="pubdate"/>
+        <association property="position" javaType="Position" column="p_id">
+            <id property="pId" column="p_id"/>
+            <result property="pName" column="p_name"/>
+            <result property="dId" column="d_id"/>
+        </association>
+    </resultMap>
+</mapper>

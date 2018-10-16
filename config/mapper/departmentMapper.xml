@@ -4,6 +4,9 @@
     <select id="queryDepartments" resultMap="departmentMap">
         select * from departments d,positions p where d.d_id = p.d_id
     </select>
+    <select id="queryById" resultMap="departmentMap">
+        select * from departments d,positions p where d.d_id = p.d_id and d.d_id=#{id}
+    </select>
     <resultMap id="departmentMap" type="Department">
         <id property="id" column="d_id"/>
         <result property="name" column="d_name"/>

@@ -16,7 +16,7 @@
     <delete id="deleteById" parameterType="int">
         delete from salaries where s_id = #{sId}
     </delete>
-    <select id="queryByEid" resultMap="salaryMap">
+    <select id="queryByEid" resultType="Salary">
         select * from salaries where e_id = #{eId}
     </select>
     <select id="queryBySid" resultType="Salary">

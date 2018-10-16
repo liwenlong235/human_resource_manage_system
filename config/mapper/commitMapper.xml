@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.dao.CommitRecordDao">
+    <insert id="add" parameterType="CommitRecord">
+        insert into commitrecords(j_id,r_id,commit_time,r_status,i_id) values(#{jId},#{rId},#{commitTime},#{rStatus},#{iId})
+    </insert>
+    <update id="update" parameterType="CommitRecord">
+        update commitrecords set j_id=#{jId},r_id=#{rId},commit_time=#{commitTime},r_status={rStatus},i_id=#{iId} where c_id=#{cId}
+    </update>
+    <delete id="deleteById" parameterType="int">
+        delete from commitrecords where c_id=#{cId}
+    </delete>
+    <select id="queryByCId" resultType="CommitRecord">
+        select * from commitrecords where c_id=#{cId}
+    </select>
+    <select id="queryByRId" resultType="CommitRecord">
+        select * from commitrecords where r_id=#{rId}
+    </select>
+    <select id="queryAll" resultType="CommitRecord">
+        select * from commitrecords
+    </select>
+</mapper>

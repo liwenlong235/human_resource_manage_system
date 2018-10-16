@@ -1,7 +1,9 @@
 package com.li.handler;
 
-import com.li.entity.User;
-import com.li.service.UserService;
+import com.alibaba.fastjson.JSON;
+import com.li.entity.*;
+import com.li.service.*;
+import com.li.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,19 +26,47 @@ public class UserHandler {
     @Autowired
     @Qualifier("userService")
     private UserService userService;
+    @Autowired
+    private DepartmentService departmentService;
+    @Autowired
+    private ResumeService resumeService;
+    @Autowired
+    private JobService jobService;
+    @Autowired
+    private CommitRecordService commitRecordService;
 
     /**
-     * 游客信息查询
+     * 招聘信息界面
      * @param modelMap
      * @return
      */
-    @RequestMapping("info")
-    public String queryUsers(ModelMap modelMap){
-        List<User> users = userService.queryUsers();
-        modelMap.addAttribute("users",users);
-        return "user/show";
+    @RequestMapping("jobs")
+    public String queryJob(ModelMap modelMap){
+        List<Job> jobs = jobService.queryJobs();
+        modelMap.addAttribute("jobs",jobs);
+        return "user/jobs";
     }
 
+    /**
+     * 详细招聘信息查询
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("jobInfo")
+    public String jobDetail(int id,ModelMap modelMap){
+        Job job = jobService.queryByJId(id);
+        modelMap.addAttribute("job",job);
+        return "user/jobInfo";
+    }
+
+    /**
+     * 查看游客详细信息
+     * @return
+     */
+    @RequestMapping("userInfo")
+    public String userInfo(){
+        return "user/userInfo";
+    }
     /**
      * 转入游客登陆界面
      * @return
@@ -52,14 +86,20 @@ public class UserHandler {
     }
 
     /**
-     * 跳转招聘信息界面
+     * 返回开始界面
      * @return
      */
-    @RequestMapping("jobInfo")
-    public String jobInfo(){
-        return "redirect:/jobInfo.jsp";
+    @RequestMapping("begin")
+    public String begin(){
+        return "redirect:/begin.jsp";
     }
-
+    @RequestMapping("deptAjax")
+    @ResponseBody
+    public void deptAjax(int dId,PrintWriter pw){
+        List<Position> positions = departmentService.queryById(dId).getPositions();
+        Object json = JSON.toJSON(positions);
+        pw.print(json);
+    }
     /**
      * 登陆提交验证
      * @param name
@@ -68,15 +108,33 @@ public class UserHandler {
      * @return
      */
     @RequestMapping("login")
-    public String login(String name,String password,ModelMap modelMap){
+    public String login(String name, String password, HttpSession session,ModelMap modelMap){
+        password = Md5Util.md5(password);
         User user = userService.queryByNameAndPassword(name,password);
         if(user==null){
             User user1 = new User(-1,name,password);
             modelMap.addAttribute("userL1",user1);
             return "user/login";
         }
-        modelMap.addAttribute("userL",user);
-        return "forward:/user/jobInfo";
+        session.setAttribute("userL",user);
+        List<Department> departments = departmentService.queryDepartments();
+        session.setAttribute("departments",departments);
+        List<String> educations = new ArrayList<>();
+        educations.add("高中及以下");
+        educations.add("大专");
+        educations.add("本科");
+        educations.add("硕士");
+        educations.add("博士及以上");
+        session.setAttribute("educations",educations);
+        Resume resume = resumeService.queryByUserId(user.getId());
+        if(resume!=null){
+            session.setAttribute("resume",resume);
+            List<CommitRecord> commitRecords = commitRecordService.queryByRId(resume.getrId());
+            if(commitRecords!=null&&commitRecords.size()>0){
+                session.setAttribute("commitRecords",commitRecords);
+            }
+        }
+        return "forward:/user/jobs";
     }
 
     /**
@@ -89,8 +147,10 @@ public class UserHandler {
     @RequestMapping("regist")
     public String regist(String name,String password,ModelMap modelMap){
         User user = new User(-1,name,password);
-        userService.addUser(user);
         modelMap.addAttribute("userR",user);
+        password = Md5Util.md5(password);
+        user.setPassword(password);
+        userService.addUser(user);
         return "user/login";
     }
 
@@ -113,5 +173,87 @@ public class UserHandler {
         }
     }
 
+    /**
+     * 跳转填写/修改简历页面
+     * @param rId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("resumeInput")
+    public String addInput(Integer rId,ModelMap modelMap){
+        if(rId!=null&&rId>0){
+            Resume resume = resumeService.queryById(rId);
+            modelMap.addAttribute("resume",resume);
+            return "user/updateResume";
+        }else {}
+        return "user/addResume";
+    }
+
+    /**
+     * 创建简历
+     * @return
+     */
+    @RequestMapping("addResume")
+    public String addResume(String rTitle,String uName,String uGender,String uBirth1,String firstWorkTime1,String tel,
+                            String email, int deptId,Integer position,double expectSalary,String education,String workExperience,
+                            String hobbies,HttpSession session){
+        java.sql.Date uBirth = java.sql.Date.valueOf(uBirth1);
+        java.sql.Date firstWorkTime = java.sql.Date.valueOf(firstWorkTime1);
+        User user = (User) session.getAttribute("userL");
+        Department department = departmentService.queryById(deptId);
+        List<Position> positions = department.getPositions();
+        Position position1 = new Position();
+        for(Position position2:positions){
+            if(position==position2.getpId()){
+                position1=position2;
+                break;
+            }
+        }
+        department = new Department(department.getId(),department.getName());
+        Resume resume = new Resume(-1,user,rTitle,uName,uBirth,uGender,firstWorkTime,tel,email,department,position1,
+                workExperience,education,expectSalary,hobbies);
+        resumeService.addResume(resume);
+        resume = resumeService.queryByUserId(user.getId());
+        session.setAttribute("resume",resume);
+        return "user/userInfo";
+    }
+
+    /**
+     * 修改简历
+     * @return
+     */
+    @RequestMapping("updateResume")
+    public String updateResume(String rTitle,String uName,String uGender,String uBirth1,String firstWorkTime1,String tel,
+                               String email, int deptId,Integer position,double expectSalary,String education,String workExperience,
+                               String hobbies,HttpSession session){
+        Resume resume = (Resume) session.getAttribute("resume");
+        java.sql.Date uBirth = java.sql.Date.valueOf(uBirth1);
+        java.sql.Date firstWorkTime = java.sql.Date.valueOf(firstWorkTime1);
+        User user = (User) session.getAttribute("userL");
+        Department department = departmentService.queryById(deptId);
+        List<Position> positions = department.getPositions();
+        Position position1 = new Position();
+        for(Position position2:positions){
+            if(position==position2.getpId()){
+                position1=position2;
+                break;
+            }
+        }
+        department = new Department(department.getId(),department.getName());
+        resume = new Resume(resume.getrId(),user,rTitle,uName,uBirth,uGender,firstWorkTime,tel,email,department,position1,
+                workExperience,education,expectSalary,hobbies);
+        resumeService.updateResume(resume);
+        session.removeAttribute("resume");
+        session.setAttribute("resume",resume);
+        return "user/userInfo";
+    }
+    @RequestMapping("commit")
+    @ResponseBody
+    public String commit(int jId,Resume resume){
+        Date date = new Date();
+        CommitRecord commitRecord = new CommitRecord(-1,jId,resume.getrId(),date,false,new Invitation(-1));
+        commitRecordService.add(commitRecord);
+        return "ok";
+    }
 
 }

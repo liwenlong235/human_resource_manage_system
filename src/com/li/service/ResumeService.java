@@ -12,5 +12,6 @@ public interface ResumeService {
     public void updateResume(Resume resume);
     public void deleteById(int id);
     public Resume queryById(int id);
+    public Resume queryByUserId(int userId);
     public List<Resume> queryResumes();
 }

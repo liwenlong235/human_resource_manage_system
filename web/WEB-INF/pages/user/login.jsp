@@ -95,14 +95,22 @@
     <style>
       span{ color: red;  }
       .setpg{
-        background: url('img1.jpg');height: 100%;width: 100%;
+        height: 100%;width: 100%;
+      }
+       body{
+         background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
+         background-size: 100% 100%;
+         text-align: center;
+       }
+      li{
+        height: 20px;
       }
     </style>
   </head>
-  <body style="text-align: center">
+  <body>
   <div class="setpg">
     <form action="user/login" method="post">
-      <ul style="list-style-type: none;margin-top: 20%">
+      <ul style="list-style-type: none;margin-top: 20%;">
         <c:if test="${empty requestScope.userR}">
           <li>账号：<input id="ip1" type="text" name="name">
             <span id="s1"></span></li><p/>
@@ -120,7 +128,7 @@
           <li><h2 style="color: red">登陆失败，密码错误</h2></li><p/>
         </c:if>
         <li><input type="submit" id="submit" value="登陆">
-          <button><a href="user/jobInfo" style="text-decoration: none;color: black">返回</a></button></li>
+          <button><a href="user/begin" style="text-decoration: none;color: black">返回</a></button></li>
       </ul>
     </form>
   </div>

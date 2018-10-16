@@ -16,6 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `commitrecords`
+--
+
+DROP TABLE IF EXISTS `commitrecords`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `commitrecords` (
+  `c_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '提交记录ID',
+  `j_id` int(11) NOT NULL COMMENT '所选的工作',
+  `r_id` int(11) NOT NULL COMMENT '提交的简历ID',
+  `commit_time` datetime NOT NULL COMMENT '提交时间',
+  `r_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '简历状态(已读/未读)',
+  `i_id` int(11) NOT NULL DEFAULT '0' COMMENT '面试邀请ID',
+  PRIMARY KEY (`c_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `commitrecords`
+--
+
+LOCK TABLES `commitrecords` WRITE;
+/*!40000 ALTER TABLE `commitrecords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `commitrecords` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `departments`
 --
 
@@ -73,6 +100,34 @@ INSERT INTO `employees` VALUES (10001,'张三 ','男',15211112222,'zhangsan@163.
 UNLOCK TABLES;
 
 --
+-- Table structure for table `invitations`
+--
+
+DROP TABLE IF EXISTS `invitations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `invitations` (
+  `i_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '面试邀请ID',
+  `r_id` int(11) NOT NULL COMMENT '简历ID',
+  `invite_time` datetime NOT NULL COMMENT '面试时间',
+  `manager` varchar(50) NOT NULL COMMENT '面试官',
+  `address` varchar(50) NOT NULL COMMENT '面试地址',
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否面试',
+  `pass` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否通过',
+  PRIMARY KEY (`i_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `invitations`
+--
+
+LOCK TABLES `invitations` WRITE;
+/*!40000 ALTER TABLE `invitations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `invitations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `jobs`
 --
 
@@ -82,8 +137,14 @@ DROP TABLE IF EXISTS `jobs`;
 CREATE TABLE `jobs` (
   `j_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '招聘信息ID',
   `p_id` int(11) NOT NULL COMMENT '职位ID',
+  `company` varchar(50) NOT NULL COMMENT '公司名称',
+  `address` varchar(100) NOT NULL COMMENT '工作地点',
+  `salary_range` varchar(50) NOT NULL COMMENT '薪资范围',
+  `duty` varchar(200) NOT NULL COMMENT '岗位职责',
+  `requirements` varchar(200) NOT NULL COMMENT '任职要求',
+  `pubdate` date NOT NULL COMMENT '发布时间',
   PRIMARY KEY (`j_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,6 +153,7 @@ CREATE TABLE `jobs` (
 
 LOCK TABLES `jobs` WRITE;
 /*!40000 ALTER TABLE `jobs` DISABLE KEYS */;
+INSERT INTO `jobs` VALUES (1,2,'海同','上海浦东','8000~10000','Java软件开发','海同毕业','2018-10-14'),(2,20,'海同','上海浦东','8000~10000','前台文员','仅限女生','2018-10-14'),(3,14,'海同','上海闸北区','10000~20000','培训员工','有培训经验，工作8年','2018-10-14'),(4,22,'海同','上海闸北区','10000~15000','行政事务管理','有人力资源工作经验，3年以上','2018-10-14'),(5,35,'海同','上海徐汇区','20000~30000','负责外贸事务管理','工作经验10年','2018-10-14'),(6,3,'海同','上海徐汇区','8000~15000','项目跟进','有一定的项目经验，3年以上','2018-10-14');
 /*!40000 ALTER TABLE `jobs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,8 +197,8 @@ CREATE TABLE `resumes` (
   `r_title` varchar(50) NOT NULL COMMENT '简历名称',
   `u_name` varchar(50) NOT NULL COMMENT '用户姓名',
   `u_birth` date NOT NULL COMMENT '出生日期',
-  `u_gender` varchar(2) NOT NULL COMMENT '性别',
-  `first_worktime` date NOT NULL COMMENT '参加工作时间',
+  `u_gender` varchar(10) NOT NULL COMMENT '性别',
+  `first_work_time` date NOT NULL COMMENT '参加工作时间',
   `tel` bigint(11) NOT NULL COMMENT '联系电话',
   `email` varchar(50) NOT NULL COMMENT '电子邮箱',
   `dept_id` int(11) NOT NULL COMMENT '应聘的部门ID',
@@ -146,7 +208,7 @@ CREATE TABLE `resumes` (
   `expect_salary` double NOT NULL COMMENT '期望薪资',
   `hobbies` varchar(100) NOT NULL COMMENT '兴趣爱好',
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,6 +217,7 @@ CREATE TABLE `resumes` (
 
 LOCK TABLES `resumes` WRITE;
 /*!40000 ALTER TABLE `resumes` DISABLE KEYS */;
+INSERT INTO `resumes` VALUES (1,10,'简历2','ccc','2004-10-10','女','2016-10-04',12345678098,'1232@163.com',6,44,'很多','高中及以下',11000,'很多'),(2,10,'简历2','ccc','2004-10-10','女','2016-10-04',12345678098,'1232@163.com',6,44,'很多','高中及以下',11000,'很多'),(6,9,'简历1','bbb','1995-10-20','男','2017-10-11',12345654321,'123@163.com',2,8,'good','大专',10000,'健身运动');
 /*!40000 ALTER TABLE `resumes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +269,7 @@ CREATE TABLE `users` (
   `user_name` varchar(30) NOT NULL COMMENT '游客账号',
   `user_password` varchar(50) NOT NULL COMMENT '游客密码',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +278,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (-1,'aaa','aaa'),(1,'??2','12345'),(2,'张三1','12345'),(3,'张三','12345'),(4,'lisi','12345'),(5,'zhangsan','12345'),(6,'',''),(7,'asd','111'),(8,'wangwu','12345'),(9,'bbb','12345');
+INSERT INTO `users` VALUES (-1,'aaa','aaa'),(1,'??2','12345'),(2,'张三1','12345'),(3,'张三','12345'),(4,'lisi','12345'),(5,'zhangsan','12345'),(6,'',''),(7,'asd','111'),(8,'wangwu','12345'),(9,'bbb','12345'),(10,'ccc','827ccb0eea8a706c4c34a16891f84e7b'),(11,'dddd','827ccb0eea8a706c4c34a16891f84e7b'),(12,'','d41d8cd98f00b204e9800998ecf8427e'),(13,'','d41d8cd98f00b204e9800998ecf8427e');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -228,4 +291,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-13 16:05:56
+-- Dump completed on 2018-10-16  9:22:44

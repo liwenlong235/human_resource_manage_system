@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService{
     @Qualifier("userDao")
     private UserDao userDao;
 
-
     @Override
     public List<User> queryUsers() {
         return userDao.queryUsers();

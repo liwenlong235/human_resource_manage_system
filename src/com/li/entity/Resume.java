@@ -12,8 +12,8 @@ public class Resume {
     private String uName;
     private Date uBirth;
     private String uGender;
-    private Date fristWorktime;
-    private long tel;
+    private Date firstWorkTime;
+    private String tel;
     private String email;
     private Department department;
     private Position position;
@@ -25,14 +25,14 @@ public class Resume {
     public Resume() {
     }
 
-    public Resume(int rId, User user, String rTitle, String uName, Date uBirth, String uGender, Date fristWorktime, long tel, String email, Department department, Position position, String workExperience, String education, double expectSalary, String hobbies) {
+    public Resume(int rId, User user, String rTitle, String uName, Date uBirth, String uGender, Date firstWorkTime, String tel, String email, Department department, Position position, String workExperience, String education, double expectSalary, String hobbies) {
         this.rId = rId;
         this.user = user;
         this.rTitle = rTitle;
         this.uName = uName;
         this.uBirth = uBirth;
         this.uGender = uGender;
-        this.fristWorktime = fristWorktime;
+        this.firstWorkTime = firstWorkTime;
         this.tel = tel;
         this.email = email;
         this.department = department;
@@ -91,19 +91,19 @@ public class Resume {
         this.uGender = uGender;
     }
 
-    public Date getFristWorktime() {
-        return fristWorktime;
+    public Date getFirstWorkTime() {
+        return firstWorkTime;
     }
 
-    public void setFristWorktime(Date fristWorktime) {
-        this.fristWorktime = fristWorktime;
+    public void setFirstWorktime(Date firstWorkTime) {
+        this.firstWorkTime = firstWorkTime;
     }
 
-    public long getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(long tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
@@ -172,7 +172,7 @@ public class Resume {
                 ", uName='" + uName + '\'' +
                 ", uBirth=" + uBirth +
                 ", uGender='" + uGender + '\'' +
-                ", fristWorktime=" + fristWorktime +
+                ", firstWorkTime=" + firstWorkTime +
                 ", tel=" + tel +
                 ", email='" + email + '\'' +
                 ", department=" + department +
