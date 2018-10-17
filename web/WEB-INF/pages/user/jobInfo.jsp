@@ -43,9 +43,15 @@
             })
         })
     </script>
+    <style>
+        body{
+            background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
+            background-size: 100% 100%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body style="font-size: 30px;">
-    <jsp:include page="${pageContext.request.contextPath}/baseNav.jsp"/>
     <c:if test="${!empty requestScope.job}">
         <input id="input1" type="hidden" value="${requestScope.job.jId}">
         <div style="height: 100px;">

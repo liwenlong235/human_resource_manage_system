@@ -44,6 +44,13 @@
             })
         })
     </script>
+    <style>
+        body{
+            background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
+            background-size: 100% 100%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <form action="user/addResume" method="post">

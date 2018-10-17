@@ -13,6 +13,8 @@ public interface EmployeeService {
     public void deleteById(int id);
     public void updateEmpl(Employee employee);
     public Employee queryById(int id);
+    public Employee queryByName(String name);
+    public Employee queryByNameAndPassword(String name,String password);
     public List<Employee> queryEmployees();
     public List<Employee> querySameDept(int dId);
     public List<Employee> querySamePosition(@Param("dId") int dId, @Param("pId")int pid);

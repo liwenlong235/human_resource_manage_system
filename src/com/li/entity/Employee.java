@@ -8,6 +8,7 @@ import java.sql.Date;
 public class Employee {
     private int eId;
     private String eName;
+    private String ePassword;
     private String gender;
     private long tel;
     private String email;
@@ -21,9 +22,10 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(int eId, String eName, String gender, long tel, String email, Department department, Position position, Date entryTime, Date dimissionTime, String education, Salary salary) {
+    public Employee(int eId, String eName, String ePassword,String gender, long tel, String email, Department department, Position position, Date entryTime, Date dimissionTime, String education, Salary salary) {
         this.eId = eId;
         this.eName = eName;
+        this.ePassword = ePassword;
         this.gender = gender;
         this.tel = tel;
         this.email = email;
@@ -49,6 +51,14 @@ public class Employee {
 
     public void seteName(String eName) {
         this.eName = eName;
+    }
+
+    public String getePassword() {
+        return ePassword;
+    }
+
+    public void setePassword(String ePassword) {
+        this.ePassword = ePassword;
     }
 
     public String getGender() {
@@ -128,6 +138,7 @@ public class Employee {
         return "Employee{" +
                 "eId=" + eId +
                 ", eName='" + eName + '\'' +
+                ", ePassword='" + ePassword + '\'' +
                 ", gender='" + gender + '\'' +
                 ", tel=" + tel +
                 ", email='" + email + '\'' +

@@ -36,6 +36,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee queryByName(String name) {
+        return employeeDao.queryByName(name);
+    }
+
+    @Override
+    public Employee queryByNameAndPassword(String name, String password) {
+        return employeeDao.queryByNameAndPassword(name,password);
+    }
+
+    @Override
     public List<Employee> queryEmployees() {
         return employeeDao.queryEmployees();
     }

@@ -21,10 +21,12 @@
     </style>
 </head>
 <body>
-<jsp:include page="baseNav.jsp"/>
 <div style="margin-top: 20%">
-<button><a href="user/loginInput">登陆</a></button><br>
-<button><a href="user/registInput">注册</a></button><br>
+<button><a href="user/loginInput">游客登陆</a></button>
+<button><a href="user/registInput">游客注册</a></button><p/>
+    <button><a href="employee/loginInput">员工登陆</a></button>
+    <button><a href="manager/loginInput">管理员/主管登陆</a></button><p/>
+
 
 
 </div>

@@ -44,10 +44,17 @@
             })
         })
     </script>
+    <style>
+        body{
+            background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
+            background-size: 100% 100%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <form action="user/updateResume" method="post">
-    <table border="0px" cellspacing="0px" cellpadding="15px" align="center">
+    <table border="0px" cellspacing="0px" cellpadding="20px" align="center">
         <tr>
             <td colspan="2">简历名称</td>
             <td colspan="2"><input type="text" name="rTitle" value="${sessionScope.resume.rTitle}"></td>

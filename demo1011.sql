@@ -16,6 +16,62 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `attendance`
+--
+
+DROP TABLE IF EXISTS `attendance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `attendance` (
+  `a_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '考勤id',
+  `e_id` int(11) NOT NULL COMMENT '员工id',
+  `month` int(11) NOT NULL COMMENT '考勤月份',
+  `day` date NOT NULL COMMENT '当天日期',
+  `morning` time NOT NULL COMMENT '上班时间',
+  `night` time NOT NULL COMMENT '下班时间',
+  `overtime` double NOT NULL DEFAULT '0' COMMENT '加班时间',
+  `leave_time` double NOT NULL DEFAULT '0' COMMENT '请加时间',
+  `absenteeism` double NOT NULL DEFAULT '0' COMMENT '旷工时间',
+  PRIMARY KEY (`a_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `attendance`
+--
+
+LOCK TABLES `attendance` WRITE;
+/*!40000 ALTER TABLE `attendance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `attendance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `awards`
+--
+
+DROP TABLE IF EXISTS `awards`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `awards` (
+  `a_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+  `e_id` int(11) NOT NULL COMMENT '员工Id',
+  `type` tinyint(1) NOT NULL COMMENT '赏/罚类型',
+  `reason` varchar(50) NOT NULL COMMENT '原因说明',
+  `create_tiem` date NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`a_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `awards`
+--
+
+LOCK TABLES `awards` WRITE;
+/*!40000 ALTER TABLE `awards` DISABLE KEYS */;
+/*!40000 ALTER TABLE `awards` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `commitrecords`
 --
 
@@ -30,7 +86,7 @@ CREATE TABLE `commitrecords` (
   `r_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '简历状态(已读/未读)',
   `i_id` int(11) NOT NULL DEFAULT '0' COMMENT '面试邀请ID',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +95,7 @@ CREATE TABLE `commitrecords` (
 
 LOCK TABLES `commitrecords` WRITE;
 /*!40000 ALTER TABLE `commitrecords` DISABLE KEYS */;
+INSERT INTO `commitrecords` VALUES (10,1,2,'2018-10-16 10:43:25',0,0),(11,3,2,'2018-10-16 12:23:51',0,0),(12,1,7,'2018-10-16 13:05:59',0,0),(13,2,7,'2018-10-16 13:06:50',0,0),(14,1,8,'2018-10-16 13:11:00',0,0),(15,4,8,'2018-10-16 13:11:10',0,0),(16,1,9,'2018-10-16 16:09:56',0,0),(17,1,10,'2018-10-16 16:30:25',0,0),(18,6,10,'2018-10-16 18:46:12',0,0);
 /*!40000 ALTER TABLE `commitrecords` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,15 +133,15 @@ DROP TABLE IF EXISTS `employees`;
 CREATE TABLE `employees` (
   `e_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '员工编号',
   `e_name` varchar(20) NOT NULL COMMENT '姓名',
-  `e_gender` varchar(2) NOT NULL COMMENT '性别',
+  `e_password` varchar(50) NOT NULL COMMENT '密码',
+  `gender` varchar(2) NOT NULL COMMENT '性别',
   `tel` bigint(11) NOT NULL COMMENT '联系方式',
   `email` varchar(20) NOT NULL COMMENT '电子邮箱',
   `d_id` int(11) NOT NULL COMMENT '部门编号',
   `p_id` int(11) NOT NULL COMMENT '职位编号',
   `entry_time` date NOT NULL COMMENT '入职时间',
-  `dimission_time` date NOT NULL COMMENT '离职时间',
+  `dimission_time` date DEFAULT NULL COMMENT '离职时间',
   `education` varchar(20) NOT NULL COMMENT '学历',
-  `s_id` int(11) NOT NULL COMMENT '薪资ID',
   PRIMARY KEY (`e_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10003 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -95,7 +152,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (10001,'张三 ','男',15211112222,'zhangsan@163.com',1,2,'2018-10-01','2021-02-13','本科',10000),(10002,'李四','男',15212342345,'lisi@163.com',1,1,'2018-02-11','2099-09-09','本科',2);
+INSERT INTO `employees` VALUES (10001,'张三 ','','男',15211112222,'zhangsan@163.com',1,2,'2018-10-01','2021-02-13','本科'),(10002,'李四','','男',15212342345,'lisi@163.com',1,1,'2018-02-11','2099-09-09','本科');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,6 +215,33 @@ INSERT INTO `jobs` VALUES (1,2,'海同','上海浦东','8000~10000','Java软件�
 UNLOCK TABLES;
 
 --
+-- Table structure for table `managers`
+--
+
+DROP TABLE IF EXISTS `managers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `managers` (
+  `m_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '管理员ID',
+  `m_name` varchar(50) NOT NULL COMMENT '账号',
+  `m_password` varchar(50) NOT NULL COMMENT '密码',
+  `type` int(50) NOT NULL COMMENT '类别',
+  `d_name` varchar(50) NOT NULL COMMENT '所属部门',
+  `p_name` varchar(50) NOT NULL COMMENT '职位',
+  PRIMARY KEY (`m_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `managers`
+--
+
+LOCK TABLES `managers` WRITE;
+/*!40000 ALTER TABLE `managers` DISABLE KEYS */;
+/*!40000 ALTER TABLE `managers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `positions`
 --
 
@@ -208,7 +292,7 @@ CREATE TABLE `resumes` (
   `expect_salary` double NOT NULL COMMENT '期望薪资',
   `hobbies` varchar(100) NOT NULL COMMENT '兴趣爱好',
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,7 +301,7 @@ CREATE TABLE `resumes` (
 
 LOCK TABLES `resumes` WRITE;
 /*!40000 ALTER TABLE `resumes` DISABLE KEYS */;
-INSERT INTO `resumes` VALUES (1,10,'简历2','ccc','2004-10-10','女','2016-10-04',12345678098,'1232@163.com',6,44,'很多','高中及以下',11000,'很多'),(2,10,'简历2','ccc','2004-10-10','女','2016-10-04',12345678098,'1232@163.com',6,44,'很多','高中及以下',11000,'很多'),(6,9,'简历1','bbb','1995-10-20','男','2017-10-11',12345654321,'123@163.com',2,8,'good','大专',10000,'健身运动');
+INSERT INTO `resumes` VALUES (10,26,'jianli1','ffff','1998-01-09','on','2016-05-09',111111111111,'12345@163.com',5,18,'asdfg','硕士',11111,'23456');
 /*!40000 ALTER TABLE `resumes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,6 +342,33 @@ LOCK TABLES `salaries` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `train`
+--
+
+DROP TABLE IF EXISTS `train`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `train` (
+  `t_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '培训Id',
+  `title` varchar(50) NOT NULL COMMENT '培训主题',
+  `e_id` int(11) NOT NULL COMMENT '员工ID',
+  `start_time` datetime NOT NULL COMMENT '培训开始时间',
+  `end_tiem` datetime NOT NULL COMMENT '结束时间',
+  `result` double NOT NULL COMMENT '培训结果',
+  PRIMARY KEY (`t_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `train`
+--
+
+LOCK TABLES `train` WRITE;
+/*!40000 ALTER TABLE `train` DISABLE KEYS */;
+/*!40000 ALTER TABLE `train` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -269,7 +380,7 @@ CREATE TABLE `users` (
   `user_name` varchar(30) NOT NULL COMMENT '游客账号',
   `user_password` varchar(50) NOT NULL COMMENT '游客密码',
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +389,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (-1,'aaa','aaa'),(1,'??2','12345'),(2,'张三1','12345'),(3,'张三','12345'),(4,'lisi','12345'),(5,'zhangsan','12345'),(6,'',''),(7,'asd','111'),(8,'wangwu','12345'),(9,'bbb','12345'),(10,'ccc','827ccb0eea8a706c4c34a16891f84e7b'),(11,'dddd','827ccb0eea8a706c4c34a16891f84e7b'),(12,'','d41d8cd98f00b204e9800998ecf8427e'),(13,'','d41d8cd98f00b204e9800998ecf8427e');
+INSERT INTO `users` VALUES (10,'ccc','827ccb0eea8a706c4c34a16891f84e7b'),(11,'dddd','827ccb0eea8a706c4c34a16891f84e7b'),(19,'bbb','827ccb0eea8a706c4c34a16891f84e7b'),(22,'aaa','827ccb0eea8a706c4c34a16891f84e7b'),(25,'eee','827ccb0eea8a706c4c34a16891f84e7b'),(26,'fff','827ccb0eea8a706c4c34a16891f84e7b');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -291,4 +402,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-16  9:22:44
+-- Dump completed on 2018-10-17  9:41:53

@@ -11,14 +11,22 @@
 <html>
 <head>
     <base href="${pageContext.request.contextPath}/">
-
+    <style>
+        body{
+            background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
+            background-size: 100% 100%;
+        }
+    </style>
 </head>
 <body>
 <div style="height: 100px">
-    <a href="user/userInfo"><h1>${sessionScope.userL.name}</h1></a>
-    <button><a href="/user/loginInput"><h1>切换账号</h1></a></button>
+    <a href="user/userInfo"><h2>当前账号：${sessionScope.userL.name}</h2></a>
+    <button><a href="/user/loginInput"><span style="text-decoration: blink;font-size: 20px">切换账号</span></a></button>
 </div>
-<table border="0px" cellspacing="0px" cellpadding="10px" align="center" >
+<table border="0px" cellspacing="0px" cellpadding="20px" align="center" style="text-align: center;text-decoration: blink" >
+    <tr>
+        <td colspan="5"><span style="text-decoration: blink;font-size: 15px">招聘信息</span></td>
+    </tr>
     <tr>
         <td>职位名</td>
         <td>公司名</td>

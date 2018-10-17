@@ -64,9 +64,16 @@
             })
         })
     </script>
+    <style>
+        body{
+            background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
+            background-size: 100% 100%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body style="text-align: center">
-<a href="user/userInfo"><span style="text-decoration: blink">${sessionScope.userL.name}</span></a>
+<a href="user/userInfo" style="text-align: left"><h2>当前用户：${sessionScope.userL.name}</h2></a>
 <h1>基本信息</h1>
     <table border="2px" cellspacing="0" cellpadding="10px" align="center">
         <tr>
@@ -81,14 +88,14 @@
 <h1>我的简历</h1>
 <c:if test="${empty sessionScope.resume}">
     <h2 style="color: red">您没有创建简历</h2>
-    <a href="user/resumeInput"><span style="color: red;font-size: 10px">新建简历</span></a>
-    <button><a href="user/jobs">返回</a></button>
+    <a href="user/resumeInput"><span style="color: red;text-decoration:underline;font-size: 20px">新建简历</span></a>
+    <button><a href="user/jobs"><span style="text-decoration: none;font-size: 20px">返回</span></a></button>
 </c:if>
 <c:if test="${!empty sessionScope.resume}">
-    <table border="2px" cellspacing="0px" cellpadding="15px" align="center">
+    <table border="2px" cellspacing="0px" cellpadding="13px" align="center">
         <input type="hidden" name="userId" value=""/>
         <tr>
-            <td colspan="4">${sessionScope.resume.rTitle}</td>
+            <td colspan="4" style="text-align: center">${sessionScope.resume.rTitle}</td>
         </tr>
         <tr>
             <td>姓名</td>
@@ -136,9 +143,9 @@
     </table><hr>
 </c:if>
 <c:if test="${!empty sessionScope.commitRecords}">
-    <table border="2px" cellspacing="0px" cellpadding="15px" align="center" style="text-align: center">
+    <table border="2px" cellspacing="0px" cellpadding="13px" align="center" style="text-align: center">
         <tr>
-            <td colspan="5">职位申请记录表</td>
+            <td colspan="6">职位申请记录表</td>
         </tr>
         <tr>
             <td>记录ID</td>

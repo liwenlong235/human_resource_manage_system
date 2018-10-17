@@ -96,6 +96,12 @@ public class UserHandler {
     public String begin(){
         return "redirect:/begin.jsp";
     }
+
+    /**
+     * 部门联动
+     * @param dId
+     * @param pw
+     */
     @RequestMapping("deptAjax")
     @ResponseBody
     public void deptAjax(int dId,PrintWriter pw){
@@ -119,6 +125,9 @@ public class UserHandler {
             modelMap.addAttribute("userL1",user1);
             return "user/login";
         }
+        session.removeAttribute("userL");
+        session.removeAttribute("resume");
+        session.removeAttribute("commitRecords");
         session.setAttribute("userL",user);
         List<Department> departments = departmentService.queryDepartments();
         session.setAttribute("departments",departments);
@@ -136,6 +145,7 @@ public class UserHandler {
             session.setAttribute("resume",resume);
             List<CommitRecord> commitRecords = commitRecordService.queryByRId(resume.getrId());
             if(commitRecords!=null&&commitRecords.size()>0){
+
                 session.setAttribute("commitRecords",commitRecords);
             }
         }
