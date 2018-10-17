@@ -2,10 +2,7 @@ package com.li.test;
 
 import com.li.dao.DepartmentDao;
 import com.li.entity.*;
-import com.li.service.CommitRecordService;
-import com.li.service.JobService;
-import com.li.service.ResumeService;
-import com.li.service.UserService;
+import com.li.service.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +30,10 @@ public class Main {
     private ResumeService resumeService;
     @Autowired
     private CommitRecordService commitRecordService;
+    @Autowired
+    private ManagerService managerService;
     @Test
     public void login(){
-        List<CommitRecord> list = commitRecordService.queryByRId(2);
-        for(CommitRecord commitRecord:list){
-            System.out.println(commitRecord);
-        }
+        System.out.println(managerService.queryByNameAndPassword("admin","admin"));
     }
 }

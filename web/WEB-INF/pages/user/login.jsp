@@ -10,20 +10,7 @@
 <html>
   <head>
     <base href="${pageContext.request.contextPath}/">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <link href="/bootstrap/css/tableexport.css">
-    <link href="/bootstrap/dist/bootstrap-table.min.css">
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
-
-    <script src="/bootstrap/js/Blob.js/Blob.js"></script>
-    <script src="/bootstrap/js/FileSaver.js/FileSaver.js"></script>
-    <script src="/bootstrap/js/js-xlsx/xlsx.core.min.js"></script>
-
-    <script src="/bootstrap/js/Bootstrap/bootstrap.min.js"></script>
-    <script src="/bootstrap/js/TableExport.js/jquery.tableexport.js"></script>
-    <script src="/bootstrap/dist/bootstrap-table.min.css"></script>
-    <script src="/bootstrap/dist/bootstrap-table-export.min.js"></script>
-    <script src="/bootstrap/dist/locale/bootstrap-table-zh-CN.min.js"></script>
     <script>
         $(function () {
             $("#ip1").blur(function () {
@@ -48,52 +35,22 @@
                     }
                 })
             })
-            $("#ip2").blur(function () {
-                var password = $(this).val();
-                if(password==""||password==null){
+            $("#submit").click(function () {
+                var name = $("#ip1").val();
+                var password = $("#ip2").val();
+                if(name!=""&&password!=""){
+                    return true;
+                }else if(name==""){
+                    $("#s1").text("账号不能为空");
+                }else{
                     $("#s2").text("密码不能为空");
-                    $("#submit").attr("disabled",true);
-                }else {
-                    $("#s2").text("");
-                    $("#submit").attr("disabled",false);
                 }
-            })
-            $("#ip3").blur(function () {
-                var name = $(this).val();
-                $.ajax({
-                    url:"user/ajaxName",
-                    data:{"name":name},
-                    type:"post",
-                    dataType:"text",
-                    success:function (data) {
-                        if(data=="null"){
-                            $("#s3").text("账号不能为空");
-                            $("#submit").attr("disabled",true);
-                        }else if(data=="OK"){
-                            $("#s3").text("账号不存在");
-                            $("#submit").attr("disabled",true);
-                        }else {
-                            $("#s3").text("账号存在");
-                            $("#s3").css("color","lightgreen");
-                            $("#submit").attr("disabled",false);
-                        }
-                    }
-                })
-            })
-            $("#ip4").blur(function () {
-                var password = $(this).val();
-                if(password==""||password==null){
-                    $("#s4").text("密码不能为空");
-                    $("#submit").attr("disabled",true);
-                }else {
-                    $("#s4").text("");
-                    $("#submit").attr("disabled",false);
-                }
+                return false;
             })
         })
     </script>
     <style>
-      span{ color: red;  }
+      span{ color: red; }
       .setpg{
         height: 100%;width: 100%;
       }
@@ -102,9 +59,7 @@
          background-size: 100% 100%;
          text-align: center;
        }
-      li{
-        height: 20px;
-      }
+      li{  height: 20px;  }
     </style>
   </head>
   <body>

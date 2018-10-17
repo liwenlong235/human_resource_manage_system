@@ -51,20 +51,31 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" id="ul1">
-                <li class="active"><a href="user/userInfo">Link <span class="sr-only">(current)</span></a></li>
-                <li><a href="page2.jsp">Link</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <li class="active"><a href="user/userInfo">管理员<span class="sr-only">(current)</span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
+                        <li><a href="#">管理员注册</a></li>
+                        <li><a href="#">查看管理员</a></li>
+                        <li><a href="#">更改管理员</a></li>
+                        <li><a href="#">删除管理员</a></li>
                     </ul>
                 </li>
+                <li><a href="page2.jsp">员工管理</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">新增员工</a></li>
+                        <li><a href="#">查看员工信息</a></li>
+                        <li><a href="#">更改员工信息</a></li>
+                        <li><a href="#">删除员工信息</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">考勤管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">查看当月所有考勤</a></li>
+                        <li><a href="#">查看指定员工考勤</a></li>
+                        <li><a href="#">修改考勤</a></li>
+                    </ul>
+                </li>
+
             </ul>
             <form class="navbar-form navbar-left">
                 <div class="form-group">

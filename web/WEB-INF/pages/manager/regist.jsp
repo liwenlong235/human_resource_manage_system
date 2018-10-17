@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: 99234
   Date: 2018/10/17
-  Time: 9:15
+  Time: 11:31
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -18,6 +18,35 @@
     </style>
     <script>
         $(function () {
+            var $select = $("#select2");
+            var dId = $("#select1").val();
+            $.ajax({
+                url:"user/deptAjax",
+                data:{"dId":dId},
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    $(data).each(function (index,item) {
+                        $select.append("<option class='opt'>"+item.pName+"</option>");
+                    })
+                }
+            })
+            $("#select1").change(function () {
+                var $select = $("#select2");
+                var dId = $("#select1").val();
+                $.ajax({
+                    url:"user/deptAjax",
+                    data:{"dId":dId},
+                    type:"post",
+                    dataType:"json",
+                    success:function (data) {
+                        $("#select2 option[class='opt']").remove();
+                        $(data).each(function (index,item) {
+                            $select.append("<option class='opt'>"+item.pName+"</option>");
+                        })
+                    }
+                })
+            })
             $("#ip1").blur(function () {
                 var name = $(this).val();
                 $.ajax({
@@ -29,11 +58,11 @@
                         if(data=="null"){
                             $("#s1").text("账号不能为空");
                             $("#submit").attr("disabled",true);
-                        }else if(data=="OK"){
-                            $("#s1").text("账号不存在");
+                        }else if(data=="NG"){
+                            $("#s1").text("账号已存在");
                             $("#submit").attr("disabled",true);
-                        }else {
-                            $("#s1").text("账号存在");
+                        }else if(data=="OK"){
+                            $("#s1").text("账号可以使用");
                             $("#s1").css("color","lightgreen");
                             $("#submit").attr("disabled",false);
                         }
@@ -56,33 +85,39 @@
     </script>
 </head>
 <body>
-<form action="managers/login" method="post">
+<form action="managers/regist" method="post">
     <table border="0px" cellpadding="15px" align="center" style="margin-top: 16%">
-        <c:if test="${!empty requestScope.managerR}">
-            <tr><td colspan="3"><h4 style="color: lightgreen">注册成功，请登录</h4></td></tr>
-        </c:if>
         <tr>
             <td>用户名</td>
             <td><input id="ip1" type="text" name="name"></td>
-            <td><span id="s1"> </span></td>
+            <td><span id="s1"></span></td>
         </tr>
         <tr>
             <td>密码</td>
             <td><input id="ip2" type="password" name="password"></td>
-            <td><span id="s2"> </span></td>
+            <td><span id="s2"></span></td>
         </tr>
         <tr>
             <td>类型</td>
             <td colspan="2"><input type="radio" name="type" checked="checked" value="0">管理员
                 <input type="radio" name="type" value="1">部门主管</td>
         </tr>
-        <c:if test="${!empty requestScope.flag}">
-            <tr style="text-align: center"><td colspan="3"><span>密码错误，登陆失败</span></td></tr>
-        </c:if>
+        <tr>
+            <td>部门</td>
+            <td><select name="dId" id="select1">
+                <c:forEach items="${sessionScope.departments}" var="department">
+                    <option value="${department.id}">${department.name}</option>
+                </c:forEach>
+            </select></td>
+        </tr>
+        <tr>
+            <td>职位</td>
+            <td><select id="select2" name="pName">
+            </select></td>
+        </tr>
         <tr style="text-align: center">
-            <td colspan="3"><input type="submit" id="submit" value="登陆">
-                <button><a href="managers/registInput" style="text-decoration: none;color: black">注册</a></button>
-                <button><a href="user/begin" style="text-decoration: none;color: black">返回</a></button></td>
+            <td colspan="3"><input id="submit" type="submit" value="注册">
+                <button><a href="/managers/loginInput" style="text-decoration: none;color: black">返回</a></button></td>
         </tr>
     </table>
 </form>
