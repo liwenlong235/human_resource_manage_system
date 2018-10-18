@@ -13,6 +13,9 @@
     <select id="queryByPId" resultType="Position">
         select * from positions where p_id = #{pId}
     </select>
+    <select id="queryByPName" resultType="Position">
+        select * from positions where p_name = #{pName}
+    </select>
     <select id="queryByDId" resultType="Position">
         select * from positions where d_id = #{dId}
     </select>

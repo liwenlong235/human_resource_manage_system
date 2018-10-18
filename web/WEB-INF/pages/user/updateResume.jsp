@@ -54,7 +54,10 @@
 </head>
 <body>
 <form action="user/updateResume" method="post">
-    <table border="0px" cellspacing="0px" cellpadding="20px" align="center">
+    <table border="2px" cellspacing="0px" cellpadding="16px" align="center" >
+        <tr style="text-align: center">
+            <td colspan="4"><h2>修改简历</h2></td>
+        </tr>
         <tr>
             <td colspan="2">简历名称</td>
             <td colspan="2"><input type="text" name="rTitle" value="${sessionScope.resume.rTitle}"></td>
@@ -122,7 +125,7 @@
             <td>兴趣爱好</td>
             <td colspan="3"><input type="text" name="hobbies" value="${sessionScope.resume.hobbies}"></td>
         </tr>
-        <tr>
+        <tr style="text-align: center">
             <td colspan="4"><input type="submit">
                 <button><a href="user/userInfo">返回</a></button></td>
         </tr>

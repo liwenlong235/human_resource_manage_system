@@ -12,6 +12,7 @@ public interface PositionService {
     public void update(Position position);
     public void deleteById(int id);
     public Position queryByPId(int pId);
+    public Position queryByName(String name);
     public List<Position> queryAll();
     public List<Position> queryByDId(int dId);
 }

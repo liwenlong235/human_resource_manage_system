@@ -200,7 +200,7 @@ public class UserHandler {
             Resume resume = resumeService.queryById(rId);
             modelMap.addAttribute("resume",resume);
             return "user/updateResume";
-        }else {}
+        }
         return "user/addResume";
     }
 

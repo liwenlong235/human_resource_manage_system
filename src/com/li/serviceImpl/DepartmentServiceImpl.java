@@ -24,4 +24,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department queryById(int id) {
         return departmentDao.queryById(id);
     }
+
+    @Override
+    public Department queryByName(String name) {
+        return departmentDao.queryByName(name);
+    }
 }

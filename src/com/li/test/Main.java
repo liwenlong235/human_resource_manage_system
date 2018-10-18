@@ -1,6 +1,7 @@
 package com.li.test;
 
 import com.li.dao.DepartmentDao;
+import com.li.dao.PositionDao;
 import com.li.entity.*;
 import com.li.service.*;
 import org.junit.Test;
@@ -32,8 +33,10 @@ public class Main {
     private CommitRecordService commitRecordService;
     @Autowired
     private ManagerService managerService;
+    @Autowired
+    private PositionDao positionDao;
     @Test
     public void login(){
-        System.out.println(managerService.queryByNameAndPassword("admin","admin"));
+        System.out.println(departmentDao.queryByName("行政部"));
     }
 }

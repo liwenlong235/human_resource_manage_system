@@ -11,7 +11,6 @@
 <head>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link href="/bootstrap/css/tableexport.css">
-    <link href="/bootstrap/dist/bootstrap-table.min.css">
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
 
     <script src="/bootstrap/js/Blob.js/Blob.js"></script>
@@ -66,16 +65,13 @@
                 <li class="dropdown"><a href="user/userInfo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理员<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="managers/managerInfo">查看管理员</a></li>
-                        <li><a href="managers/managerUpdate">更改管理员</a></li>
-                        <li><a href="managers/managerDelete">删除管理员</a></li>
+                        <li><a href="/managers/managerUpdateInput">更改管理员</a></li>
                     </ul>
                 </li>
                 <li class="dropdown"><a href="page2.jsp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">员工管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/addEmpl">新增员工</a></li>
+                        <li><a href="managers/emplInput">新增员工</a></li>
                         <li><a href="managers/emplInfo">查看员工信息</a></li>
-                        <li><a href="managers/updateEmpl">更改员工信息</a></li>
-                        <li><a href="managers/deleteEmpl">删除员工信息</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -101,7 +97,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="managers/addTrain">新建培训信息</a></li>
                         <li><a href="managers/updateTrain">修改培训信息</a></li>
-                        <li><a href="managers/deleteTrain">删除工资信息</a></li>
+                        <li><a href="managers/deleteTrain">删除培训信息</a></li>
                         <li><a href="managers/queryDeptTrain">查看部门培训记录</a></li>
                         <li><a href="managers/queryEmplTrain">查看员工培训记录</a></li>
                     </ul>

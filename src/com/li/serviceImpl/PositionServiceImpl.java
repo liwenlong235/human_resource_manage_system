@@ -36,6 +36,11 @@ public class PositionServiceImpl implements PositionService {
     }
 
     @Override
+    public Position queryByName(String name) {
+        return positionDao.queryByPName(name);
+    }
+
+    @Override
     public List<Position> queryAll() {
         return positionDao.queryAll();
     }

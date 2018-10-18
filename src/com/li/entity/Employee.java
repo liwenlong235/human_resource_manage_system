@@ -10,31 +10,29 @@ public class Employee {
     private String eName;
     private String ePassword;
     private String gender;
-    private long tel;
+    private String tel;
     private String email;
-    private Department department;
-    private Position position;
+    private int dId;
+    private int pId;
     private Date entryTime;
     private Date dimissionTime;
     private String education;
-    private Salary salary;
 
     public Employee() {
     }
 
-    public Employee(int eId, String eName, String ePassword,String gender, long tel, String email, Department department, Position position, Date entryTime, Date dimissionTime, String education, Salary salary) {
+    public Employee(int eId, String eName, String ePassword, String gender, String tel, String email, int dId, int pId, Date entryTime, Date dimissionTime, String education) {
         this.eId = eId;
         this.eName = eName;
         this.ePassword = ePassword;
         this.gender = gender;
         this.tel = tel;
         this.email = email;
-        this.department = department;
-        this.position = position;
+        this.dId = dId;
+        this.pId = pId;
         this.entryTime = entryTime;
         this.dimissionTime = dimissionTime;
         this.education = education;
-        this.salary = salary;
     }
 
     public int geteId() {
@@ -69,11 +67,11 @@ public class Employee {
         this.gender = gender;
     }
 
-    public long getTel() {
+    public String getTel() {
         return tel;
     }
 
-    public void setTel(long tel) {
+    public void setTel(String tel) {
         this.tel = tel;
     }
 
@@ -85,20 +83,20 @@ public class Employee {
         this.email = email;
     }
 
-    public Department getDepartment() {
-        return department;
+    public int getdId() {
+        return dId;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void setdId(int dId) {
+        this.dId = dId;
     }
 
-    public Position getPosition() {
-        return position;
+    public int getpId() {
+        return pId;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setpId(int pId) {
+        this.pId = pId;
     }
 
     public Date getEntryTime() {
@@ -125,13 +123,6 @@ public class Employee {
         this.education = education;
     }
 
-    public Salary getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Salary salary) {
-        this.salary = salary;
-    }
 
     @Override
     public String toString() {
@@ -140,14 +131,13 @@ public class Employee {
                 ", eName='" + eName + '\'' +
                 ", ePassword='" + ePassword + '\'' +
                 ", gender='" + gender + '\'' +
-                ", tel=" + tel +
+                ", tel='" + tel + '\'' +
                 ", email='" + email + '\'' +
-                ", department=" + department.getName() +
-                ", position=" + position.getpName() +
+                ", dId=" + dId +
+                ", pId=" + pId +
                 ", entryTime=" + entryTime +
                 ", dimissionTime=" + dimissionTime +
                 ", education='" + education + '\'' +
-                ", salary=" + salary +
                 '}';
     }
 }

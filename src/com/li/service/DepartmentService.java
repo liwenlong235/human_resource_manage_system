@@ -10,4 +10,5 @@ import java.util.List;
 public interface DepartmentService {
     public List<Department> queryDepartments();
     public Department queryById(int id);
+    public Department queryByName(String name);
 }

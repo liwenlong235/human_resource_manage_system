@@ -3,48 +3,31 @@
 <mapper namespace="com.li.dao.EmployeeDao">
     <insert id="addEmpl" parameterType="Employee">
         insert into employees(e_name,e_password,gender,tel,email,d_id,p_id,entry_time,dimission_time,education)
-        values(#{eName},#{ePassword},#{gender},#{tel},#{email},#{department.id}#{position.pId},#{entryTime},#{dimissionTime},#{education})
+        values(#{eName},#{ePassword},#{gender},#{tel},#{email},#{dId},#{pId},#{entryTime},#{dimissionTime},#{education})
     </insert>
     <update id="updateEmpl" parameterType="Employee">
-        update employees set e_name=#{eName},e_password=#{ePassword},gender=#{gender},tel=#{tel},email=#{email},d_id=#{department.id},
-        p_id=#{position.pId},entry_time=#{entryTime},dimission_time=#{dimissionTime},education=#{education}, where e_id = #{eId}
+        update employees set e_name=#{eName},e_password=#{ePassword},gender=#{gender},tel=#{tel},email=#{email},d_id=#{did},
+        p_id=#{pId},entry_time=#{entryTime},dimission_time=#{dimissionTime},education=#{education}, where e_id = #{eId}
     </update>
     <delete id="deleteById" parameterType="int">
         delete from employees where e_id = #{eId}
     </delete>
-    <select id="queryByNameAndPassword" resultMap="employeeMap">
-        select * from employees e,departments d,positions p where e.d_id=d.d_id and e.p_id=p.p_id and e.e_name=#{name} and e.e_password =#{password}
+    <select id="queryByName" resultType="Employee">
+        select * from employees where e_name=#{name}
     </select>
-    <select id="queryById" resultMap="employeeMap">
-        select * from employees e,departments d,positions p where e.d_id=d.d_id and e.p_id=p.p_id and e.e_id = #{eId}
+    <select id="queryByNameAndPassword" resultType="Employee">
+        select * from employees where e_name=#{name} and e_password =#{password}
     </select>
-    <select id="querySameDept" resultMap="employeeMap">
-        select * from employees e,departments d,positions p where e.d_id=d.d_id and e.p_id=p.p_id and e.d_id = #{dId}
+    <select id="queryById" resultType="Employee">
+        select * from employees where e_id = #{eId}
     </select>
-    <select id="querySamePosition" resultMap="employeeMap">
-        select * from employees e,departments d,positions p where e.d_id=d.d_id and e.p_id=p.p_id and e.d_id = #{dId} and e.p_id=#{pId}
+    <select id="querySameDept" resultType="Employee">
+        select * from employees where d_id = #{dId}
     </select>
-    <select id="queryEmployees" resultMap="employeeMap">
-        select * from employees e,departments d,positions p where e.d_id=d.d_id and e.p_id=p.p_id
+    <select id="querySamePosition" resultType="Employee">
+        select * from employees where d_id = #{dId} and p_id=#{pId}
     </select>
-   <resultMap id="employeeMap" type="Employee">
-       <id property="eId" column="e_id"/>
-       <result property="eName" column="e_name"/>
-       <result property="ePassword" column="e_password"/>
-       <result property="gender" column="gender"/>
-       <result property="tel" column="tel"/>
-       <result property="email" column="email"/>
-       <result property="entryTime" column="entry_time"/>
-       <result property="dimissionTime" column="dimission_time"/>
-       <result property="education" column="education"/>
-       <association property="department" javaType="Department">
-           <id property="id" column="d_id"/>
-           <result property="name" column="d_name"/>
-       </association>
-       <association property="position" javaType="Position">
-           <id property="pId" column="p_id"/>
-           <result property="pName" column="p_name"/>
-           <result property="dId" column="d_id"/>
-       </association>
-   </resultMap>
+    <select id="queryEmployees" resultType="Employee">
+        select * from employees
+    </select>
 </mapper>
