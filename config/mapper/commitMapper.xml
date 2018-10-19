@@ -5,7 +5,7 @@
         insert into commitrecords(j_id,r_id,commit_time,r_status,i_id) values(#{jId},#{rId},#{commitTime},#{rStatus},#{iId})
     </insert>
     <update id="update" parameterType="CommitRecord">
-        update commitrecords set j_id=#{jId},r_id=#{rId},commit_time=#{commitTime},r_status={rStatus},i_id=#{iId} where c_id=#{cId}
+        update commitrecords set j_id=#{jId},r_id=#{rId},commit_time=#{commitTime},r_status=#{rStatus},i_id=#{iId} where c_id=#{cId}
     </update>
     <delete id="deleteById" parameterType="int">
         delete from commitrecords where c_id=#{cId}

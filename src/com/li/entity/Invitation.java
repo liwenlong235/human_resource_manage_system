@@ -7,12 +7,12 @@ import java.util.Date;
  */
 public class Invitation {
     private int iId;
-    private int rId;
+    private int cId;
     private Date inviteTime;
     private String manager;
     private String address;
-    private boolean confirmed;
-    private boolean pass;
+    private int confirmed;
+    private int pass;
 
     public Invitation() {
     }
@@ -21,9 +21,9 @@ public class Invitation {
         this.iId = iId;
     }
 
-    public Invitation(int iId, int rId, Date inviteTime, String manager, String address, boolean confirmed, boolean pass) {
+    public Invitation(int iId, int cId, Date inviteTime, String manager, String address, int confirmed, int pass) {
         this.iId = iId;
-        this.rId = rId;
+        this.cId = cId;
         this.inviteTime = inviteTime;
         this.manager = manager;
         this.address = address;
@@ -39,12 +39,12 @@ public class Invitation {
         this.iId = iId;
     }
 
-    public int getrId() {
-        return rId;
+    public int getcId() {
+        return cId;
     }
 
-    public void setrId(int rId) {
-        this.rId = rId;
+    public void setcId(int cId) {
+        this.cId = cId;
     }
 
     public Date getInviteTime() {
@@ -71,19 +71,19 @@ public class Invitation {
         this.address = address;
     }
 
-    public boolean isConfirmed() {
+    public int getConfirmed() {
         return confirmed;
     }
 
-    public void setConfirmed(boolean confirmed) {
+    public void setConfirmed(int confirmed) {
         this.confirmed = confirmed;
     }
 
-    public boolean isPass() {
+    public int getPass() {
         return pass;
     }
 
-    public void setPass(boolean pass) {
+    public void setPass(int pass) {
         this.pass = pass;
     }
 
@@ -91,7 +91,7 @@ public class Invitation {
     public String toString() {
         return "Invitation{" +
                 "iId=" + iId +
-                ", rId=" + rId +
+                ", cId=" + cId +
                 ", inviteTime=" + inviteTime +
                 ", manager='" + manager + '\'' +
                 ", address='" + address + '\'' +

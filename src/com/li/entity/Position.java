@@ -1,5 +1,7 @@
 package com.li.entity;
 
+import java.util.Date;
+
 /**
  * Created by 99234 on 2018/10/12.
  */
@@ -7,6 +9,7 @@ public class Position {
     private int pId;
     private String  pName;
     private int dId;
+    private Date createTime;
 
     public Position() {
     }
@@ -15,6 +18,13 @@ public class Position {
         this.pId = pId;
         this.pName = pName;
         this.dId = dId;
+    }
+
+    public Position(int pId, String pName, int dId, Date createTime) {
+        this.pId = pId;
+        this.pName = pName;
+        this.dId = dId;
+        this.createTime = createTime;
     }
 
     public int getpId() {
@@ -41,12 +51,21 @@ public class Position {
         this.dId = dId;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public String toString() {
         return "Position{" +
                 "pId=" + pId +
                 ", pName='" + pName + '\'' +
                 ", dId=" + dId +
+                ", createTime=" + createTime +
                 '}';
     }
 }

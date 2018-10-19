@@ -13,6 +13,6 @@ public interface ManagerService {
     public void deleteById(int id);
     public Manager queryById(int id);
     public Manager queryByName(String name);
-    public Manager queryByNameAndPassword(String name,String password);
+    public Manager queryByNameAndPassword(String name,String password,int type);
     public List<Manager> queryAll();
 }

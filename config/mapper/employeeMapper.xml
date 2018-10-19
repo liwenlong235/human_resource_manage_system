@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.li.dao.EmployeeDao">
     <insert id="addEmpl" parameterType="Employee">
-        insert into employees(e_name,e_password,gender,tel,email,d_id,p_id,entry_time,dimission_time,education)
-        values(#{eName},#{ePassword},#{gender},#{tel},#{email},#{dId},#{pId},#{entryTime},#{dimissionTime},#{education})
+        insert into employees(r_id,e_name,e_password,gender,tel,email,d_id,p_id,entry_time,dimission_time,education)
+        values(#{rId},#{eName},#{ePassword},#{gender},#{tel},#{email},#{dId},#{pId},#{entryTime},#{dimissionTime},#{education})
     </insert>
     <update id="updateEmpl" parameterType="Employee">
-        update employees set e_name=#{eName},e_password=#{ePassword},gender=#{gender},tel=#{tel},email=#{email},d_id=#{did},
-        p_id=#{pId},entry_time=#{entryTime},dimission_time=#{dimissionTime},education=#{education}, where e_id = #{eId}
+        update employees set r_id=#{rId},e_name=#{eName},e_password=#{ePassword},gender=#{gender},tel=#{tel},email=#{email},d_id=#{dId},
+        p_id=#{pId},entry_time=#{entryTime},dimission_time=#{dimissionTime},education=#{education} where e_id = #{eId}
     </update>
     <delete id="deleteById" parameterType="int">
         delete from employees where e_id = #{eId}
@@ -20,6 +20,9 @@
     </select>
     <select id="queryById" resultType="Employee">
         select * from employees where e_id = #{eId}
+    </select>
+    <select id="queryByRId" resultType="Employee">
+        select * from employees where r_id = #{rId}
     </select>
     <select id="querySameDept" resultType="Employee">
         select * from employees where d_id = #{dId}

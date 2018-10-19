@@ -11,11 +11,6 @@
 <html>
 <head>
     <base href="${pageContext.request.contextPath}/">
-    <style>
-        ul{  list-style-type: none;  }
-        div{  height: 80px;  width: 100%;  text-align: center;  }
-        .li1{  float: left;  width: 33%;  }
-    </style>
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script>
         $(function () {
@@ -49,37 +44,46 @@
             background-size: 100% 100%;
             text-align: center;
         }
+        td{width: 15%}
     </style>
 </head>
 <body style="font-size: 30px;">
     <c:if test="${!empty requestScope.job}">
         <input id="input1" type="hidden" value="${requestScope.job.jId}">
-        <div style="height: 100px;">
-            <ul>
-                <li class="li1"><h1>${requestScope.job.position.pName}</h1></li>
-                <li class="li1"><h1 style="color: red">${requestScope.job.salaryRange}元/月</h1></li>
-                <li class="li1"><button id="button1"><a href=""><h1>立即申请</h1></a></button></li></ul></div>
-        <div>
-            <ul>
-                <li class="li1" style="display: block">${requestScope.job.company}</li>
-                <li class="li1">${requestScope.job.address}</li>
-                <li class="li1"><f:formatDate value="${requestScope.job.pubdate}"/></li>
-            </ul></div>
-        <div style="text-align: left;margin-left: 10%">
-            <ul>
-                <li><h3>职位描述</h3></li>
-                <ul>
-                    <li>岗位职责：<br>
-                        <ol><li>${requestScope.job.duty}</li></ol>
-                    </li>
-                    <li>
-                        任职要求：<br>
-                        <ol><li>${requestScope.job.requirements}</li></ol>
-                    </li></ul>
-            </ul>
-            <ul><li>${requestScope.job.address}</li></ul>
-        </div>
+        <table border="0px" cellpadding="10px" cellspacing="0px" align="center" style="margin-top: 10%;width: 45%">
+            <tr>
+                <td><h2>${requestScope.job.position.pName}</h2></td>
+                <td><h2 style="color: red">${requestScope.job.salaryRange}元/月</h2></td>
+                <td><button id="button1"><a href=""><h2>立即申请</h2></a></button></td>
+            </tr>
+            <tr>
+                <td>${requestScope.job.company}</td>
+                <td>${requestScope.job.address}</td>
+                <td><f:formatDate value="${requestScope.job.pubdate}"/></td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr></td></tr>
+            <tr>
+            <tr>
+                <td colspan="3"><h4>职位描述</h4></td></tr>
+            <tr>
+                <td colspan="3">1、岗位职责：<br>${requestScope.job.duty}</td>
+            </tr>
+            <tr>
+                <td colspan="3">2、任职要求：<br>${requestScope.job.requirements}</td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr></td></tr>
+            <tr>
+            <tr>
+                <td>工作地址</td>
+                <td colspan="3">${requestScope.job.address}</td>
+            </tr>
+            <tr>
+                <td colspan="3"><hr></td></tr>
+            <tr>
+        </table>
     </c:if>
-    <button><a href="/user/jobs">返回</a></button></td>
+    <button><a href="/user/jobs"><span style="font-size: 20px">返回</span></a></button></td>
 </body>
 </html>

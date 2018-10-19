@@ -12,6 +12,7 @@ public interface InvitationService {
     public void update(Invitation invitation);
     public void deleteById(int id);
     public Invitation queryByIid(int iId);
-    public Invitation queryByRid(int rId);
+    public Invitation queryByCId(int cId);
     public List<Invitation> queryAll();
+    public List<Invitation> queryByRId(int rId);
 }

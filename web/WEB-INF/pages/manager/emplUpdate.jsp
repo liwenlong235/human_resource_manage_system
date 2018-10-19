@@ -54,7 +54,7 @@
 </head>
 <body>
 <jsp:include page="managerBaseNav.jsp"/>
-<c:if test="${!empty requestScope.eployee}">
+<c:if test="${!empty requestScope.employee}">
     <form action="managers/updateEmpl" method="post">
         <table border="2px" cellspacing="0px" cellpadding="16px" align="center">
             <input type="hidden" name="eId" value="${requestScope.employee.eId}">

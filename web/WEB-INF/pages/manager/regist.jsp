@@ -115,6 +115,9 @@
             <td><select id="select2" name="pName">
             </select></td>
         </tr>
+        <c:if test="${!empty requestScope.flag}">
+            <tr><td colspan="3"><h4 style="color:red;">不能注册管理员类型</h4></td></tr>
+        </c:if>
         <tr style="text-align: center">
             <td colspan="3"><input id="submit" type="submit" value="注册">
                 <button><a href="/managers/loginInput" style="text-decoration: none;color: black">返回</a></button></td>

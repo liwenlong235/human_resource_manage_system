@@ -37,6 +37,8 @@ public class Main {
     private PositionDao positionDao;
     @Test
     public void login(){
-        System.out.println(departmentDao.queryByName("行政部"));
+        Department department = new Department(-1,"后勤部",new java.util.Date());
+        departmentDao.add(department);
+        System.out.println(departmentDao.queryByName("后勤部"));
     }
 }

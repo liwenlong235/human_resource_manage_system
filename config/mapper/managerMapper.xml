@@ -20,6 +20,6 @@
         select * from managers where m_name = #{name}
     </select>
     <select id="queryByNameAndPassword" resultType="Manager">
-        select * from managers where m_name=#{name} and m_password=#{password}
+        select * from managers where m_name=#{name} and m_password=#{password} and type=#{type}
     </select>
 </mapper>

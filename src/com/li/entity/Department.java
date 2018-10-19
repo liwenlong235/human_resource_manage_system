@@ -1,5 +1,6 @@
 package com.li.entity;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,6 +10,7 @@ public class Department {
     private int id;
     private String name;
     private List<Position> positions;
+    private Date createTime;
 
     public Department() {
     }
@@ -18,10 +20,23 @@ public class Department {
         this.name = name;
     }
 
+    public Department(int id, String name, Date createTime) {
+        this.id = id;
+        this.name = name;
+        this.createTime = createTime;
+    }
+
     public Department(int id, String name, List<Position> positions) {
         this.id = id;
         this.name = name;
         this.positions = positions;
+    }
+
+    public Department(int id, String name, List<Position> positions, Date createTime) {
+        this.id = id;
+        this.name = name;
+        this.positions = positions;
+        this.createTime = createTime;
     }
 
     public int getId() {
@@ -48,6 +63,13 @@ public class Department {
         this.positions = positions;
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
     @Override
     public String toString() {
@@ -55,6 +77,7 @@ public class Department {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", positions=" + positions +
+                ", createTime=" + createTime +
                 '}';
     }
 }

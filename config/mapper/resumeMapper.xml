@@ -17,13 +17,13 @@
         delete from resumes where r_id = #{id}
     </delete>
     <select id="queryById" resultMap="resumeMap">
-        select * from resumes r,users u,departments d,positions p where r.user_id=u.user_id and r.dept_id=d.d_id and r.position_id=p.p_id and r.r_id = #{id}
+        select * from resumes r,users u,department d,positions p where r.user_id=u.user_id and r.dept_id=d.d_id and r.position_id=p.p_id and r.r_id = #{id}
     </select>
     <select id="queryByUserId" resultMap="resumeMap">
-        select * from resumes r,users u,departments d,positions p where r.user_id=u.user_id and r.dept_id=d.d_id and r.position_id=p.p_id and r.user_id = #{id}
+        select * from resumes r,users u,department d,positions p where r.user_id=u.user_id and r.dept_id=d.d_id and r.position_id=p.p_id and r.user_id = #{id}
     </select>
     <select id="queryResumes" resultMap="resumeMap">
-        select * from resumes r,users u,departments d,positions p where r.user_id=u.user_id and r.dept_id=d.d_id and r.position_id=p.p_id
+        select * from resumes r,users u,department d,positions p where r.user_id=u.user_id and r.dept_id=d.d_id and r.position_id=p.p_id
     </select>
     <resultMap id="resumeMap" type="Resume">
         <id property="rId" column="r_id"/>

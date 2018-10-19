@@ -83,10 +83,10 @@ CREATE TABLE `commitrecords` (
   `j_id` int(11) NOT NULL COMMENT '所选的工作',
   `r_id` int(11) NOT NULL COMMENT '提交的简历ID',
   `commit_time` datetime NOT NULL COMMENT '提交时间',
-  `r_status` tinyint(1) NOT NULL DEFAULT '0' COMMENT '简历状态(已读/未读)',
-  `i_id` int(11) NOT NULL DEFAULT '0' COMMENT '面试邀请ID',
+  `r_status` tinyint(1) NOT NULL COMMENT '简历状态(已读/未读)',
+  `i_id` int(11) NOT NULL COMMENT '面试邀请ID',
   PRIMARY KEY (`c_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,7 +95,7 @@ CREATE TABLE `commitrecords` (
 
 LOCK TABLES `commitrecords` WRITE;
 /*!40000 ALTER TABLE `commitrecords` DISABLE KEYS */;
-INSERT INTO `commitrecords` VALUES (10,1,2,'2018-10-16 10:43:25',0,0),(11,3,2,'2018-10-16 12:23:51',0,0),(12,1,7,'2018-10-16 13:05:59',0,0),(13,2,7,'2018-10-16 13:06:50',0,0),(14,1,8,'2018-10-16 13:11:00',0,0),(15,4,8,'2018-10-16 13:11:10',0,0),(16,1,9,'2018-10-16 16:09:56',0,0),(17,1,10,'2018-10-16 16:30:25',0,0),(18,6,10,'2018-10-16 18:46:12',0,0);
+INSERT INTO `commitrecords` VALUES (31,1,12,'2018-10-19 13:35:47',1,12),(32,1,14,'2018-10-19 13:46:55',1,13);
 /*!40000 ALTER TABLE `commitrecords` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,8 +109,9 @@ DROP TABLE IF EXISTS `department`;
 CREATE TABLE `department` (
   `d_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_name` varchar(20) NOT NULL,
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`d_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +120,7 @@ CREATE TABLE `department` (
 
 LOCK TABLES `department` WRITE;
 /*!40000 ALTER TABLE `department` DISABLE KEYS */;
-INSERT INTO `department` VALUES (1,'销售部'),(2,'财务部'),(3,'项目部'),(4,'采购部'),(5,'人力资源部'),(6,'广告部'),(7,'行政部');
+INSERT INTO `department` VALUES (1,'销售部','0000-00-00 00:00:00'),(2,'财务部','0000-00-00 00:00:00'),(3,'项目部','0000-00-00 00:00:00'),(4,'采购部','0000-00-00 00:00:00'),(5,'人力资源部','0000-00-00 00:00:00'),(6,'广告部','0000-00-00 00:00:00'),(7,'行政部','0000-00-00 00:00:00'),(9,'后勤部','2018-10-19 16:59:48');
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,6 +133,7 @@ DROP TABLE IF EXISTS `employees`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employees` (
   `e_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '员工编号',
+  `r_id` int(11) NOT NULL COMMENT '对应简历ID',
   `e_name` varchar(20) NOT NULL COMMENT '姓名',
   `e_password` varchar(50) NOT NULL COMMENT '密码',
   `gender` varchar(10) NOT NULL COMMENT '性别',
@@ -140,10 +142,10 @@ CREATE TABLE `employees` (
   `d_id` int(11) NOT NULL COMMENT '部门编号',
   `p_id` int(11) NOT NULL COMMENT '职位编号',
   `entry_time` date NOT NULL COMMENT '入职时间',
-  `dimission_time` date DEFAULT '0000-00-00' COMMENT '离职时间',
+  `dimission_time` date DEFAULT NULL COMMENT '离职时间',
   `education` varchar(20) NOT NULL COMMENT '学历',
   PRIMARY KEY (`e_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10003 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10012 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +154,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (10001,'张三 ','','男',15211112222,'zhangsan@163.com',1,2,'2018-10-01','1970-01-01','本科'),(10002,'李四','','男',15212342345,'lisi@163.com',1,1,'2018-02-11','1970-01-01','本科');
+INSERT INTO `employees` VALUES (10010,12,'aaa','6cf7af35e8b3873e13c2376866fc13e7','男',12345678098,'12345@163.com',4,39,'2018-10-18','1970-01-01','本科'),(10011,14,'ccc','670b14728ad9902aecba32e22fa4f6bd','男',111111111111,'12345@163.com',1,2,'2018-10-19','1970-01-01','本科');
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,14 +167,14 @@ DROP TABLE IF EXISTS `invitations`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `invitations` (
   `i_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '面试邀请ID',
-  `r_id` int(11) NOT NULL COMMENT '简历ID',
+  `c_id` int(11) NOT NULL COMMENT '简历ID',
   `invite_time` datetime NOT NULL COMMENT '面试时间',
   `manager` varchar(50) NOT NULL COMMENT '面试官',
   `address` varchar(50) NOT NULL COMMENT '面试地址',
-  `confirmed` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否面试',
-  `pass` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否通过',
+  `confirmed` int(1) NOT NULL COMMENT '是否面试',
+  `pass` int(1) NOT NULL COMMENT '是否通过',
   PRIMARY KEY (`i_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,6 +183,7 @@ CREATE TABLE `invitations` (
 
 LOCK TABLES `invitations` WRITE;
 /*!40000 ALTER TABLE `invitations` DISABLE KEYS */;
+INSERT INTO `invitations` VALUES (12,31,'2018-11-11 14:00:00','销售主管','浦东新区松涛路489号',1,1),(13,32,'2018-11-11 14:00:00','销售主管','123',1,1);
 /*!40000 ALTER TABLE `invitations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +232,7 @@ CREATE TABLE `managers` (
   `d_name` varchar(50) NOT NULL COMMENT '所属部门',
   `p_name` varchar(50) NOT NULL COMMENT '职位',
   PRIMARY KEY (`m_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +241,7 @@ CREATE TABLE `managers` (
 
 LOCK TABLES `managers` WRITE;
 /*!40000 ALTER TABLE `managers` DISABLE KEYS */;
-INSERT INTO `managers` VALUES (6,'admin','827ccb0eea8a706c4c34a16891f84e7b',0,'人力资源部','人力资源主管');
+INSERT INTO `managers` VALUES (6,'admin','827ccb0eea8a706c4c34a16891f84e7b',0,'人力资源部','人力资源主管'),(7,'xiaoshou','827ccb0eea8a706c4c34a16891f84e7b',1,'销售部','销售主管'),(8,'caiwu','827ccb0eea8a706c4c34a16891f84e7b',1,'财务部','财务主管'),(9,'xiangmu','827ccb0eea8a706c4c34a16891f84e7b',1,'项目部','项目主管'),(10,'caigou','827ccb0eea8a706c4c34a16891f84e7b',1,'采购部','采购主管'),(11,'renliziyuan','827ccb0eea8a706c4c34a16891f84e7b',1,'人力资源部','人力资源主管'),(12,'guanggao','827ccb0eea8a706c4c34a16891f84e7b',1,'广告部','广告设计主管'),(13,'xingzheng ','827ccb0eea8a706c4c34a16891f84e7b',1,'行政部','行政主管');
 /*!40000 ALTER TABLE `managers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -253,6 +256,7 @@ CREATE TABLE `positions` (
   `p_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '职位ID',
   `p_name` varchar(50) NOT NULL COMMENT '职位名称',
   `d_id` int(11) NOT NULL COMMENT '部门ID',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`p_id`),
   KEY `foreign_p_d` (`d_id`),
   CONSTRAINT `foreign_p_d` FOREIGN KEY (`d_id`) REFERENCES `departments` (`d_id`)
@@ -265,7 +269,7 @@ CREATE TABLE `positions` (
 
 LOCK TABLES `positions` WRITE;
 /*!40000 ALTER TABLE `positions` DISABLE KEYS */;
-INSERT INTO `positions` VALUES (1,'销售代表',1),(2,'电话销售',1),(3,'销售经理',1),(4,'销售主管',1),(5,'销售总监',1),(6,'出纳员',2),(7,'会计助理',2),(8,'会计师',2),(9,'会计经理',2),(10,'财务顾问',2),(11,'财务主管',2),(12,'财务经理',2),(13,'财务总监',2),(14,'培训专员',5),(15,'培训经理',5),(16,'培训讲师',5),(17,'人力资源总监',5),(18,'人力资源经理',5),(19,'人力资源主管',5),(20,'前台',7),(21,'行政助理',7),(22,'行政专员',7),(23,'行政经理',7),(24,'行政主管',7),(25,'行政总监',7),(26,'项目专员',3),(27,'项目主管',3),(28,'项目经理',3),(29,'项目专管',3),(30,'项目助理',3),(31,'测试工程师',3),(32,'开发工程师',3),(33,'报关员',4),(34,'贸易跟单员',4),(35,'外贸主管',4),(36,'外贸专员',4),(37,'采购经理',4),(38,'采购专员',4),(39,'采购经理',4),(40,'广告设计师',6),(41,'广告文案策划',6),(42,'广告美术指导',6),(43,'广告执行制作',6),(44,'广告设计经理',6),(45,'广告设计总监',6);
+INSERT INTO `positions` VALUES (1,'销售代表',1,NULL),(2,'电话销售',1,NULL),(3,'销售经理',1,NULL),(4,'销售主管',1,NULL),(5,'销售总监',1,NULL),(6,'出纳员',2,NULL),(7,'会计助理',2,NULL),(8,'会计师',2,NULL),(9,'会计经理',2,NULL),(10,'财务顾问',2,NULL),(11,'财务主管',2,NULL),(12,'财务经理',2,NULL),(13,'财务总监',2,NULL),(14,'培训专员',5,NULL),(15,'培训经理',5,NULL),(16,'培训讲师',5,NULL),(17,'人力资源总监',5,NULL),(18,'人力资源经理',5,NULL),(19,'人力资源主管',5,NULL),(20,'前台',7,NULL),(21,'行政助理',7,NULL),(22,'行政专员',7,NULL),(23,'行政经理',7,NULL),(24,'行政主管',7,NULL),(25,'行政总监',7,NULL),(26,'项目专员',3,NULL),(27,'项目主管',3,NULL),(28,'项目经理',3,NULL),(29,'项目专管',3,NULL),(30,'项目助理',3,NULL),(31,'测试工程师',3,NULL),(32,'开发工程师',3,NULL),(33,'报关员',4,NULL),(34,'贸易跟单员',4,NULL),(35,'外贸主管',4,NULL),(36,'外贸专员',4,NULL),(37,'采购主管',4,NULL),(38,'采购专员',4,NULL),(39,'采购经理',4,NULL),(40,'广告设计师',6,NULL),(41,'广告文案策划',6,NULL),(42,'广告美术指导',6,NULL),(43,'广告执行制作',6,NULL),(44,'广告设计经理',6,NULL),(45,'广告设计主管',6,NULL);
 /*!40000 ALTER TABLE `positions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,7 +297,7 @@ CREATE TABLE `resumes` (
   `expect_salary` double NOT NULL COMMENT '期望薪资',
   `hobbies` varchar(100) NOT NULL COMMENT '兴趣爱好',
   PRIMARY KEY (`r_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -302,7 +306,7 @@ CREATE TABLE `resumes` (
 
 LOCK TABLES `resumes` WRITE;
 /*!40000 ALTER TABLE `resumes` DISABLE KEYS */;
-INSERT INTO `resumes` VALUES (10,22,'简历2','aaa','1999-01-03','男','2016-10-03',122345677777,'12345@163.com',3,30,'qwerr','高中及以下',11111,'asdfg'),(11,22,'简历2','aaa','1999-01-03','男','2016-10-03',122345677777,'12345@163.com',3,30,'qwerr','高中及以下',11111,'asdfg');
+INSERT INTO `resumes` VALUES (12,22,'aaa','aaa','2000-10-01','男','2018-10-09',12345678098,'12345@163.com',2,9,'asdfg','本科',12345,'qweer'),(13,19,'bbb','bbb','2000-10-10','女','2017-10-10',12345678098,'12345@163.com',5,17,'1111','本科',111,'23456'),(14,10,'ccc','ccc','1998-10-19','男','2018-10-28',111111111111,'12345@163.com',1,2,'asdfg','本科',12345,'1232345'),(15,26,'fff','fff','1995-10-09','男','2018-10-18',111111111111,'12345@163.com',1,2,'12345','大专',12345,'23456');
 /*!40000 ALTER TABLE `resumes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -403,4 +407,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-18 10:18:54
+-- Dump completed on 2018-10-19 17:07:50

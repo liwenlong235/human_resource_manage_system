@@ -36,6 +36,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee queryByRId(int rId) {
+        return employeeDao.queryByRId(rId);
+    }
+
+    @Override
     public Employee queryByName(String name) {
         return employeeDao.queryByName(name);
     }

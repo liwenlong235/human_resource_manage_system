@@ -41,8 +41,8 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public Manager queryByNameAndPassword(String name, String password) {
-        return managerDao.queryByNameAndPassword(name,password);
+    public Manager queryByNameAndPassword(String name, String password,int type) {
+        return managerDao.queryByNameAndPassword(name,password,type);
     }
 
     @Override

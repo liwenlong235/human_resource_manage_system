@@ -14,7 +14,7 @@
     <style>
         body{  background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
             background-size: 100% 100%;  }
-        span{ color: red}
+        span{ color:red;}
     </style>
     <script>
         $(function () {
@@ -77,7 +77,7 @@
                 <input type="radio" name="type" value="1">部门主管</td>
         </tr>
         <c:if test="${!empty requestScope.flag}">
-            <tr style="text-align: center"><td colspan="3"><span>密码错误，登陆失败</span></td></tr>
+            <tr style="text-align: center"><td colspan="3"><span>密码或类型错误，登陆失败</span></td></tr>
         </c:if>
         <tr style="text-align: center">
             <td colspan="3"><input type="submit" id="submit" value="登陆">

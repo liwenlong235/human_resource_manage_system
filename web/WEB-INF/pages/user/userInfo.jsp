@@ -16,48 +16,44 @@
     <script>
         $(function () {
             $(".button1").click(function () {
-                var $this = $(this);
-                var $td = $(this).parent().parent().children();
-                var iId = $td[5].innerHTML;
-                var flag = "yes";
-                if(iId=="未邀请"){
-                    alert("未收到面试邀请");
-                    return false;
-                }
+                var $this1 = $(this);
+                var $s2 = $(".s2");
+                var $s1 = $(".s1");
+                var $td1 = $(this).parent().parent().children();
+                var iId1= $td1[5].innerHTML;
+                var flag1 = "yes";
                 $.ajax({
                     url:"user/invitationAjax",
                     type:"post",
-                    data:{"iId":iId,"flag":flag},
+                    data:{"iId":iId1,"flag":flag1},
                     dataType:"text",
                     success:function (data) {
                         if(data=="OK"){
-                            $this.parent().children()[1].attr("display","none");
-                            $this.attr("disabled",true);
+                            $s2.hide();
+                            $s1.text("已接受");
                         }else {
-                            $this.attr("display","none");
-                            $this.parent().children()[1].attr("disabled",true);
+                            $s2.hide();
+                            $s1.text("邀请已过期");
                         }
                     }
                 })
                 return false;
             })
             $(".button2").click(function () {
-                var $this = $(this);
-                var $td = $(this).parent().parent().children();
+                var $this = $(".button2");
+                var $s2 = $(".s2");
+                var $s1 = $(".s1");
+                var $td = $this.parent().parent().parent().children();
                 var iId = $td[5].innerHTML;
                 var flag = "no";
-                if(iId=="未邀请"){
-                    alert("未收到面试邀请");
-                    return false;
-                }
                 $.ajax({
                     url:"user/invitationAjax",
                     type:"post",
                     data:{"iId":iId,"flag":flag},
                     dataType:"text",
                     success:function (data) {
-                        $this.parent().children()[0].attr("display","none");
-                        $this.attr("disabled",true);
+                        $s1.hide();
+                        $s2.text("已拒绝");
                     }
                 })
                 return false;
@@ -177,8 +173,17 @@
             <c:if test="${commitRecord.iId>0}">
                 <td>已邀请</td>
             </c:if>
-            <td><button class="button1"><a href="">是</a></button>
-                <button class="button2"><a href="">否</a></button></td>
+            <c:if test="${commitRecord.rStatus==false&&commitRecord.iId<=0}">
+                <td>暂无消息</td>
+            </c:if>
+            <c:if test="${commitRecord.rStatus==true&&commitRecord.iId<=0}">
+                <td>已被拒绝</td>
+            </c:if>
+            <c:forEach items="${sessionScope.invitations}" var="invitation">
+                <c:if test="${commitRecord.iId==invitation.iId}">
+                    <td><a href="user/invitationInfo?id=${commitRecord.iId}">查看邀请</a></td>
+                </c:if>
+            </c:forEach>
         </tr>
     </c:forEach>
     </table>

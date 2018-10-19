@@ -36,12 +36,17 @@ public class InvitationServiceImpl implements InvitationService{
     }
 
     @Override
-    public Invitation queryByRid(int rId) {
-        return invitationDao.queryByRid(rId);
+    public Invitation queryByCId(int cId) {
+        return invitationDao.queryByCId(cId);
     }
 
     @Override
     public List<Invitation> queryAll() {
         return invitationDao.queryAll();
+    }
+
+    @Override
+    public List<Invitation> queryByRId(int rId) {
+        return invitationDao.queryByRId(rId);
     }
 }

@@ -65,13 +65,19 @@
                 <li class="dropdown"><a href="user/userInfo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理员<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="managers/managerInfo">查看管理员</a></li>
-                        <li><a href="/managers/managerUpdateInput">更改管理员</a></li>
                     </ul>
                 </li>
                 <li class="dropdown"><a href="page2.jsp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">员工管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/emplInput">新增员工</a></li>
+                        <li><a href="managers/queryPass">查看可入职员工信息</a></li>
                         <li><a href="managers/emplInfo">查看员工信息</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="page2.jsp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">部门管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="managers2/departmentInfo">查看部门职位信息</a></li>
+                        <li><a href="managers2/addDeptInput?dId=1">新增部门</a></li>
+                        <li><a href="managers2/addDeptInput">新增职位</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -105,10 +111,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">面试信息管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/queryCommit">查看申请简历</a></li>
-                        <li><a href="managers/addInvitation">创建面试邀请</a></li>
-                        <li><a href="managers/updateInvitation">更新面试信息</a></li>
-                        <li><a href="managers/queryInvitation">查看面试信息</a></li>
+                        <li><a href="managers2/queryCommit">查看申请简历</a></li>
+                        <li><a href="managers2/invitationInfo">查看面试信息</a></li>
                     </ul>
                 </li>
             </ul>

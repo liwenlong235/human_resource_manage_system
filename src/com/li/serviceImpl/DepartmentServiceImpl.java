@@ -29,4 +29,19 @@ public class DepartmentServiceImpl implements DepartmentService {
     public Department queryByName(String name) {
         return departmentDao.queryByName(name);
     }
+
+    @Override
+    public void add(Department department) {
+        departmentDao.add(department);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        departmentDao.deleteById(id);
+    }
+
+    @Override
+    public void update(Department department) {
+        departmentDao.update(department);
+    }
 }

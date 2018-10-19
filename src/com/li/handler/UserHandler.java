@@ -67,7 +67,16 @@ public class UserHandler {
      * @return
      */
     @RequestMapping("userInfo")
-    public String userInfo(){
+    public String userInfo( HttpSession session){
+        User user = (User) session.getAttribute("userL");
+        Resume resume = resumeService.queryByUserId(user.getId());
+        if(resume!=null){
+            List<CommitRecord> commitRecords = commitRecordService.queryByRId(resume.getrId());
+            session.removeAttribute("commitRecords");
+            session.setAttribute("commitRecords",commitRecords);
+            List<Invitation> invitations = invitationService.queryByRId(resume.getrId());
+            session.setAttribute("invitations",invitations);
+        }
         return "user/userInfo";
     }
     /**
@@ -280,33 +289,27 @@ public class UserHandler {
         Date date = new Date();
         CommitRecord commitRecord1 = new CommitRecord(-1,jId,rId,date,false,0);
         commitRecordService.add(commitRecord1);
-        List<CommitRecord> commitRecords = commitRecordService.queryByRId(rId);
-        session.removeAttribute("commitRecords");
-        session.setAttribute("commitRecords",commitRecords);
         return "OK";
     }
 
     /**
-     * 面试邀请确认
-     * @param iId
-     * @param flag
+     * 查看简历
+     * @param id
+     * @param modelMap
      * @return
      */
-    @RequestMapping("invitationAjax")
-    @ResponseBody
-    public String invitationAjax(int iId,String flag){
-        if("yes".equals(flag)){
-            Invitation invitation = invitationService.queryByIid(iId);
-            Date date = new Date();
-            int time = DateUtil.compareDate(date,invitation.getInviteTime());
-            if(time>=0){
-                invitation.setConfirmed(true);
-                return "OK";
-            }else {return "NG";}
-        }else {
-            return "NG";
-        }
-
+    @RequestMapping("invitationInfo")
+    public String invitationInfo(int id,ModelMap modelMap){
+        Invitation invitation = invitationService.queryByIid(id);
+        modelMap.addAttribute("invitation",invitation);
+        return "user/invitationInfo";
+    }
+    @RequestMapping("invitationUpdate")
+    public String invitationUpdate(int iId,int confirmed){
+        Invitation invitation = invitationService.queryByIid(iId);
+        invitation.setConfirmed(confirmed);
+        invitationService.update(invitation);
+        return "forward:/user/userInfo";
     }
 
 }
