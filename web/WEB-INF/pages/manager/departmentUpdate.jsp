@@ -81,10 +81,10 @@
                 <td>更新部门</td>
                 <td><select name="dId">
                     <c:forEach items="${requestScope.departments}" var="department">
-                        <c:if test="${department.id==requestScope.positon.dId}">
+                        <c:if test="${department.id==requestScope.position.dId}">
                             <option value="${department.id}" selected="selected">${department.name}</option>
                         </c:if>
-                        <c:if test="${department.id!=requestScope.positon.dId}">
+                        <c:if test="${department.id!=requestScope.position.dId}">
                             <option value="${department.id}">${department.name}</option>
                         </c:if>
                     </c:forEach>

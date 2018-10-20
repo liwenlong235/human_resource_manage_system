@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.li.dao.AttendanceDao">
     <insert id="add" parameterType="Attendance">
-        insert into attendance(e_id,month,day,morning,night,overtime,leaveTime,absenteeism) values(#{eId},
-        #{month},#{day},#}{morning},#{day},#{night},#{overtime},#{leaveTime},#{absenteeism})
+        insert into attendance(e_id,month,day,morning,night,lateTime,absenteeism) values(#{eId},
+        #{month},#{day},#}{morning},#{day},#{night},#{leaveTime},#{absenteeism})
     </insert>
     <update id="update" parameterType="Attendance">
-        update attendance set e_id=#{eId},mmonth=#{month},day=#{day},morning=#{morning},night=#{night},overtime=
-        #{overtime},leave_time=#{leaveTime},absenteeism=#{absenteeism} where a_id=#{aId}
+        update attendance set e_id=#{eId},mmonth=#{month},day=#{day},morning=#{morning},night=#{night},
+        late_time=#{lateTime},absenteeism=#{absenteeism} where a_id=#{aId}
     </update>
     <delete id="deleteById" parameterType="int">
         delete from attendance where a_id = #{id}
@@ -15,10 +15,19 @@
     <select id="queryById" resultType="Attendance">
         select * from attendance where a_id=#{id}
     </select>
+    <select id="queryByDayAndEId" resultType="Attendance">
+        select * from attendance where day = #{day} and e_id=#{eId}
+    </select>
     <select id="queryByEIdAndMonth" resultType="Attendance">
         select * from attendance where e_id=#{eId} and month=#{month}
     </select>
     <select id="queryAll" resultType="Attendance">
         select * from attendance
+    </select>
+    <select id="queryByEId" resultType="Attendance">
+        select * from attendance where e_id=#{eId}
+    </select>
+    <select id="queryByMonth" resultType="Attendance">
+        select * from attendance where month=#{month}
     </select>
 </mapper>

@@ -6,6 +6,7 @@ import com.li.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -33,6 +34,21 @@ public class AttendanceServiceImpl implements AttendanceService {
     @Override
     public Attendance queryById(int id) {
         return attendanceDao.queryById(id);
+    }
+
+    @Override
+    public Attendance queryByDayAndEId(Date date,int eId) {
+        return attendanceDao.queryByDayAndEId(date,eId);
+    }
+
+    @Override
+    public List<Attendance> queryByEId(int eId) {
+        return attendanceDao.queryByEId(eId);
+    }
+
+    @Override
+    public List<Attendance> queryByMonth(int month) {
+        return attendanceDao.queryByMonth(month);
     }
 
     @Override

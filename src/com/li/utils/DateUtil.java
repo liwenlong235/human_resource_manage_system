@@ -15,4 +15,15 @@ public class DateUtil {
             return 0;
         }
     }
+    public static double getDisTime(Date date1,Date date2){
+        long time = Math.abs(date1.getTime()-date2.getTime());
+        long day = time/(1000 * 60 * 60 * 24);
+        long hour = time/(1000 * 60 * 60)- day * 24;
+        long min = time / (1000 * 60) - day * 24 * 60 - hour * 60;
+        double time1 = hour;
+        if(min>=30){
+            time1 = time1 + 0.5;
+        }
+        return time1;
+    }
 }

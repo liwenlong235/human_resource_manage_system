@@ -25,10 +25,9 @@
                     type:"post",
                     dataType:"text",
                     success:function (data) {
-                        if(data=="ok"){
-                            alert("已经拒绝邀请，按钮被禁用");
-                            $s1.attr("disabled",true);
-                            $this.attr("disabled",true);
+                        if(data=="OK"){
+                            alert("已经拒绝邀请");
+                            $td.remove();
                         }
                     }
                 })
@@ -61,8 +60,9 @@
                 </c:forEach></td>
                 <td><a href="managers2/resumeInfo?rId=${commit.rId}">点击查看简历</a></td>
                 <td><f:formatDate value="${commit.commitTime}"/></td>
-                <td><button class="button1"><a href="managers2/addInvitationInput?cId=${commit.cId}">是</a></button>
-                <button class="button2"><a href="">否</a></button></td>
+                <td>
+                    <button class="button1"><a href="managers2/addInvitationInput?cId=${commit.cId}">是</a></button>
+                    <button class="button2"><a href="">否</a></button></td>
             </tr>
         </c:forEach>
     </table>

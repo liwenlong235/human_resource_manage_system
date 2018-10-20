@@ -35,8 +35,8 @@ public class TrainServiceImpl implements com.li.service.TrainService {
     }
 
     @Override
-    public List<Train> queryByEId(int eId) {
-        return trainDao.queryByEId(eId);
+    public List<Train> queryByPId(int pId) {
+        return trainDao.queryByPId(pId);
     }
 
     @Override

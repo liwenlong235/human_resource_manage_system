@@ -26,7 +26,6 @@
                             alert("内容不能为空");
                             $("#submit1").attr("disabled",true);
                         }else if(data=="OK"){
-                            $("#s1").css("color","red");
                             $("#submit1").attr("disabled",false);
                         }else {
                             alert("名字已存在");

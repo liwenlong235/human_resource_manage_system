@@ -5,7 +5,7 @@
         insert into department(d_name,create_time) values(#{name},#{createTime})
     </insert>
     <update id="update" parameterType="Department">
-        update department set d_name=#{name} where d_id=#{id}
+        update department set d_name=#{name},create_time=#{createTime} where d_id=#{id}
     </update>
     <delete id="deleteById" parameterType="int">
         delete from department where d_id=#{id}
@@ -19,6 +19,15 @@
     <select id="queryByName" resultMap="departmentMap">
         select * from department d,positions p where d.d_id = p.d_id and d.d_name = #{dName}
     </select>
+    <select id="queryById2" resultMap="deptMap">
+        select * from department where d_id=#{id}
+    </select>
+    <select id="queryByName2" resultMap="deptMap">
+        select * from department where d_name = #{dName}
+    </select>
+    <select id="queryAll" resultMap="deptMap">
+        select * from department
+    </select>
     <resultMap id="departmentMap" type="Department">
         <id property="id" column="d_id"/>
         <result property="name" column="d_name"/>
@@ -28,5 +37,11 @@
             <result property="pName" column="p_name"/>
             <result property="dId" column="d_id"/>
         </collection>
+    </resultMap>
+
+    <resultMap id="deptMap" type="Department">
+        <id property="id" column="d_id"/>
+        <result property="name" column="d_name"/>
+        <result property="create_time" column="createTime"/>
     </resultMap>
 </mapper>

@@ -7,8 +7,10 @@ import com.li.service.*;
 import com.li.utils.DateUtil;
 import com.li.utils.Md5Util;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -111,12 +113,15 @@ public class ManagerHandler {
             session.setAttribute("leader",manager);
             List<Invitation> invitations = invitationService.queryAll();
             java.util.Date date = new java.util.Date();
-            for(Invitation invitation:invitations){
-                int res = DateUtil.compareDate(invitation.getInviteTime(),date);
-                if(res<0){
-                    invitations.remove(invitation);
+            System.out.println(invitations);
+            System.out.println("*****");
+            for(int i=0;i<invitations.size();i++){
+                int res = DateUtil.compareDate(invitations.get(i).getInviteTime(),date);
+                if(res<0||invitations.get(i).getPass()!=0){
+                    invitations.remove(i);
                 }
             }
+            System.out.println(invitations);
             modelMap.addAttribute("invitations",invitations);
             return "leader/leader";
         }
@@ -174,12 +179,13 @@ public class ManagerHandler {
         for(int i=0;i<invitations.size();i++){
             if(invitations.get(i).getPass()!=1){
                 invitations.remove(i);
-            }
-            int cId = invitations.get(i).getcId();
-            int rId = commitRecordService.queryByCId(cId).getrId();
-            for(int j=0;j<employees.size();j++){
-                if(rId==employees.get(j).getrId()){
-                    invitations.remove(i);
+            }else {
+                int cId = invitations.get(i).getcId();
+                int rId = commitRecordService.queryByCId(cId).getrId();
+                for(int j=0;j<employees.size();j++){
+                    if(rId==employees.get(j).getrId()){
+                        invitations.remove(i);
+                    }
                 }
             }
         }
@@ -318,7 +324,7 @@ public class ManagerHandler {
     public String updateEmpl(int eId,String eName,String ePassword,String gender,String tel,String email,int dId ,int pId,String entryTime,
                              String dimissionTime,String education,ModelMap modelMap,HttpSession session){
         Employee employee = employeeService.queryById(eId);
-        ePassword = Md5Util.md5(education);
+        ePassword = Md5Util.md5(ePassword);
         Date entryTime1 = Date.valueOf(entryTime);
         Date dimissionTime1 = Date.valueOf(dimissionTime);
         Employee employee1 = new Employee(eId,employee.getrId(),eName,ePassword,gender,tel,email,dId,pId,entryTime1,dimissionTime1,education);
@@ -326,5 +332,14 @@ public class ManagerHandler {
         employeeService.updateEmpl(employee1);
         modelMap.addAttribute("flagU","Ok");
         return "forward:/managers/emplInfo";
+    }
+
+    @RequestMapping("emplInfoByInput")
+    public String emplInfoByInput(ModelMap modelMap){
+        List<Department> departments = departmentService.queryAll();
+        List<Position> positions = positionService.queryAll();
+        modelMap.addAttribute("departments",departments);
+        modelMap.addAttribute("positions",positions);
+        return "manager/emplInfoByInput";
     }
 }

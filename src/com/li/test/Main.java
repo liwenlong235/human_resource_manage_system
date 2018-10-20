@@ -4,6 +4,7 @@ import com.li.dao.DepartmentDao;
 import com.li.dao.PositionDao;
 import com.li.entity.*;
 import com.li.service.*;
+import com.li.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -37,8 +39,9 @@ public class Main {
     private PositionDao positionDao;
     @Test
     public void login(){
-        Department department = new Department(-1,"后勤部",new java.util.Date());
-        departmentDao.add(department);
-        System.out.println(departmentDao.queryByName("后勤部"));
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH);
+        int WeekOfYear = calendar.get(Calendar.DAY_OF_WEEK);//一周的第几天
+        System.out.println(WeekOfYear);
     }
 }

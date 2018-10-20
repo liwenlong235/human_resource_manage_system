@@ -1,7 +1,7 @@
 package com.li.entity;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by 99234 on 2018/10/16.
@@ -13,22 +13,20 @@ public class Attendance {
     private Date day;
     private Time morning;
     private Time night;
-    private double overtime;
-    private double leaveTime;
+    private double lateTime;
     private double absenteeism;
 
     public Attendance() {
     }
 
-    public Attendance(int aId, int eId, int month, Date day, Time morning, Time night, double overtime, double leaveTime, double absenteeism) {
+    public Attendance(int aId, int eId, int month, Date day, Time morning, Time night, double lateTime, double absenteeism) {
         this.aId = aId;
         this.eId = eId;
         this.month = month;
         this.day = day;
         this.morning = morning;
         this.night = night;
-        this.overtime = overtime;
-        this.leaveTime = leaveTime;
+        this.lateTime = lateTime;
         this.absenteeism = absenteeism;
     }
 
@@ -80,20 +78,12 @@ public class Attendance {
         this.night = night;
     }
 
-    public double getOvertime() {
-        return overtime;
+    public double getLateTime() {
+        return lateTime;
     }
 
-    public void setOvertime(double overtime) {
-        this.overtime = overtime;
-    }
-
-    public double getLeaveTime() {
-        return leaveTime;
-    }
-
-    public void setLeaveTime(double leaveTime) {
-        this.leaveTime = leaveTime;
+    public void setLateTime(double lateTime) {
+        this.lateTime = lateTime;
     }
 
     public double getAbsenteeism() {
@@ -113,8 +103,7 @@ public class Attendance {
                 ", day=" + day +
                 ", morning=" + morning +
                 ", night=" + night +
-                ", overtime=" + overtime +
-                ", leaveTime=" + leaveTime +
+                ", lateTime=" + lateTime +
                 ", absenteeism=" + absenteeism +
                 '}';
     }

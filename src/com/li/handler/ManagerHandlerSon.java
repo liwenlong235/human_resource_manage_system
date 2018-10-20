@@ -2,6 +2,7 @@ package com.li.handler;
 
 import com.li.entity.*;
 import com.li.service.*;
+import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -34,6 +35,8 @@ public class ManagerHandlerSon extends ManagerHandler {
     private ManagerService managerService;
     @Autowired
     private InvitationService invitationService;
+    @Autowired
+    private EmployeeService employeeService;
 
     /**
      * 查看申请记录
@@ -43,7 +46,14 @@ public class ManagerHandlerSon extends ManagerHandler {
     @RequestMapping("queryCommit")
     public String commitInfo(HttpSession session){
         List<CommitRecord> commitRecords = commitRecordService.queryCommitRecords();
-        session.setAttribute("commitRecords",commitRecords);
+        for(int i=0;i<commitRecords.size();i++){
+            if(commitRecords.get(i).getiId()!=0){
+                commitRecords.remove(i);
+            }
+        }
+        if(commitRecords!=null){
+            session.setAttribute("commitRecords",commitRecords);
+        }
         List<Job> jobs = jobService.queryJobs();
         session.setAttribute("jobs",jobs);
         return "manager/commitInfo";
@@ -63,7 +73,7 @@ public class ManagerHandlerSon extends ManagerHandler {
     }
 
     /**
-     * 跳转新增简历界面
+     * 跳转新增面试邀请界面
      * @param cId
      * @param modelMap
      * @return
@@ -76,6 +86,15 @@ public class ManagerHandlerSon extends ManagerHandler {
         return "manager/addInvitation";
     }
 
+    /**
+     * 新增面试邀请
+     * @param cId
+     * @param inviteTime
+     * @param manager
+     * @param address
+     * @return
+     * @throws ParseException
+     */
     @RequestMapping("addInvitation")
     public String addInvitation(int cId,String inviteTime,String manager,String address) throws ParseException {
         Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inviteTime);
@@ -168,7 +187,7 @@ public class ManagerHandlerSon extends ManagerHandler {
             return "manager/departmentAdd";
         }
         modelMap.addAttribute("flag","position");
-        List<Department> departments = departmentService.queryDepartments();
+        List<Department> departments = departmentService.queryAll();
         modelMap.addAttribute("departments",departments);
         return "manager/departmentAdd";
     }
@@ -183,13 +202,14 @@ public class ManagerHandlerSon extends ManagerHandler {
     @RequestMapping("updateDeptInput")
     public String updateDepartInput(Integer dId,Integer pId,ModelMap modelMap){
         if(dId!=null){
-            Department department = departmentService.queryById(dId);
+            Department department = departmentService.queryById2(dId);
+            System.out.println(department);
             modelMap.addAttribute("department",department);
             return "manager/departmentUpdate";
         }
         Position position = positionService.queryByPId(pId);
         modelMap.addAttribute("position",position);
-        List<Department> departments = departmentService.queryDepartments();
+        List<Department> departments = departmentService.queryAll();
         modelMap.addAttribute("departments",departments);
         return "manager/departmentUpdate";
     }
@@ -207,7 +227,7 @@ public class ManagerHandlerSon extends ManagerHandler {
             return "null";
         }
         if("dept".equals(flag)){
-            Department department = departmentService.queryByName(name);
+            Department department = departmentService.queryByName2(name);
             if(department==null){
                return "OK";
             }else {
@@ -254,9 +274,8 @@ public class ManagerHandlerSon extends ManagerHandler {
      */
     @RequestMapping("departmentInfo")
     public String departmentInfo(ModelMap modelMap){
-        List<Department> departments = departmentService.queryDepartments();
+        List<Department> departments = departmentService.queryAll();
         List<Position> positions = positionService.queryAll();
-        System.out.println(departments);
         modelMap.addAttribute("departments",departments);
         modelMap.addAttribute("positions",positions);
         return "manager/departmentInfo";
@@ -270,18 +289,72 @@ public class ManagerHandlerSon extends ManagerHandler {
      * @return
      */
     @RequestMapping("positionUpdate")
-    public String departmentUpdate(int dId,int pId,String pName){
+    public String departmentUpdate(int dId,int pId,String pName,ModelMap modelMap){
+        Position position1 = positionService.queryByPId(pId);
         Position position = new Position(pId,pName,dId);
-        positionService.update(position);
+        List<Employee> employees = employeeService.querySamePosition(position1.getdId(),pId);
+        if(employees==null||employees.size()==0){
+            positionService.update(position);
+            modelMap.addAttribute("flagP","OK");
+            return "forward:/managers2/departmentInfo";
+        }
+        modelMap.addAttribute("flagP","NG");
         return "forward:/managers2/departmentInfo";
     }
 
-
+    /**
+     * 修改部门
+     * @param id
+     * @param deptName
+     * @return
+     */
     @RequestMapping("departmentUpdate")
-    public String positionUpdate(int id,String deptName){
-        Department department = new Department(id,deptName);
-        departmentService.update(department);
+    public String positionUpdate(int id,String deptName,ModelMap modelMap){
+        Department department1 = departmentService.queryById2(id);
+        Department department = new Department(id,deptName,department1.getCreateTime());
+        List<Position> positions = positionService.queryByDId(id);
+        if (positions==null||positions.size()==0) {
+            modelMap.addAttribute("flagD","OK");
+            departmentService.update(department);
+            return "forward:/managers2/departmentInfo";
+        }
+        modelMap.addAttribute("flagD","NG");
         return "forward:/managers2/departmentInfo";
+    }
+
+    /**
+     * 删除部门
+     * @param dId
+     * @return
+     */
+    @RequestMapping("deptDelete")
+    @ResponseBody
+    public String deptDelete(int dId){
+        List<Position> positions = positionService.queryByDId(dId);
+        System.out.println(positions);
+        if(positions==null||positions.size()==0){
+            departmentService.deleteById(dId);
+            return "OK";
+        }
+        return "NG";
+
+    }
+
+    /**
+     * 删除职位
+     * @param pId
+     * @return
+     */
+    @RequestMapping("positionDelete")
+    @ResponseBody
+    public String positionDelete(int pId){
+        Position position = positionService.queryByPId(pId);
+        List<Employee> employees = employeeService.querySamePosition(position.getdId(),pId);
+        if(employees==null||employees.size()==0){
+            positionService.deleteById(pId);
+            return "OK";
+        }
+        return "NG";
     }
 
 }

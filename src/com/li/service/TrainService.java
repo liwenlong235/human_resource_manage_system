@@ -12,6 +12,6 @@ public interface TrainService {
     public void update(Train train);
     public void deleteById(int id);
     public Train queryById(int id);
-    public List<Train> queryByEId(int eId);
+    public List<Train> queryByPId(int pId);
     public List<Train> queryAll();
 }

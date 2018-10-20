@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <base href="${pageContext.request.contextPath}/">
@@ -22,7 +23,7 @@
             </tr>
             <tr>
                 <td>面试时间</td>
-                <td>${requestScope.invitation.inviteTime}</td>
+                <td><f:formatDate value="${requestScope.invitation.inviteTime}"/></td>
             </tr>
             <tr>
                 <td>面试官</td>

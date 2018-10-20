@@ -44,4 +44,19 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void update(Department department) {
         departmentDao.update(department);
     }
+
+    @Override
+    public List<Department> queryAll() {
+        return departmentDao.queryAll();
+    }
+
+    @Override
+    public Department queryById2(int id) {
+        return departmentDao.queryById2(id);
+    }
+
+    @Override
+    public Department queryByName2(String dName) {
+        return departmentDao.queryByName2(dName);
+    }
 }

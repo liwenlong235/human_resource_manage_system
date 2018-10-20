@@ -53,47 +53,37 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <c:if test="${!empty sessionScope.manager}">
-                <h4 style="color:red;">当前用户：${sessionScope.manager.mName}</h4>
-                <a href="/managers/loginInput"><h4>切换账号</h4></a>
+            <c:if test="${!empty sessionScope.employee}">
+                <h4 style="color:red;">当前用户：${sessionScope.employee.eName}</h4>
+                <a href="/employee/loginInput"><h4>切换账号</h4></a>
             </c:if>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" id="ul1">
-                <li class="dropdown"><a href="user/userInfo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理员<span class="caret"></span></a>
+                <li class="dropdown"><a href="user/userInfo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">员工信息<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/managerInfo">查看管理员</a></li>
+                        <li><a href="employee/employeeInfo">查看个人信息</a></li>
+                        <li><a href="employee/updateInput">修改密码</a></li>
                     </ul>
                 </li>
-                <li class="dropdown"><a href="page2.jsp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">员工管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="managers/queryPass">查看可入职员工信息</a></li>
-                        <li><a href="managers/emplInfo">查看全部员工信息</a></li>
-                        <li><a href="managers/emplInfoByInput">查看指定条件的员工信息</a></li>
-                    </ul>
-                </li>
+
                 <li class="dropdown"><a href="page2.jsp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">部门管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="managers2/departmentInfo">查看部门职位信息</a></li>
-                        <li><a href="managers2/addDeptInput?dId=1">新增部门</a></li>
-                        <li><a href="managers2/addDeptInput">新增职位</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">考勤管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers3/queryAttendances">查看全部考勤</a></li>
-                        <li><a href="managers3/queryEmplAttendance">按条件查询考勤</a></li>
+                        <li><a href="employee/upAndDown">上/下班打卡</a></li>
+                        <li><a href="employee/attendanceInfo">查看个人考勤</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">工资管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/addSalary">新建工资记录</a></li>
-                        <li><a href="managers/updateSalary">修改工资信息</a></li>
-                        <li><a href="managers/deleteSalary">删除工资信息</a></li>
                         <li><a href="managers/queryMonthSalary">查看当月工资</a></li>
                         <li><a href="managers/queryEmplSalary">查看员工当月工资</a></li>
                     </ul>
@@ -101,18 +91,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">培训管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/addTrain">新建培训信息</a></li>
-                        <li><a href="managers/updateTrain">修改培训信息</a></li>
-                        <li><a href="managers/deleteTrain">删除培训信息</a></li>
                         <li><a href="managers/queryDeptTrain">查看部门培训记录</a></li>
                         <li><a href="managers/queryEmplTrain">查看员工培训记录</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">面试信息管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="managers2/queryCommit">查看申请简历</a></li>
-                        <li><a href="managers2/invitationInfo">查看面试信息</a></li>
                     </ul>
                 </li>
             </ul>

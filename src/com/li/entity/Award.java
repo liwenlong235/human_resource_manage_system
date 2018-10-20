@@ -9,16 +9,18 @@ public class Award {
     private int aId;
     private int eId;
     private boolean type;
+    private double money;
     private String reason;
     private Date createTime;
 
     public Award() {
     }
 
-    public Award(int aId, int eId, boolean type, String reason, Date createTime) {
+    public Award(int aId, int eId, boolean type, double money, String reason, Date createTime) {
         this.aId = aId;
         this.eId = eId;
         this.type = type;
+        this.money = money;
         this.reason = reason;
         this.createTime = createTime;
     }
@@ -47,6 +49,14 @@ public class Award {
         this.type = type;
     }
 
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
     public String getReason() {
         return reason;
     }
@@ -69,6 +79,7 @@ public class Award {
                 "aId=" + aId +
                 ", eId=" + eId +
                 ", type=" + type +
+                ", money=" + money +
                 ", reason='" + reason + '\'' +
                 ", createTime=" + createTime +
                 '}';
