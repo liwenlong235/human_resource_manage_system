@@ -8,7 +8,6 @@ import java.util.Date;
 public class Award {
     private int aId;
     private int eId;
-    private boolean type;
     private double money;
     private String reason;
     private Date createTime;
@@ -16,10 +15,9 @@ public class Award {
     public Award() {
     }
 
-    public Award(int aId, int eId, boolean type, double money, String reason, Date createTime) {
+    public Award(int aId, int eId, double money, String reason, Date createTime) {
         this.aId = aId;
         this.eId = eId;
-        this.type = type;
         this.money = money;
         this.reason = reason;
         this.createTime = createTime;
@@ -39,14 +37,6 @@ public class Award {
 
     public void seteId(int eId) {
         this.eId = eId;
-    }
-
-    public boolean isType() {
-        return type;
-    }
-
-    public void setType(boolean type) {
-        this.type = type;
     }
 
     public double getMoney() {
@@ -78,7 +68,6 @@ public class Award {
         return "Award{" +
                 "aId=" + aId +
                 ", eId=" + eId +
-                ", type=" + type +
                 ", money=" + money +
                 ", reason='" + reason + '\'' +
                 ", createTime=" + createTime +

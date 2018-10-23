@@ -16,17 +16,22 @@
 <form action="managers3/queryEmplAttendance" method="post">
     <table border="2px" cellpadding="15px" align="center">
         <tr>
-            <td><input type="text" name="name" value="请输入员工姓名" style="color: grey"></td>
-            <td><input type="number" name="month" value="请输入1~12之间的整数" style="color:grey"></td>
+            <td>员工姓名</td>
+            <td><input type="text" name="name"></td>
+            <td>查询月份</td>
+            <td  style="color:grey"><input type="number" name="month"></td>
             <td><input type="submit" value="搜索"></td>
         </tr>
     </table>
 </form>
 <c:if test="${requestScope.flag=='monthNG'}">
-    <h3 style="color: red">输入月份错误</h3>
+    <h3 style="color: red">输入月份错误,请输入1~12之间的整数</h3>
 </c:if>
 <c:if test="${requestScope.flag=='nameNG'}">
     <h3 style="color: red">输入名字错误</h3>
+</c:if>
+<c:if test="${empty requestScope.attendances||requestScope.attendances1||requestScope.attendances2}">
+    <h3 style="color: red">暂时没有相关信息</h3>
 </c:if>
 <c:if test="${!empty requestScope.attendances}">
     <table border="2px" cellpadding="15px" cellspacing="0" align="center">

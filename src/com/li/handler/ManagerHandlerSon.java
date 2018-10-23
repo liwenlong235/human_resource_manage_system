@@ -1,5 +1,6 @@
 package com.li.handler;
 
+import com.alibaba.fastjson.JSON;
 import com.li.entity.*;
 import com.li.service.*;
 import javafx.geometry.Pos;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,9 +48,16 @@ public class ManagerHandlerSon extends ManagerHandler {
     @RequestMapping("queryCommit")
     public String commitInfo(HttpSession session){
         List<CommitRecord> commitRecords = commitRecordService.queryCommitRecords();
+        List<Employee> employees = employeeService.queryEmployees();
         for(int i=0;i<commitRecords.size();i++){
-            if(commitRecords.get(i).getiId()!=0){
+            CommitRecord commitRecord = commitRecords.get(i);
+            if(commitRecord.getiId()!=0){
                 commitRecords.remove(i);
+            }
+            for(int j=0;j<employees.size();j++){
+                if(commitRecord.getrId()==employees.get(j).getrId()){
+                    commitRecords.remove(i);
+                }
             }
         }
         if(commitRecords!=null){
@@ -97,7 +106,7 @@ public class ManagerHandlerSon extends ManagerHandler {
      */
     @RequestMapping("addInvitation")
     public String addInvitation(int cId,String inviteTime,String manager,String address) throws ParseException {
-        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(inviteTime);
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(inviteTime);
         Invitation invitation = new Invitation(-1,cId,date,manager,address,-1,0);
         invitationService.add(invitation);
         Invitation invitation1 = invitationService.queryByCId(cId);
@@ -355,6 +364,17 @@ public class ManagerHandlerSon extends ManagerHandler {
             return "OK";
         }
         return "NG";
+    }
+
+    @RequestMapping("positionAjax")
+    @ResponseBody
+    public void positionAjax(PrintWriter printWriter){
+        System.out.println("aaa");
+        List<Position> positions = positionService.queryAll();
+        Object json = JSON.toJSON(positions);
+        System.out.println(json);
+        printWriter.print(json);
+        printWriter.close();
     }
 
 }

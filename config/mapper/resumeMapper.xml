@@ -11,7 +11,7 @@
         update resumes set user_id=#{user.id},r_title=#{rTitle},u_name=#{uName},u_birth=#{uBirth},
         u_gender=#{uGender},first_work_time=#{firstWorkTime},tel=#{tel},email=#{email},dept_id=#{department.id},
         position_id=#{position.pId},work_experience=#{workExperience},education=#{education},expect_salary=
-        #{expectSalary},hobbies=#{hobbies}
+        #{expectSalary},hobbies=#{hobbies} where r_id = #{rId}
     </update>
     <delete id="deleteById" parameterType="int">
         delete from resumes where r_id = #{id}

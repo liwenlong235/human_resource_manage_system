@@ -1,6 +1,7 @@
 package com.li.service;
 
 import com.li.entity.Salary;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ public interface SalaryService {
     public List<Salary> queryByEid(int eId);
     public Salary queryBySid(int sid);
     public List<Salary> querySalaries();
+    public Salary queryByEidAndMonth(int eId,int month);
 }

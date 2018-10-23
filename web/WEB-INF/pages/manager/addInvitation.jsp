@@ -9,7 +9,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-
+    <base href="${pageContext.request.contextPath}/">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function () {
+            $("#submit").click(function () {
+                var inviteTime = $("#ip1").val();
+                var address = $("#p2").val();
+                if(inviteTime!=""&&address!=""){
+                    return true;
+                }else if(inviteTime==""){
+                    alert("面试时间不能为空");
+                }else {
+                    alert("面试地点不能为空")
+                }
+                return false;
+            })
+        })
+    </script>
 </head>
 <body>
 <jsp:include page="managerBaseNav.jsp"/>
@@ -18,7 +35,7 @@
         <input type="hidden" name="cId" value="${requestScope.cId}">
         <tr>
             <td>面试时间</td>
-            <td><input type="datetime" name="inviteTime"></td>
+            <td><input id="ip1" type="date" name="inviteTime"></td>
         </tr>
         <tr>
             <td>部门主管</td>
@@ -32,9 +49,9 @@
         </tr>
         <tr>
             <td>面试地点</td>
-            <td><input type="text" name="address"></td>
+            <td><input id="ip2" type="text" name="address"></td>
         </tr>
-        <tr><td><input type="submit"></td></tr>
+        <tr><td colspan="2"><input type="submit" id="submit"></td></tr>
     </table>
 </form>
 </body>

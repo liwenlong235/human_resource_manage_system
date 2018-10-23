@@ -1,6 +1,6 @@
 package com.li.entity;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Created by 99234 on 2018/10/16.
@@ -11,20 +11,16 @@ public class Train {
     private int dId;
     private int pId;
     private Date startTime;
-    private Date endTime;
-    private double result;
 
     public Train() {
     }
 
-    public Train(int tId, String title, int dId, int pId, Date startTime, Date endTime, double result) {
+    public Train(int tId, String title, int dId, int pId, Date startTime) {
         this.tId = tId;
         this.title = title;
         this.dId = dId;
         this.pId = pId;
         this.startTime = startTime;
-        this.endTime = endTime;
-        this.result = result;
     }
 
     public int gettId() {
@@ -51,22 +47,6 @@ public class Train {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public double getResult() {
-        return result;
-    }
-
-    public void setResult(double result) {
-        this.result = result;
-    }
-
     public int getdId() {
         return dId;
     }
@@ -91,8 +71,6 @@ public class Train {
                 ", dId=" + dId +
                 ", pId=" + pId +
                 ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", result=" + result +
                 '}';
     }
 }

@@ -85,27 +85,26 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">考勤管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="managers3/queryAttendances">查看全部考勤</a></li>
-                        <li><a href="managers3/queryEmplAttendance">按条件查询考勤</a></li>
+                        <li><a href="/managers3/queryAttendanceInput">按条件查询考勤</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="user/userInfo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">奖惩管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="managers/awardInfo">查看奖励记录</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="user/userInfo" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">培训管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="managers3/addTrainInput">新增培训</a></li>
+                        <li><a href="managers3/trainInfo">查看培训信息</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">工资管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/addSalary">新建工资记录</a></li>
-                        <li><a href="managers/updateSalary">修改工资信息</a></li>
-                        <li><a href="managers/deleteSalary">删除工资信息</a></li>
-                        <li><a href="managers/queryMonthSalary">查看当月工资</a></li>
-                        <li><a href="managers/queryEmplSalary">查看员工当月工资</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">培训管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="managers/addTrain">新建培训信息</a></li>
-                        <li><a href="managers/updateTrain">修改培训信息</a></li>
-                        <li><a href="managers/deleteTrain">删除培训信息</a></li>
-                        <li><a href="managers/queryDeptTrain">查看部门培训记录</a></li>
-                        <li><a href="managers/queryEmplTrain">查看员工培训记录</a></li>
+                        <li><a href="managers3/addSalary">发放工资</a></li>
+                        <li><a href="managers3/querySalary">查看工资信息</a></li>
+                        <li><a href="managers3/queryDissent">查看工资异议信息</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

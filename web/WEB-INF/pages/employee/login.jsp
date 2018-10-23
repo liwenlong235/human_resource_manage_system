@@ -33,7 +33,7 @@
         })
     </script>
 </head>
-<body>
+<body style="text-align: center">
 <c:if test="${!empty requestScope.updateFlag}">
     <h3 style="color: lawngreen;">密码修改成功，请重新登陆</h3>
 </c:if>
@@ -51,6 +51,9 @@
         </tr>
         <c:if test="${requestScope.flag=='NG'}">
             <tr style="text-align: center"><td colspan="3"><span style="color: red">账号或密码错误</span></td></tr>
+        </c:if>
+        <c:if test="${requestScope.flag=='overtime'}">
+            <tr style="text-align: center"><td colspan="3"><span style="color: red">该员工已离职，不能登陆</span></td></tr>
         </c:if>
         <tr style="text-align: center">
             <td colspan="3"><input type="submit" id="submit">

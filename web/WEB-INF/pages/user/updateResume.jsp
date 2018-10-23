@@ -15,6 +15,7 @@
         $(function () {
             var $select = $("#s2");
             var dId = $("#s1").val();
+            var pId = "${sessionScope.resume.position.pId}";
             $.ajax({
                 url:"user/deptAjax",
                 data:{"dId":dId},
@@ -22,7 +23,12 @@
                 dataType:"json",
                 success:function (data) {
                     $(data).each(function (index,item) {
-                        $select.append("<option class='opt' value='"+item.pId+"'>"+item.pName+"</option>");
+                        if(item.pId==pId){
+                            $select.append("<option class='opt' value='"+item.pId+"' selected='selected'>"+item.pName+"</option>");
+                        }
+                        if(item.pId!=pId){
+                            $select.append("<option class='opt' value='"+item.pId+"'>"+item.pName+"</option>");
+                        }
                     })
                 }
             })
@@ -101,7 +107,6 @@
             </select></td>
             <td>应聘职位</td>
             <td><select name="position" id="s2">
-                <option class="opt" value="${sessionScope.resume.position.pId}">${sessionScope.resume.position.pName}</option>
             </select></td>
         </tr>
         <tr>

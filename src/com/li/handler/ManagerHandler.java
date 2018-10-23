@@ -36,8 +36,6 @@ public class ManagerHandler {
     @Autowired
     private AttendanceService attendanceService;
     @Autowired
-    private AwardService awardService;
-    @Autowired
     private SalaryService salaryService;
     @Autowired
     private EmployeeService employeeService;
@@ -51,6 +49,8 @@ public class ManagerHandler {
     private CommitRecordService commitRecordService;
     @Autowired
     private ResumeService resumeService;
+    @Autowired
+    private AwardService awardService;
 
     /**
      * 跳转到管理员登陆界面
@@ -179,18 +179,14 @@ public class ManagerHandler {
         for(int i=0;i<invitations.size();i++){
             if(invitations.get(i).getPass()!=1){
                 invitations.remove(i);
-            }else {
-                int cId = invitations.get(i).getcId();
-                int rId = commitRecordService.queryByCId(cId).getrId();
-                for(int j=0;j<employees.size();j++){
-                    if(rId==employees.get(j).getrId()){
-                        invitations.remove(i);
-                    }
+            }
+            int cId = invitations.get(i).getcId();
+            int rId = commitRecordService.queryByCId(cId).getrId();
+            for(int j=0;j<employees.size();j++){
+                if(rId==employees.get(j).getrId()){
+                    invitations.remove(i);
                 }
             }
-        }
-        for(Invitation invitation:invitations){
-            System.out.println(invitation);
         }
         modelMap.addAttribute("commitRecords",commitRecords);
         modelMap.addAttribute("invitations",invitations);
@@ -204,6 +200,13 @@ public class ManagerHandler {
     public String managerInfo(){
         return "manager/managerInfo";
     }
+
+    /**
+     * 跳转管理员更新界面
+     * @param session
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("managerUpdateInput")
     public String managerUpdateInput(HttpSession session,ModelMap modelMap){
         Manager manager = (Manager) session.getAttribute("manager");
@@ -334,6 +337,11 @@ public class ManagerHandler {
         return "forward:/managers/emplInfo";
     }
 
+    /**
+     * 跳转搜索部门员工界面
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("emplInfoByInput")
     public String emplInfoByInput(ModelMap modelMap){
         List<Department> departments = departmentService.queryAll();
@@ -342,4 +350,98 @@ public class ManagerHandler {
         modelMap.addAttribute("positions",positions);
         return "manager/emplInfoByInput";
     }
+
+    /**
+     * 按照条件搜索部门员工
+     * @param dId
+     * @param pId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("employeeInfo")
+    public String employeeInfo(int dId,int pId,ModelMap modelMap){
+        List<Employee> employees = employeeService.querySamePosition(dId,pId);
+        modelMap.addAttribute("employees",employees);
+        List<Department> departments = departmentService.queryAll();
+        List<Position> positions = positionService.queryAll();
+        modelMap.addAttribute("departments",departments);
+        modelMap.addAttribute("positions",positions);
+        modelMap.addAttribute("flag","OK");
+        return "manager/emplInfoByInput";
+    }
+
+    /**
+     * 跳转创建奖励界面
+     * @param eId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("addAwardInpu")
+    public String addAwardInput(int eId,ModelMap modelMap){
+        modelMap.addAttribute("eId",eId);
+        return "manager/addAward";
+    }
+
+    /**
+     *新增奖励表
+     * @param eId
+     * @param money
+     * @param reason
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("addAward")
+    public String addAward(int eId,double money,String reason,ModelMap modelMap){
+        Date date = new Date(System.currentTimeMillis());
+        Award award = new Award(-1,eId,money,reason,date);
+        awardService.add(award);
+        modelMap.addAttribute("award","OK");
+        return "manager/manage";
+    }
+
+    /**
+     * 跳转修改奖励界面
+     * @param aId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("updateAwardInput")
+    public String updateAwardInput(int aId,ModelMap modelMap){
+        Award award = awardService.queryById(aId);
+        modelMap.addAttribute("award",award);
+        return "manager/awardUpdate";
+    }
+
+    @RequestMapping("updateAward")
+    public String updateAward(int aId,int eId,double money,String reason,ModelMap modelMap){
+        Award award = awardService.queryById(aId);
+        Award award1 = new Award(aId,eId,money,reason,award.getCreateTime());
+        awardService.update(award1);
+        modelMap.addAttribute("awardUpdate","OK");
+        return "manager/manage";
+    }
+    /**
+     * 查看奖励记录
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("awardInfo")
+    public String awardInfo(ModelMap modelMap){
+        List<Award> awards = awardService.queryAll();
+        modelMap.addAttribute("awards",awards);
+        return "manager/awardInfo";
+    }
+
+    /**
+     * 删除奖励记录
+     * @param aId
+     * @return
+     */
+    @RequestMapping("deleteAward")
+    @ResponseBody
+    public String deleteAward(int aId){
+        awardService.deleteById(aId);
+        return "OK";
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.li.handler;
 
-import com.li.entity.Attendance;
-import com.li.entity.Department;
-import com.li.entity.Employee;
-import com.li.entity.Position;
+import com.li.entity.*;
 import com.li.service.*;
 import com.li.utils.DateUtil;
 import com.li.utils.Md5Util;
@@ -26,8 +23,6 @@ import java.util.List;
 @RequestMapping("employee")
 public class EmployeeHandler {
     @Autowired
-    private DepartmentService departmentService;
-    @Autowired
     private PositionService positionService;
     @Autowired
     private EmployeeService employeeService;
@@ -39,6 +34,10 @@ public class EmployeeHandler {
     private AwardService awardService;
     @Autowired
     private SalaryService salaryService;
+    @Autowired
+    private DepartmentService departmentService;
+    @Autowired
+    private DissentService dissentService;
 
     /**
      * 跳转登陆界面
@@ -70,9 +69,24 @@ public class EmployeeHandler {
             modelMap.addAttribute("flag","NG");
             return "employee/login";
         }
+        int flag = DateUtil.compareDate(employee.getDimissionTime(),Date.valueOf("1970-01-01"));
+        if(flag!=0){
+            modelMap.addAttribute("flag","overtime");
+            return "employee/login";
+        }
         session.removeAttribute("employee");
         session.setAttribute("employee",employee);
-
+        List<Train> trains = trainService.queryAll();
+        for(int i=0;i<trains.size();i++){
+            Train train = trains.get(i);
+            int time = DateUtil.compareDate(train.getStartTime(),new Date(System.currentTimeMillis()));
+            if(time<0||train.getdId()!=employee.getdId()){
+                trains.remove(i);
+            }
+        }
+        if(trains.size()>0){
+            modelMap.addAttribute("trains",trains);
+        }
         return "employee/employee";
     }
 
@@ -124,6 +138,39 @@ public class EmployeeHandler {
     }
 
     /**
+     * 跳转查看部门员工
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("emplInfoByPsInput")
+    public String emplInfoByPsInput(ModelMap modelMap){
+        List<Department> departments = departmentService.queryAll();
+        List<Position> positions = positionService.queryAll();
+        modelMap.addAttribute("departments",departments);
+        modelMap.addAttribute("positions",positions);
+        return "employee/emplInfoByPs";
+    }
+
+    /**
+     * 按条件查询员工
+     * @param dId
+     * @param pId
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("emplInfoByPs")
+    public String emplInfoByPs(int dId,int pId,ModelMap modelMap){
+        List<Employee> employees = employeeService.querySamePosition(dId,pId);
+        modelMap.addAttribute("employees",employees);
+        List<Department> departments = departmentService.queryAll();
+        List<Position> positions = positionService.queryAll();
+        modelMap.addAttribute("departments",departments);
+        modelMap.addAttribute("positions",positions);
+        modelMap.addAttribute("flag","OK");
+        return "employee/emplInfoByPs";
+    }
+
+    /**
      * 跳转上班/下班打卡界面
      * @param modelMap
      * @return
@@ -142,8 +189,9 @@ public class EmployeeHandler {
     @ResponseBody
     public String add(HttpSession session){
         Calendar calendar = Calendar.getInstance();
-        int WeekOfYear = calendar.get(Calendar.DAY_OF_WEEK);
-        if(WeekOfYear==7||WeekOfYear==1){
+        int weekOfYear = calendar.get(Calendar.DAY_OF_WEEK);
+        System.out.println(weekOfYear);
+        if(weekOfYear==7||weekOfYear==1){
             return "weekend";
         }
         Employee employee = (Employee) session.getAttribute("employee");
@@ -157,6 +205,7 @@ public class EmployeeHandler {
                 }
             }
         }
+        System.out.println("aaa");
         Time morning = new Time(System.currentTimeMillis());
         int month = calendar.get(Calendar.MONTH)+1;
         double lateTime = 0;
@@ -170,7 +219,9 @@ public class EmployeeHandler {
             }
         }
         Attendance attendance = new Attendance(-1,employee.geteId(),month,day,morning,null,lateTime,absenteeism);
+        System.out.println(attendance);
         attendanceService.add(attendance);
+        System.out.println("asd");
         return "OK";
     }
 
@@ -220,6 +271,13 @@ public class EmployeeHandler {
         attendanceService.update(attendance);
         return "OK";
     }
+
+    /**
+     * 查看全部考勤
+     * @param session
+     * @param modelMap
+     * @return
+     */
     @RequestMapping("attendanceInfo")
     public String attendanceInfo(HttpSession session,ModelMap modelMap){
         Employee employee = (Employee) session.getAttribute("employee");
@@ -228,6 +286,65 @@ public class EmployeeHandler {
             modelMap.addAttribute("attendances",attendances);
         }
         return "employee/attendanceInfo";
+    }
+
+    /**
+     * 查看个人工资
+     * @param modelMap
+     * @param session
+     * @return
+     */
+    @RequestMapping("emplSalaryInfo")
+    public String querySalary(ModelMap modelMap,HttpSession session){
+        Employee employee = (Employee) session.getAttribute("employee");
+        List<Salary> salaries = salaryService.queryByEid(employee.geteId());
+        modelMap.addAttribute("salaries",salaries);
+        return "employee/salaryInfo";
+    }
+
+    /**
+     * 新增工资异议
+     * @param dissent
+     * @param sId
+     * @return
+     */
+    @RequestMapping("dissentAdd")
+    @ResponseBody
+    public String dissentAdd(String dissent,int sId){
+        Dissent dissent1 = dissentService.queryBySId(sId);
+        if(dissent1!=null){
+            return "NG";
+        }
+        Dissent dissent2 = new Dissent(-1,sId,dissent,0);
+        dissentService.add(dissent2);
+        return "OK";
+    }
+
+    /**
+     * 查看培训记录
+     * @param modelMap
+     * @param session
+     * @return
+     */
+    @RequestMapping("queryDeptTrain")
+    public String queryDeptTrain(ModelMap modelMap,HttpSession session){
+        List<Train> trains = trainService.queryAll();
+        Employee employee = (Employee) session.getAttribute("employee");
+        for(int i=0;i<trains.size();i++){
+            Train train = trains.get(i);
+            int time = DateUtil.compareDate(train.getStartTime(),new Date(System.currentTimeMillis()));
+            if(time<0||train.getdId()!=employee.getdId()){
+                trains.remove(i);
+            }
+        }
+        if(trains.size()>0){
+            modelMap.addAttribute("trains",trains);
+        }
+        List<Department> departments = departmentService.queryAll();
+        List<Position> positions = positionService.queryAll();
+        modelMap.addAttribute("departments",departments);
+        modelMap.addAttribute("positions",positions);
+        return "employee/trainInfo";
     }
 
 }

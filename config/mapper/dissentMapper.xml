@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.li.dao.DissentDao">
+    <insert id="add" parameterType="Dissent">
+        insert into dissent(s_id,dissent,agree) values(#{sId},#{dissent},#{agree})
+    </insert>
+    <update id="update" parameterType="Dissent">
+        update dissent set s_id=#{sId},dissent=#{dissent},agree=#{agree} where d_id=#{dId}
+    </update>
+    <delete id="deleteByDId" >
+        delete from dissent where d_id = #{dId}
+    </delete>
+    <select id="queryBySId" resultType="Dissent">
+        select * from dissent where s_id = #{sId}
+    </select>
+    <select id="queryByDId" resultType="Dissent">
+        select * from dissent where d_id = #{dId}
+    </select>
+    <select id="queryAll" resultType="Dissent">
+        select * from dissent
+    </select>
+    <select id="queryNeedAll" resultType="Dissent">
+        select * from dissent where agree!= #{agree}
+    </select>
+</mapper>

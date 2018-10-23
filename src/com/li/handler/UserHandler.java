@@ -293,7 +293,7 @@ public class UserHandler {
     }
 
     /**
-     * 查看简历
+     * 查看面试信息
      * @param id
      * @param modelMap
      * @return
@@ -304,6 +304,13 @@ public class UserHandler {
         modelMap.addAttribute("invitation",invitation);
         return "user/invitationInfo";
     }
+
+    /**
+     * 更新面试信息
+     * @param iId
+     * @param confirmed
+     * @return
+     */
     @RequestMapping("invitationUpdate")
     public String invitationUpdate(int iId,int confirmed){
         Invitation invitation = invitationService.queryByIid(iId);

@@ -1,6 +1,7 @@
 package com.li.test;
 
 import com.li.dao.DepartmentDao;
+import com.li.dao.DissentDao;
 import com.li.dao.PositionDao;
 import com.li.entity.*;
 import com.li.service.*;
@@ -37,11 +38,14 @@ public class Main {
     private ManagerService managerService;
     @Autowired
     private PositionDao positionDao;
+    @Autowired
+    private DissentDao dissentDao;
     @Test
     public void login(){
-        Calendar calendar = Calendar.getInstance();
+        /*Calendar calendar = Calendar.getInstance();
         int month = calendar.get(Calendar.MONTH);
         int WeekOfYear = calendar.get(Calendar.DAY_OF_WEEK);//一周的第几天
-        System.out.println(WeekOfYear);
+        System.out.println(WeekOfYear);*/
+        System.out.println(dissentDao.queryAll());
     }
 }

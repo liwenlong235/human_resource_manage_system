@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <base href="${pageContext.request.contextPath}/">
@@ -40,9 +41,9 @@
                     </c:if>
                 </c:forEach></td>
                 <td>${attendance.month}</td>
-                <td>${attendance.day}</td>
-                <td>${attendance.morning}</td>
-                <td>${attendance.night}</td>
+                <td><f:formatDate value="${attendance.day}"/></td>
+                <td><f:formatDate value="${attendance.morning}"/></td>
+                <td><f:formatDate value="${attendance.night}"/></td>
                 <td>${attendance.lateTime}</td>
                 <td>${attendance.absenteeism}</td>
             </tr>

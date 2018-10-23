@@ -10,6 +10,7 @@
 <%@taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
+    <base href="${pageContext.request.contextPath}/">
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script>
         $(function () {
@@ -60,6 +61,7 @@
             <td>学历</td>
             <td>修改</td>
             <td>删除</td>
+            <td>奖赏</td>
         </tr>
         <c:forEach items="${sessionScope.employees}" var="employee">
             <tr>
@@ -84,6 +86,7 @@
                 <td>${employee.education}</td>
                 <td><a href="managers/emplInput?id=${employee.eId}">修改</a></td>
                 <td><a class="delete" href="managers/deleteEmpl">删除</a></td>
+                <td><a href="managers/addAwardInpu?eId=${employee.eId}">奖励</a></td>
             </tr>
         </c:forEach>
     </table>

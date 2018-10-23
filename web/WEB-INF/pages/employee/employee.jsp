@@ -19,9 +19,10 @@
                     type:"post",
                     dateType:"text",
                     success:function (data) {
+                        alert(data)
                         if(data=="weekend"){
                             alert("休息日不用打卡，好好休息吧！！！")
-                        }else if(data=="NG"){
+                        }else if(data=="OK"){
                             alert("上班打卡信息已存在，请勿重复打卡")
                         }else {
                             alert("上班打卡成功，祝您工作愉快！！！")
@@ -56,6 +57,9 @@
 </head>
 <body style="text-align: center">
 <jsp:include page="emplBaseNav.jsp"/>
+<c:if test="${!empty requestScope.trains}">
+    <h3 style="color: red">部门有培训信息，请及时查看</h3>
+</c:if>
 <c:if test="${!empty requestScope.work}">
     <button id="button1" style="background: yellowgreen"><h3>上班打卡</h3></button><br>
     <button id="button2" style="background: yellowgreen"><h3>下班打卡</h3></button>

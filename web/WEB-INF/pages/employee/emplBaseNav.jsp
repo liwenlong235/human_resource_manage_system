@@ -71,7 +71,7 @@
 
                 <li class="dropdown"><a href="page2.jsp" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">部门管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers2/departmentInfo">查看部门职位信息</a></li>
+                        <li><a href="employee/emplInfoByPsInput">查看部门职位及员工信息</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -85,14 +85,13 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">工资管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="managers/queryMonthSalary">查看当月工资</a></li>
-                        <li><a href="managers/queryEmplSalary">查看员工当月工资</a></li>
+                        <li><a href="managers/emplSalaryInfo">查看员工当月工资</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">培训管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/queryDeptTrain">查看部门培训记录</a></li>
-                        <li><a href="managers/queryEmplTrain">查看员工培训记录</a></li>
+                        <li><a href="employee/queryDeptTrain">查看部门培训记录</a></li>
                     </ul>
                 </li>
             </ul>

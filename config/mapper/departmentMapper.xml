@@ -38,7 +38,6 @@
             <result property="dId" column="d_id"/>
         </collection>
     </resultMap>
-
     <resultMap id="deptMap" type="Department">
         <id property="id" column="d_id"/>
         <result property="name" column="d_name"/>

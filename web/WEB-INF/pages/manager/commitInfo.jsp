@@ -36,7 +36,7 @@
         })
     </script>
 </head>
-<body>
+<body style="text-align: center">
 <jsp:include page="managerBaseNav.jsp"/>
 <c:if test="${empty sessionScope.commitRecords}">
     <h3 style="color: red">暂时没有相关信息</h3>
@@ -51,19 +51,21 @@
             <td>邀请面试</td>
         </tr>
         <c:forEach var="commit" items="${sessionScope.commitRecords}">
-            <tr>
-                <td>${commit.cId}</td>
-                <td><c:forEach var="job" items="${sessionScope.jobs}">
-                    <c:if test="${job.jId==commit.jId}">
-                        ${job.position.pName}
-                    </c:if>
-                </c:forEach></td>
-                <td><a href="managers2/resumeInfo?rId=${commit.rId}">点击查看简历</a></td>
-                <td><f:formatDate value="${commit.commitTime}"/></td>
-                <td>
-                    <button class="button1"><a href="managers2/addInvitationInput?cId=${commit.cId}">是</a></button>
-                    <button class="button2"><a href="">否</a></button></td>
-            </tr>
+            <c:if test="${commit.iId==0}">
+                <tr>
+                    <td>${commit.cId}</td>
+                    <td><c:forEach var="job" items="${sessionScope.jobs}">
+                        <c:if test="${job.jId==commit.jId}">
+                            ${job.position.pName}
+                        </c:if>
+                    </c:forEach></td>
+                    <td><a href="managers2/resumeInfo?rId=${commit.rId}">点击查看简历</a></td>
+                    <td><f:formatDate value="${commit.commitTime}"/></td>
+                    <td>
+                        <button class="button1"><a href="managers2/addInvitationInput?cId=${commit.cId}">是</a></button>
+                        <button class="button2"><a href="">否</a></button></td>
+                </tr>
+            </c:if>
         </c:forEach>
     </table>
 </c:if>

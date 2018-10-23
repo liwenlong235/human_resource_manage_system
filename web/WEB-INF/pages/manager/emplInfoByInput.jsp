@@ -1,4 +1,3 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: 99234
@@ -7,27 +6,105 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <base href="${pageContext.request.contextPath}/">
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+    <script>
+        $(function () {
+            var $select = $("#s2");
+            var dId = $("#s1").val();
+            $.ajax({
+                url:"user/deptAjax",
+                data:{"dId":dId},
+                type:"post",
+                dataType:"json",
+                success:function (data) {
+                    $(data).each(function (index,item) {
+                        $select.append("<option class='opt' value='"+item.pId+"'>"+item.pName+"</option>");
+                    })
+                }
+            })
+            $("#s1").change(function () {
+                var $select = $("#s2");
+                var dId = $("#s1").val();
+                $.ajax({
+                    url:"user/deptAjax",
+                    data:{"dId":dId},
+                    type:"post",
+                    dataType:"json",
+                    success:function (data) {
+                        $("#s2 option[class='opt']").remove();
+                        $(data).each(function (index,item) {
+                            $select.append("<option class='opt' value='"+item.pId+"'>"+item.pName+"</option>");
+                        })
+                    }
+                })
+            })
+        })
+    </script>
 </head>
-<body>
+<body style="text-align: center">
 <jsp:include page="managerBaseNav.jsp"/>
 <form action="managers/employeeInfo" method="post">
-    <table>
+    <table align="center">
         <tr>
-            <td><select id="select1" name="dId">
-                <c:formatDate value="${requestScope.departments}" var="department">
+            <td><select id="s1" name="dId">
+                <c:forEach items="${requestScope.departments}" var="department">
                     <option value="${department.id}">${department.name}</option>
-                </c:formatDate>
+                </c:forEach>
             </select></td>
-            <td><select id="select2" name="pId">
-
+            <td><select id="s2" name="pId">
             </select>
-
             </td>
+            <td><input type="submit"></td>
         </tr>
     </table>
 </form>
+<c:if test="${!empty requestScope.flag}">
+    <c:if test="${empty requestScope.employees}">
+        <h3 style="color: red">暂时没有相关信息</h3>
+    </c:if>
+    <c:if test="${!empty requestScope.employees}">
+        <table border="2px" cellspacing="0" cellpadding="15px" align="center">
+            <tr style="text-align: center">
+                <td>ID</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>联系方式</td>
+                <td>电子邮箱</td>
+                <td>部门</td>
+                <td>职位</td>
+                <td>入职时间</td>
+                <td>离职时间</td>
+                <td>学历</td>
+            </tr>
+            <c:forEach items="${requestScope.employees}" var="employee">
+                <tr>
+                    <td>${employee.eId}</td>
+                    <td>${employee.eName}</td>
+                    <td>${employee.gender}</td>
+                    <td>${employee.tel}</td>
+                    <td>${employee.email}</td>
+                    <td><c:forEach items="${sessionScope.departments}" var="department">
+                        <c:if test="${department.id==employee.dId}">
+                            ${department.name}
+                        </c:if>
+                    </c:forEach></td>
+                    <td><c:forEach items="${sessionScope.positions}" var="position">
+                        <c:if test="${position.pId==employee.pId}">
+                            ${position.pName}
+                        </c:if>
+                    </c:forEach></td>
+                    <td><f:formatDate value="${employee.entryTime}"/></td>
+                    <td><f:formatDate value="${employee.dimissionTime}"/></td>
+                    <td>${employee.education}</td>
+                </tr>
+            </c:forEach>
+        </table>
+    </c:if>
+</c:if>
 </body>
 </html>

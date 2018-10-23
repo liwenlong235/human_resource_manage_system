@@ -7,7 +7,7 @@
     </insert>
     <update id="updateJob" parameterType="Job">
         update jobs set p_id=#{position.pId},company=#{company},address=#{address},salary_rang=#{salaryRange},duty=#{duty},requirements
-        =#{requirements},pubdate=#{pubdate}
+        =#{requirements},pubdate=#{pubdate} where j_id=#{jId}
     </update>
     <delete id="deleteByJId" parameterType="int">
         delete from jobs where j_id=#{jId}
