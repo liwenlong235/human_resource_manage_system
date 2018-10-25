@@ -17,7 +17,7 @@
     <h3 style="color: red">暂时没有相关信息</h3>
 </c:if>
 <c:if test="${!empty requestScope.attendances}">
-    <table border="2px" cellpadding="15px" cellspacing="0" align="center">
+    <table border="2px" cellpadding="15px" cellspacing="0" align="center" style="text-align: center">
         <tr>
             <td colspan="8">${sessionScope.employee.eName}的考勤记录</td>
         </tr>
@@ -28,8 +28,8 @@
             <td>上班日期</td>
             <td>上班时间</td>
             <td>下班时间</td>
-            <td>迟到时间</td>
-            <td>矿工时间</td>
+            <td>迟到时间(小时)</td>
+            <td>矿工时间(天)</td>
         </tr>
         <c:forEach items="${requestScope.attendances}" var="attendance">
             <tr>

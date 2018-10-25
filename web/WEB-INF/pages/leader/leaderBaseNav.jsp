@@ -75,6 +75,9 @@
                     </ul>
                 </li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><button><a href="user/begin"><h4>退出</h4></a></button></li>
+            </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>

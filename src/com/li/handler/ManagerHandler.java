@@ -174,22 +174,25 @@ public class ManagerHandler {
     @RequestMapping("queryPass")
     public String queryPass(ModelMap modelMap){
         List<Invitation> invitations = invitationService.queryAll();
-        List<Employee> employees = employeeService.queryEmployees();
         List<CommitRecord> commitRecords = commitRecordService.queryCommitRecords();
-        for(int i=0;i<invitations.size();i++){
-            if(invitations.get(i).getPass()!=1){
-                invitations.remove(i);
-            }
-            int cId = invitations.get(i).getcId();
-            int rId = commitRecordService.queryByCId(cId).getrId();
-            for(int j=0;j<employees.size();j++){
-                if(rId==employees.get(j).getrId()){
+        if(invitations!=null){
+            for(int i=0;i<invitations.size();i++){
+                if(invitations.get(i).getPass()!=1){
                     invitations.remove(i);
+                    i--;
+                }else {
+                    int rId = commitRecordService.queryByCId(invitations.get(i).getcId()).getrId();
+                    Employee employee = employeeService.queryByRId(rId);
+                    if(employee!=null){
+                        invitations.remove(i);
+                        i--;
+                    }
                 }
             }
+            System.out.println(invitations);
+            modelMap.addAttribute("commitRecords",commitRecords);
+            modelMap.addAttribute("invitations",invitations);
         }
-        modelMap.addAttribute("commitRecords",commitRecords);
-        modelMap.addAttribute("invitations",invitations);
         return "manager/queryPass";
     }
     /**

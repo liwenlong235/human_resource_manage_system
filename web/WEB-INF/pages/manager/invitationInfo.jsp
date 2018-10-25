@@ -12,8 +12,11 @@
 <head>
     <title>Title</title>
 </head>
-<body>
+<body style="text-align: center">
 <jsp:include page="managerBaseNav.jsp"/>
+<c:if test="${empty requestScope.invitations}">
+    <h3 style="color: red">暂时没有相关信息</h3>
+</c:if>
 <c:if test="${!empty requestScope.invitations}">
     <table border="1px" cellspacing="0px" cellpadding="15px" align="center">
         <tr>

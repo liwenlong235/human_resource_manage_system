@@ -112,8 +112,13 @@
                     <ul class="dropdown-menu">
                         <li><a href="managers2/queryCommit">查看申请简历</a></li>
                         <li><a href="managers2/invitationInfo">查看面试信息</a></li>
+                        <li><a href="managers2/addJobInput">创建招聘信息</a></li>
+                        <li><a href="managers2/jobsInfo">查看招聘信息</a></li>
                     </ul>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><button><a href="user/begin"><h4>退出</h4></a></button></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

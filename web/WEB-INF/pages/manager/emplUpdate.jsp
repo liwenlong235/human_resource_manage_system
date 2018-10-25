@@ -49,6 +49,19 @@
                     }
                 })
             })
+            $("#submit").click(function () {
+                var ip1 = $("#ip1").val();
+                var ip2 = $("#ip2").val();
+                var ip3 = $("#ip3").val();
+                var ip4 = $("#ip4").val();
+                var ip5 = $("#ip5").val();
+                var ip6 = $("#ip6").val();
+                if(ip1==""||ip2==""||ip3==""||ip4==""||ip5==""||ip6==""){
+                    alert("所填内容不能为空")
+                    return false;
+                }
+                return true;
+            })
         })
     </script>
 </head>
@@ -61,9 +74,9 @@
             <tr><td colspan="4"><h3>修改员工信息</h3></td></tr>
             <tr>
                 <td>姓名</td>
-                <td><input type="text" name="eName" value="${requestScope.employee.eName}"></td>
+                <td><input id="ip1" type="text" name="eName" value="${requestScope.employee.eName}"></td>
                 <td>密码</td>
-                <td><input type="text" name="ePassword" value="${requestScope.employee.ePassword}"></td>
+                <td><input id="ip2" type="text" name="ePassword" value="${requestScope.employee.ePassword}"></td>
             </tr>
             <tr>
                 <td>性别</td>
@@ -77,11 +90,11 @@
                     </c:if>
                 </td>
                 <td>联系方式</td>
-                <td><input type="tel" name="tel" value="${requestScope.employee.tel}"></td>
+                <td><input id="ip3" type="tel" name="tel" value="${requestScope.employee.tel}"></td>
             </tr>
             <tr>
                 <td>电子邮箱</td>
-                <td><input type="email" name="email" value="${requestScope.employee.email}"></td>
+                <td><input id="ip4" type="email" name="email" value="${requestScope.employee.email}"></td>
                 <td>学历</td>
                 <td><select name="education">
                     <option>${requestScope.employee.education}</option>
@@ -115,11 +128,11 @@
             </tr>
             <tr>
                 <td>入职时间</td>
-                <td><input type="date" name="entryTime" value="${requestScope.employee.entryTime}"></td>
+                <td><input id="ip5" type="date" name="entryTime" value="${requestScope.employee.entryTime}"></td>
                 <td>离职时间</td>
-                <td><input type="date" name="dimissionTime" value="${requestScope.employee.dimissionTime}"></td>
+                <td><input id="ip6" type="date" name="dimissionTime" value="${requestScope.employee.dimissionTime}"></td>
             </tr>
-            <tr><td colspan="4"><input type="submit"></td></tr>
+            <tr><td colspan="4"><input id="submit" type="submit"></td></tr>
         </table>
     </form>
 </c:if>

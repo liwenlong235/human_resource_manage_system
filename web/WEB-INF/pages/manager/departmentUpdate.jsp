@@ -50,7 +50,7 @@
                             $("#submit2").attr("disabled",false);
                         }else {
                             alert("名字已存在");
-                            $("#submit1").attr("disabled",true);
+                            $("#submit2").attr("disabled",true);
                         }
                     }
                 })

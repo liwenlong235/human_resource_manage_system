@@ -19,10 +19,9 @@
                     type:"post",
                     dateType:"text",
                     success:function (data) {
-                        alert(data)
                         if(data=="weekend"){
                             alert("休息日不用打卡，好好休息吧！！！")
-                        }else if(data=="OK"){
+                        }else if(data=="NG"){
                             alert("上班打卡信息已存在，请勿重复打卡")
                         }else {
                             alert("上班打卡成功，祝您工作愉快！！！")
@@ -43,8 +42,10 @@
                                 alert("休息日不用打卡，好好休息吧！！！")
                             }else if(data=="null"){
                                 alert("没有上班打卡信息，请先打上班卡")
-                            }else {
+                            }else if(data=="OK"){
                                 alert("下班打卡成功，祝您下班愉快！！！")
+                            }else {
+                                alert("下班打信息已存在，请勿重复打卡")
                             }
                         }
                     })

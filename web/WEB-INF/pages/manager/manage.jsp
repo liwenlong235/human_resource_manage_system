@@ -26,7 +26,16 @@
     <h3 style="color: lawngreen">培训信息添加成功</h3>
 </c:if>
 <c:if test="${requestScope.salaryTime=='NG'}">
-    <h3 style="color: lawngreen">还未到发放工资的时间，发放时间为每月5号</h3>
+    <h3 style="color: red">还未到发放工资的时间，发放时间为每月5号</h3>
+</c:if>
+<c:if test="${requestScope.salary=='OK'}">
+    <h3 style="color: lawngreen">工资发放成功</h3>
+</c:if>
+<c:if test="${requestScope.doubleSalary=='NG'}">
+    <h3 style="color: lawngreen">上月工资已发放，请勿重复操作</h3>
+</c:if>
+<c:if test="${requestScope.job=='OK'}">
+    <h3 style="color: lawngreen">招聘信息添加成功</h3>
 </c:if>
 </body>
 </html>

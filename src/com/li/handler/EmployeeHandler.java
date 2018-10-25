@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -79,7 +81,7 @@ public class EmployeeHandler {
         List<Train> trains = trainService.queryAll();
         for(int i=0;i<trains.size();i++){
             Train train = trains.get(i);
-            int time = DateUtil.compareDate(train.getStartTime(),new Date(System.currentTimeMillis()));
+            int time = DateUtil.compareDay(train.getStartTime(),new Date(System.currentTimeMillis()));
             if(time<0||train.getdId()!=employee.getdId()){
                 trains.remove(i);
             }
@@ -190,7 +192,6 @@ public class EmployeeHandler {
     public String add(HttpSession session){
         Calendar calendar = Calendar.getInstance();
         int weekOfYear = calendar.get(Calendar.DAY_OF_WEEK);
-        System.out.println(weekOfYear);
         if(weekOfYear==7||weekOfYear==1){
             return "weekend";
         }
@@ -199,18 +200,17 @@ public class EmployeeHandler {
         List<Attendance> attendances = attendanceService.queryByEId(employee.geteId());
         if(attendances!=null){
             for(int i=0;i<attendances.size();i++){
-                int a = DateUtil.compareDate(day,attendances.get(i).getDay());
+                int a = DateUtil.compareDay(day,attendances.get(i).getDay());
                 if(a==0){
                     return "NG";
                 }
             }
         }
-        System.out.println("aaa");
         Time morning = new Time(System.currentTimeMillis());
         int month = calendar.get(Calendar.MONTH)+1;
         double lateTime = 0;
         double absenteeism = 0;
-        int flag = DateUtil.compareDate(morning,Time.valueOf("09:00:00"));
+        int flag = DateUtil.compareTime(morning,Time.valueOf("09:00:00"));
         if(flag>0){
             lateTime = DateUtil.getDisTime(morning,Time.valueOf("09:00:00"));
             if(lateTime>=3){
@@ -219,9 +219,7 @@ public class EmployeeHandler {
             }
         }
         Attendance attendance = new Attendance(-1,employee.geteId(),month,day,morning,null,lateTime,absenteeism);
-        System.out.println(attendance);
         attendanceService.add(attendance);
-        System.out.println("asd");
         return "OK";
     }
 
@@ -244,7 +242,7 @@ public class EmployeeHandler {
         boolean flag = false;
         if(attendances!=null){
             for(int i=0;i<attendances.size();i++){
-                int a = DateUtil.compareDate(day,attendances.get(i).getDay());
+                int a = DateUtil.compareDay(day,attendances.get(i).getDay());
                 if(a==0){
                     flag = true;
                 }
@@ -254,17 +252,21 @@ public class EmployeeHandler {
             return "null";
         }
         Attendance attendance = attendanceService.queryByDayAndEId(day,employee.geteId());
+        if(attendance.getNight()!=null){
+            return "double";
+        }
         Time night = new Time(System.currentTimeMillis());
         double lateTime = 0;
-        double absenteeism = 0;
-        int flag1 = DateUtil.compareDate(night,Time.valueOf("18:00:00"));
+        double absenteeism = attendance.getAbsenteeism();
+        int flag1 = DateUtil.compareTime(night,Time.valueOf("18:00:00"));
         if(flag1<0){
-            lateTime = lateTime + DateUtil.getDisTime(night,Time.valueOf("18:00:00"));
+            lateTime = DateUtil.getDisTime(night,Time.valueOf("18:00:00"));
             if(lateTime>=3){
                 lateTime=0;
                 absenteeism = 1;
             }
         }
+        lateTime = lateTime+ attendance.getLateTime();
         attendance.setLateTime(lateTime);
         attendance.setAbsenteeism(absenteeism);
         attendance.setNight(night);
@@ -298,6 +300,15 @@ public class EmployeeHandler {
     public String querySalary(ModelMap modelMap,HttpSession session){
         Employee employee = (Employee) session.getAttribute("employee");
         List<Salary> salaries = salaryService.queryByEid(employee.geteId());
+        if(salaries!=null){
+            for(int i=0;i<salaries.size();i++){
+                Salary salary = salaries.get(i);
+                int deduct = (int)salary.getsDeduct();
+                int real = (int)salary.getsReal();
+                salary.setsDeduct(deduct);
+                salary.setsReal(real);
+            }
+        }
         modelMap.addAttribute("salaries",salaries);
         return "employee/salaryInfo";
     }
@@ -321,6 +332,30 @@ public class EmployeeHandler {
     }
 
     /**
+     *
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("emplDissentInfo")
+    public String emplDissentInfo(ModelMap modelMap,HttpSession session){
+        Employee employee = (Employee) session.getAttribute("employee");
+        List<Salary> salaries = salaryService.queryByEid(employee.geteId());
+        List<Dissent> dissents = null;
+        if(salaries!=null){
+            dissents = new ArrayList<>();
+            for(int i=0;i<salaries.size();i++){
+                Salary salary = salaries.get(i);
+                Dissent dissent = dissentService.queryBySId(salary.getsId());
+                if(dissent!=null){
+                    dissents.add(dissent);
+                }
+            }
+        }
+        modelMap.addAttribute("dissents",dissents);
+        return "employee/dissentInfo";
+    }
+
+    /**
      * 查看培训记录
      * @param modelMap
      * @param session
@@ -332,7 +367,7 @@ public class EmployeeHandler {
         Employee employee = (Employee) session.getAttribute("employee");
         for(int i=0;i<trains.size();i++){
             Train train = trains.get(i);
-            int time = DateUtil.compareDate(train.getStartTime(),new Date(System.currentTimeMillis()));
+            int time = DateUtil.compareDay(train.getStartTime(),new Date(System.currentTimeMillis()));
             if(time<0||train.getdId()!=employee.getdId()){
                 trains.remove(i);
             }

@@ -13,10 +13,14 @@
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script>
         $(function () {
+            var flag = $("#h3").val();
+            if(flag!=null){
+                $("#submit").attr("disabled",true);
+            }
             $("#submit").click(function () {
                 var inviteTime = $("#ip1").val();
-                var address = $("#p2").val();
-                if(inviteTime!=""&&address!=""){
+                var address = $("#ip2").val();
+                if(inviteTime!=null&&address!=""&&inviteTime!=""&address!=null){
                     return true;
                 }else if(inviteTime==""){
                     alert("面试时间不能为空");
@@ -28,8 +32,14 @@
         })
     </script>
 </head>
-<body>
+<body style="text-align: center">
 <jsp:include page="managerBaseNav.jsp"/>
+<c:if test="${requestScope.flag=='NG'}">
+        <h3 id="h3" style="color: red">面试信息已存在，不能重复提交</h3>
+</c:if>
+<c:if test="${requestScope.time=='NG'}">
+    <h3 id="h3" style="color: red">面试时间至少为当前时间以后2天及以上</h3>
+</c:if>
 <form action="managers2/addInvitation" method="post">
     <table border="1px" cellspacing="0" cellpadding="15px" align="center">
         <input type="hidden" name="cId" value="${requestScope.cId}">
@@ -51,7 +61,7 @@
             <td>面试地点</td>
             <td><input id="ip2" type="text" name="address"></td>
         </tr>
-        <tr><td colspan="2"><input type="submit" id="submit"></td></tr>
+        <tr style="text-align: center"><td colspan="2"><input type="submit" id="submit"></td></tr>
     </table>
 </form>
 </body>

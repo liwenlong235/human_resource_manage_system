@@ -21,11 +21,11 @@
     </style>
 </head>
 <body>
-<div style="margin-top: 20%">
-<button><a href="user/loginInput">游客登陆</a></button>
-<button><a href="user/registInput">游客注册</a></button><p/>
-    <button><a href="employee/loginInput">员工登陆</a></button>
-    <button><a href="managers/loginInput">管理员/主管登陆</a></button><p/>
+<div style="margin-top: 15%">
+<button><a href="user/loginInput"><h4>游客登陆</h4></a></button>&nbsp;
+<button><a href="user/registInput"><h4>游客注册</h4></a></button><p/>
+    <button><a href="employee/loginInput"><h4>员工登陆</h4></a></button>
+    <button><a href="managers/loginInput"><h4>管理员/主管登陆</h4></a></button><p/>
 
 
 

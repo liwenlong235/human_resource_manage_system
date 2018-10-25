@@ -47,6 +47,18 @@
                     }
                 })
             })
+            $("#submit").click(function () {
+                var ip1 = $("#ip1").val();
+                var ip2 = $("#ip2").val();
+                var ip3 = $("#ip3").val();
+                var ip4 = $("#ip4").val();
+                var ip5 = $("#ip5").val();
+                if(ip1==""||ip2==""||ip3==""||ip4==""||ip5==""){
+                    alert("所填内容不能为空")
+                    return false;
+                }
+                return true;
+            })
         })
     </script>
 </head>
@@ -59,9 +71,9 @@
             <tr style="text-align: center"><td colspan="4"><h3>新增员工信息</h3></td></tr>
             <tr>
                 <td>姓名</td>
-                <td><input type="text" name="eName" value="${requestScope.resume.uName}"></td>
+                <td><input id="ip1" type="text" name="eName" value="${requestScope.resume.uName}"></td>
                 <td>密码</td>
-                <td><input type="text" name="ePassword" value="000000" readonly="readonly"></td>
+                <td><input id="ip2" type="text" name="ePassword" value="000000" readonly="readonly"></td>
             </tr>
             <tr>
                 <td>性别</td>
@@ -74,11 +86,11 @@
                         <input type="radio" name="gender" value="女" checked="checked">女
                     </c:if></td>
                 <td>联系方式</td>
-                <td><input type="tel" name="tel" value="${requestScope.resume.tel}"></td>
+                <td><input id="ip3" type="tel" name="tel" value="${requestScope.resume.tel}"></td>
             </tr>
             <tr>
                 <td>电子邮箱</td>
-                <td><input type="email" name="email" value="${requestScope.resume.email}"></td>
+                <td><input id="ip4" type="email" name="email" value="${requestScope.resume.email}"></td>
                 <td>学历</td>
                 <td><select name="education">
                     <c:forEach items="${sessionScope.educations}" var="education">
@@ -108,11 +120,11 @@
             </tr>
             <tr>
                 <td>入职时间</td>
-                <td><input type="date" name="entryTime"></td>
+                <td><input type="date" name="entryTime" id="ip5"></td>
                 <td>离职时间</td>
                 <td><input type="date" name="dimissionTime" readonly="readonly"></td>
             </tr>
-            <tr style="text-align: center"><td colspan="4"><input type="submit"></td></tr>
+            <tr style="text-align: center"><td colspan="4"><input type="submit" id="submit"></td></tr>
         </table>
     </form>
 </c:if>

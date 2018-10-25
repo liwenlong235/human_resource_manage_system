@@ -46,6 +46,11 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
+    public List<Salary> queryByMonth(int sMonth) {
+        return salaryDao.queryByMonth(sMonth);
+    }
+
+    @Override
     public Salary queryByEidAndMonth(int eId, int month) {
         return salaryDao.queryByEidAndMonth(eId,month);
     }

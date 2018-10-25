@@ -1,18 +1,30 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: 99234
-  Date: 2018/10/21
-  Time: 11:21
+  Date: 2018/10/23
+  Time: 22:17
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <base href="${pageContext.request.contextPath}/">
     <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
     <script>
         $(function () {
+            $("#submit").click(function () {
+                var company = $(":text[name='company']").val();
+                var address = $(":text[name='address']").val();
+                var duty = $(":text[name='duty']").val();
+                var requirements = $(":text[name='requirements']").val();
+                var salary = $("#ip1").val();
+                if(company==""||address==""||duty==""||requirements==""||salary==""){
+                    alert("所有内容都不能为空")
+                    return false;
+                }
+                return true;
+            })
             var $select = $("#s2");
             var dId = $("#s1").val();
             $.ajax({
@@ -21,7 +33,6 @@
                 type:"post",
                 dataType:"json",
                 success:function (data) {
-                    $select.append("<option class='opt' value='0'>全部职位</option>");
                     $(data).each(function (index,item) {
                         $select.append("<option class='opt' value='"+item.pId+"'>"+item.pName+"</option>");
                     })
@@ -37,57 +48,47 @@
                     dataType:"json",
                     success:function (data) {
                         $("#s2 option[class='opt']").remove();
-                        $select.append("<option class='opt' value='0'>全部职位</option>");
                         $(data).each(function (index,item) {
                             $select.append("<option class='opt' value='"+item.pId+"'>"+item.pName+"</option>");
                         })
                     }
                 })
             })
-            $("#submit").click(function () {
-                var title = $("#ip1").val();
-                var time = $("#ip2").val();
-                if(time!=""&&title!=""){
-                    return true;
-                }else if(title==""){
-                    alert("培训主题不能为空");
-                }else {
-                    alert("培训时间不能为空")
-                }
-                return false;
-            })
         })
     </script>
 </head>
 <body>
 <jsp:include page="managerBaseNav.jsp"/>
-<form action="managers3/addTrain">
-    <table border="2px" cellspacing="0" align="center">
-        <tr style="text-align: center">
-            <td colspan="2">新建培训表单</td>
-        </tr>
+<form action="managers2/addJob" method="post">
+    <table border="2px" cellspacing="0" align="center" style="text-align: center">
         <tr>
-            <td>培训主题</td>
-            <td><input id="ip1" type="text" name="title"></td>
-        </tr>
-        <tr>
-            <td>培训时间</td>
-            <td><input id="ip2" type="date" name="time"></td>
-        </tr>
-        <tr>
-            <td>培训部门</td>
+            <td>部门</td>
             <td><select id="s1" name="dId">
                 <c:forEach items="${requestScope.departments}" var="department">
                     <option value="${department.id}">${department.name}</option>
                 </c:forEach>
             </select></td>
+            <td>职位</td>
+            <td><select name="pId" id="s2"></select></td>
         </tr>
         <tr>
-            <td>选择职位</td>
-            <td><select id="s2" name="pId"></select></td>
+            <td>公司</td>
+            <td><input type="text" name="company"></td>
+            <td>地址</td>
+            <td><input type="text" name="address"></td>
         </tr>
-        <tr style="text-align: center">
-            <td colspan="2"><input id="submit" type="submit"></td>
+        <tr>
+            <td>岗位职责</td>
+            <td><input type="text" name="duty"></td>
+            <td>任职要求</td>
+            <td><input type="text" name="requirements"></td>
+        </tr>
+        <tr>
+            <td>薪水</td>
+            <td colspan="3"><input name="salary" type="number" id="ip1"></td>
+        </tr>
+        <tr>
+            <td colspan="4"><input type="submit" id="submit"></td>
         </tr>
     </table>
 </form>

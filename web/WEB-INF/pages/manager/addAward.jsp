@@ -14,7 +14,7 @@
         $(function () {
             $("#submit").click(function () {
                 var money = $("#ip1").val();
-                var reason = $("#p2").val();
+                var reason = $("#ip2").val();
                 if(money!=""&&reason!=""){
                     return true;
                 }else if(money==""){

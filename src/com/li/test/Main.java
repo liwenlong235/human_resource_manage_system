@@ -1,5 +1,6 @@
 package com.li.test;
 
+import com.li.dao.AttendanceDao;
 import com.li.dao.DepartmentDao;
 import com.li.dao.DissentDao;
 import com.li.dao.PositionDao;
@@ -15,6 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -40,12 +43,16 @@ public class Main {
     private PositionDao positionDao;
     @Autowired
     private DissentDao dissentDao;
+    @Autowired
+    private AttendanceDao attendanceDao;
+    @Autowired
+    private DissentService dissentService;
+    @Autowired
+    private AwardService awardService;
+    @Autowired
+    private EmployeeService employeeService;
     @Test
     public void login(){
-        /*Calendar calendar = Calendar.getInstance();
-        int month = calendar.get(Calendar.MONTH);
-        int WeekOfYear = calendar.get(Calendar.DAY_OF_WEEK);//一周的第几天
-        System.out.println(WeekOfYear);*/
-        System.out.println(dissentDao.queryAll());
+
     }
 }

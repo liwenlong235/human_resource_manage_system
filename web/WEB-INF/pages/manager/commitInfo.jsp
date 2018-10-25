@@ -28,6 +28,9 @@
                         if(data=="OK"){
                             alert("已经拒绝邀请");
                             $td.remove();
+                        }else {
+                            alert("找不到相关数据")
+                            $td.remove();
                         }
                     }
                 })
@@ -38,10 +41,10 @@
 </head>
 <body style="text-align: center">
 <jsp:include page="managerBaseNav.jsp"/>
-<c:if test="${empty sessionScope.commitRecords}">
+<c:if test="${empty requestScope.commitRecords}">
     <h3 style="color: red">暂时没有相关信息</h3>
 </c:if>
-<c:if test="${!empty sessionScope.commitRecords}">
+<c:if test="${!empty requestScope.commitRecords}">
     <table border="2px" cellspacing="0" cellpadding="15x" align="center">
         <tr>
             <td>记录ID</td>
@@ -50,11 +53,11 @@
             <td>投递时间</td>
             <td>邀请面试</td>
         </tr>
-        <c:forEach var="commit" items="${sessionScope.commitRecords}">
+        <c:forEach var="commit" items="${requestScope.commitRecords}">
             <c:if test="${commit.iId==0}">
                 <tr>
                     <td>${commit.cId}</td>
-                    <td><c:forEach var="job" items="${sessionScope.jobs}">
+                    <td><c:forEach var="job" items="${requestScope.jobs}">
                         <c:if test="${job.jId==commit.jId}">
                             ${job.position.pName}
                         </c:if>

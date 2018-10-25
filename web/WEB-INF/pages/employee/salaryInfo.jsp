@@ -16,12 +16,12 @@
             $(".dissent").click(function () {
                 var $this = $(this);
                 var $td = $(this).parent().parent().children();
-                var aId = $td[0].innerHTML;
+                var sId = $td[0].innerHTML;
                 var dissent = prompt("输入异议内容");
                 if(dissent!=null&&dissent!=""){
                     $.ajax({
                         url:"employee/dissentAdd",
-                        data:{"dissent":dissent},
+                        data:{"dissent":dissent,"sId":sId},
                         type:"post",
                         dataType:"text",
                         success:function (data) {
@@ -32,18 +32,21 @@
                             }
                         }
                     })
+                }else {
+                    alert("异议内容为空，异议无效")
                 }
+                return false;
             })
         })
     </script>
 </head>
-<body>
+<body style="text-align: center">
 <jsp:include page="emplBaseNav.jsp"/>
 <c:if test="${empty requestScope.salaries}">
     <h3 style="color: red">暂时没有相关信息</h3>
 </c:if>
 <c:if test="${!empty requestScope.salaries}">
-    <table>
+    <table border="2px" cellspacing="0" align="center" style="text-align: center">
         <tr>
             <td>工资ID</td>
             <td>发放月份</td>
@@ -63,12 +66,11 @@
                 <td>${salary.sMonth}</td>
                 <td>${salary.eId}</td>
                 <td>${salary.eName}</td>
-                <td>${salary.sNasic}</td>
+                <td>${salary.sBasic}</td>
                 <td>${salary.bonus}</td>
                 <td>${salary.sDeduct}</td>
                 <td>${salary.backPay}</td>
                 <td>${salary.sReal}</td>
-                <td>${salary.remarks}</td>
                 <td>${salary.remarks}</td>
                 <td><a class="dissent" href="">异议</a></td>
             </tr>

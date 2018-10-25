@@ -30,12 +30,9 @@
 <c:if test="${requestScope.flag=='nameNG'}">
     <h3 style="color: red">输入名字错误</h3>
 </c:if>
-<c:if test="${empty requestScope.attendances||requestScope.attendances1||requestScope.attendances2}">
-    <h3 style="color: red">暂时没有相关信息</h3>
-</c:if>
 <c:if test="${!empty requestScope.attendances}">
     <table border="2px" cellpadding="15px" cellspacing="0" align="center">
-        <tr>
+        <tr style="text-align: center">
             <td colspan="5">${requestScope.employee.eName}的考勤记录</td>
         </tr>
         <tr>
@@ -45,7 +42,7 @@
             <td>迟到时间</td>
             <td>矿工时间</td>
         </tr>
-        <c:forEach items="${requestScope.attendance}" var="attendance">
+        <c:forEach items="${requestScope.attendances}" var="attendance">
             <tr>
                 <td>${attendance.day}</td>
                 <td>${attendance.morning}</td>
@@ -58,7 +55,7 @@
 </c:if>
 <c:if test="${!empty requestScope.attendances1}">
     <table border="2px" cellpadding="15px" cellspacing="0" align="center">
-        <tr>
+        <tr style="text-align: center">
             <td colspan="5">${requestScope.employee.eName}的${requestScope.month}月份考勤记录</td>
         </tr>
         <tr>
@@ -68,7 +65,7 @@
             <td>迟到时间</td>
             <td>矿工时间</td>
         </tr>
-        <c:forEach items="${requestScope.attendance1}" var="attendance">
+        <c:forEach items="${requestScope.attendances1}" var="attendance">
             <tr>
                 <td>${attendance.day}</td>
                 <td>${attendance.morning}</td>
@@ -80,8 +77,8 @@
     </table>
 </c:if>
 <c:if test="${!empty requestScope.attendances2}">
-    <table border="2px" cellpadding="15px" cellspacing="0" align="center">
-        <tr>
+    <table border="2px" cellpadding="15px" cellspacing="0" align="center" style="text-align: center">
+        <tr style="text-align: center">
             <td colspan="8">${requestScope.month}月份员工考勤记录</td>
         </tr>
         <tr>

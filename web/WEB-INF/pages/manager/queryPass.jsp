@@ -12,8 +12,11 @@
 <head>
     <base href="${pageContext.request.contextPath}/">
 </head>
-<body>
+<body style="text-align: center">
 <jsp:include page="managerBaseNav.jsp"/>
+<c:if test="${empty requestScope.commitRecords}">
+    <h3 style="color: red">暂时没有相关信息</h3>
+</c:if>
 <c:if test="${!empty requestScope.commitRecords}">
 <table border="2px" cellspacing="0" cellpadding="15x" align="center">
     <tr>
@@ -28,7 +31,7 @@
     </tr>
     <c:forEach items="${requestScope.invitations}" var="invitation">
         <c:forEach items="${requestScope.commitRecords}" var="commit">
-            <c:if test="${invitation.cId==commit.cId}">
+            <c:if test="${invitation.cId==commit.cId&&invitation.pass==1}">
                 <tr>
                     <td>${commit.rId}</td>
                     <td>${invitation.iId}</td>

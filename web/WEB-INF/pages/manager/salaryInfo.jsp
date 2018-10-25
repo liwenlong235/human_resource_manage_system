@@ -36,7 +36,7 @@
                 <td>${salary.sMonth}</td>
                 <td>${salary.eId}</td>
                 <td>${salary.eName}</td>
-                <td>${salary.sNasic}</td>
+                <td>${salary.sBasic}</td>
                 <td>${salary.bonus}</td>
                 <td>${salary.sDeduct}</td>
                 <td>${salary.backPay}</td>

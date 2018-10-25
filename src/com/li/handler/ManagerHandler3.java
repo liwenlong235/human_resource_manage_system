@@ -209,6 +209,11 @@ public class ManagerHandler3 extends ManagerHandler {
             modelMap.addAttribute("salaryTime","NG");
             return "manager/manage";
         }
+        List<Salary> salaries = salaryService.queryByMonth(month);
+        if(salaries!=null&&salaries.size()>0){
+            modelMap.addAttribute("doubleSalary","NG");
+            return "manager/manage";
+        }
         List<Award> awards = awardService.queryAll();
         List<Attendance> attendances = attendanceService.queryByMonth(month);
         List<Employee> employees = employeeService.queryEmployees();
@@ -224,7 +229,7 @@ public class ManagerHandler3 extends ManagerHandler {
                     lateTime = lateTime + attendance.getLateTime();
                     absenteeism = absenteeism + attendance.getAbsenteeism();
                     if(attendance.getNight()==null){
-                        lateTime += 1;
+                        absenteeism += 1;
                     }
                 }
             }
@@ -234,15 +239,18 @@ public class ManagerHandler3 extends ManagerHandler {
                 if(award.geteId()==employee.geteId()){
                     Calendar calendar1 = Calendar.getInstance();
                     calendar1.setTime(award.getCreateTime());
-                    if(month==calendar1.get(Calendar.MONTH)){
+                    if(month==(calendar1.get(Calendar.MONTH)+1)){
                         money += award.getMoney();
                     }
                 }
             }
             double basic = 3000;
-            double deduct = (basic/22)*absenteeism + (basic/(22*8))*lateTime;
+            double deduct = (basic/22)*(22-attendances1.size()+absenteeism) + (basic/(22*8))*lateTime;
             double backPay = 0;
             double real = basic + money - deduct;
+            if(real<0){
+                real=0;
+            }
             Salary salary1 = salaryService.queryByEidAndMonth(employee.geteId(),month-1);
             if(salary1!=null&&!salary1.getRemarks().equals(null)){
                 salary1 = salaryService.queryByEidAndMonth(employee.geteId(),month);
@@ -262,6 +270,15 @@ public class ManagerHandler3 extends ManagerHandler {
     @RequestMapping("querySalary")
     public String querySalary(ModelMap modelMap){
         List<Salary> salaries = salaryService.querySalaries();
+        if(salaries!=null){
+            for(int i=0;i<salaries.size();i++){
+                Salary salary = salaries.get(i);
+                int deduct = (int)salary.getsDeduct();
+                int real = (int)salary.getsReal();
+                salary.setsDeduct(deduct);
+                salary.setsReal(real);
+            }
+        }
         modelMap.addAttribute("salaries",salaries);
         return "manager/salaryInfo";
     }
@@ -275,12 +292,12 @@ public class ManagerHandler3 extends ManagerHandler {
      */
     @RequestMapping("updateDissent")
     @ResponseBody
-    public String updateDissent(int dId,String str,int flag){
+    public String updateDissent(int dId,String str,Integer flag){
         Dissent dissent = dissentService.queryByDId(dId);
         if(dissent!=null&&dissent.getAgree()!=0){
             return "NG";
         }
-        if(flag==-1){
+        if(flag!=null&&flag==-1){
             dissent.setAgree(-1);
             dissentService.update(dissent);
             return "OK";
@@ -288,6 +305,7 @@ public class ManagerHandler3 extends ManagerHandler {
         dissent.setAgree(1);
         dissentService.update(dissent);
         Integer backPay = Integer.valueOf(str);
+        System.out.println(backPay);
         Salary salary = salaryService.queryBySid(dissent.getsId());
         Salary salary1 = new Salary(-1,salary.getsMonth()+1,salary.geteId(),salary.geteName(),0,0,0,backPay,0,"上月不补发工资");
         salaryService.addSalary(salary1);
@@ -302,7 +320,7 @@ public class ManagerHandler3 extends ManagerHandler {
     @RequestMapping("queryDissent")
     public String queryDissent(ModelMap modelMap){
         List<Dissent> dissents = dissentService.queryNeedAll(0);
-        modelMap.addAttribute("dissent",dissents);
+        modelMap.addAttribute("dissents",dissents);
         return "manager/dissentInfo";
     }
 }

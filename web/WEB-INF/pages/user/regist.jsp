@@ -36,14 +36,18 @@
                 })
             })
             $("#submit1").click(function () {
+                var name = $("#ip1").val();
                 var password = $("#ip2").val();
                 var password1 = $("#ip3").val();
                 if(password!=password1){
                     $("#s3").text("两次密码不一致");
                     return false;
                 }
+                if(name==""){
+                    $("#s1").text("账号不能为空");
+                }
                 $("#s2").text("密码不能为空");
-                if(password!=""&&password1!=""&password==password1){
+                if(name!=""&&password!=""&&password1!=""&password==password1){
                     $("#s2").text("");
                     return true;
                 }

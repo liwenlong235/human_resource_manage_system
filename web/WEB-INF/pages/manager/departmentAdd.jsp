@@ -49,10 +49,26 @@
                             $("#submit2").attr("disabled",false);
                         }else {
                             alert("名字已存在");
-                            $("#submit1").attr("disabled",true);
+                            $("#submit2").attr("disabled",true);
                         }
                     }
                 })
+            })
+            $("#submit1").click(function () {
+                var ip1 = $("#input1").val();
+                if(ip1==""){
+                    alert("内容不能为空")
+                    return false;
+                }
+                return true;
+            })
+            $("#submit2").click(function () {
+                var ip2 = $("#input2").val();
+                if(ip2==""){
+                    alert("内容不能为空")
+                    return false;
+                }
+                return true;
             })
         })
     </script>

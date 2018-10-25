@@ -15,6 +15,7 @@ import java.util.List;
 public class AwardServiceImpl implements AwardService {
     @Autowired
     private AwardDao awardDao;
+
     @Override
     public void add(Award award) {
         awardDao.add(award);
@@ -44,4 +45,7 @@ public class AwardServiceImpl implements AwardService {
     public List<Award> queryAll() {
         return awardDao.queryAll();
     }
+
+
+
 }

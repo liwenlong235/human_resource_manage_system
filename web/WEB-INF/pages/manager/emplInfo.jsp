@@ -45,6 +45,7 @@
 <c:if test="${!empty requestScope.flagU}"><h3 style="color: lawngreen">更新成功！</h3></c:if>
 <c:if test="${requestScope.flagA=='no'}"><h3 style="color: red">添加失败，存在同名用户</h3></c:if>
 <c:if test="${requestScope.flagA=='ok'}"><h3 style="color: lawngreen">添加成功！</h3></c:if>
+<c:if test="${empty sessionScope.employees}"><h3 style="color: red">暂时没有相关信息</h3></c:if>
 <c:if test="${!empty sessionScope.employees}">
     <table border="2px" cellspacing="0" cellpadding="15px" align="center">
         <tr style="text-align: center">

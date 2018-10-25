@@ -84,8 +84,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">工资管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="managers/queryMonthSalary">查看当月工资</a></li>
-                        <li><a href="managers/emplSalaryInfo">查看员工当月工资</a></li>
+                        <li><a href="employee/emplSalaryInfo">查看工资</a></li>
+                        <li><a href="employee/emplDissentInfo">查看异议结果</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -94,6 +94,9 @@
                         <li><a href="employee/queryDeptTrain">查看部门培训记录</a></li>
                     </ul>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><button><a href="user/begin"><h4>退出</h4></a></button></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

@@ -11,6 +11,13 @@
 <html>
 <head>
     <base href="${pageContext.request.contextPath}/">
+    <style>
+        body{
+            background: url('${pageContext.request.contextPath}/img/img1.jpg') no-repeat;
+            background-size: 100% 100%;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <c:if test="${!empty requestScope.invitation}">
@@ -46,7 +53,7 @@
                         <input type="radio" name="confirmed" value="0">否</c:if>
                 </td>
             </tr>
-            <tr><td colspan="2"><c:if test="${requestScope.invitation.confirmed>=0}">
+            <tr style="text-align: center"><td colspan="2"><c:if test="${requestScope.invitation.confirmed>=0}">
                 <a href="user/userInfo">返回</a></c:if>
                 <c:if test="${requestScope.invitation.confirmed<0}"><input type="submit"></c:if></td></tr>
         </table>

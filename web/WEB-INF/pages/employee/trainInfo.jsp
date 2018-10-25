@@ -11,8 +11,11 @@
 <head>
     <base href="${pageContext.request.contextPath}/">
 </head>
-<body>
+<body style="text-align: center">
 <jsp:include page="emplBaseNav.jsp"/>
+<c:if test="${empty requestScope.trains}">
+    <h3 style="color: red">暂时没有相关信息</h3>
+</c:if>
 <c:if test="${!empty requestScope.trains}">
     <table border="2px" cellspacing="0" align="center"  style="text-align: center">
         <tr>

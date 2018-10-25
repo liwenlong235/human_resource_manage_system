@@ -24,4 +24,7 @@
     <select id="queryByEidAndMonth" resultType="Salary">
         select * from salaries where e_id = #{eId} and s_month = #{sMonth}
     </select>
+    <select id="queryByMonth" resultType="Salary">
+        select * from salaries where s_month = #{sMonth}
+    </select>
 </mapper>

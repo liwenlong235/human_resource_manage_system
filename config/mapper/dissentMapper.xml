@@ -20,6 +20,6 @@
         select * from dissent
     </select>
     <select id="queryNeedAll" resultType="Dissent">
-        select * from dissent where agree!= #{agree}
+        select * from dissent where agree = #{agree}
     </select>
 </mapper>

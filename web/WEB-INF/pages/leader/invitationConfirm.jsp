@@ -24,7 +24,6 @@
                     data:{"iId":iId,"flag":flag},
                     dataType:"text",
                     success:function (data) {
-                        alert(data);
                         if(data=="OK"){
                             $td.remove();
                             alert("面试已通过");

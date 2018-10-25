@@ -17,6 +17,7 @@
                 var $td = $(this).parent().parent().children();
                 var dId = $td[0].innerHTML;
                 var str = prompt("输入反馈金额");
+                alert(str+"*"+dId)
                 if(str!=null&&str!=""){
                     $.ajax({
                         url:"managers3/updateDissent",
@@ -24,6 +25,7 @@
                         type:"post",
                         dataType:"text",
                         success:function (data) {
+                            alert(data)
                             if(data=="OK"){
                                 alert("更新成功");
                             }else {
@@ -32,6 +34,7 @@
                         }
                     })
                 }
+                return false;
             })
             $(".a2").click(function () {
                 var $td = $(this).parent().parent().children();
@@ -52,6 +55,7 @@
                         }
                     })
                 }
+                return false;
             })
         })
     </script>
@@ -62,7 +66,7 @@
     <h3 style="color: red">暂时没有相关信息</h3>
 </c:if>
 <c:if test="${!empty requestScope.dissents}">
-    <table>
+    <table border="2px" cellspacing="0" align="center" style="text-align: center">
         <tr>
             <td>复议记录ID</td>
             <td>工资ID</td>
@@ -79,7 +83,6 @@
             </tr>
         </c:forEach>
     </table>
-
 </c:if>
 </body>
 </html>

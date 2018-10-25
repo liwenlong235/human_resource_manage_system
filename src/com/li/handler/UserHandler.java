@@ -221,6 +221,7 @@ public class UserHandler {
     public String addResume(String rTitle,String uName,String uGender,String uBirth1,String firstWorkTime1,String tel,
                             String email, int deptId,Integer position,double expectSalary,String education,String workExperience,
                             String hobbies,HttpSession session){
+        System.out.println(uGender);
         java.sql.Date uBirth = java.sql.Date.valueOf(uBirth1);
         java.sql.Date firstWorkTime = java.sql.Date.valueOf(firstWorkTime1);
         User user = (User) session.getAttribute("userL");
@@ -238,6 +239,7 @@ public class UserHandler {
                 workExperience,education,expectSalary,hobbies);
         resumeService.addResume(resume);
         resume = resumeService.queryByUserId(user.getId());
+        System.out.println(resume);
         session.setAttribute("resume",resume);
         return "user/userInfo";
     }

@@ -56,6 +56,6 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <session-config>
-        <session-timeout>1440</session-timeout>
+        <session-timeout>144000</session-timeout>
     </session-config>
 </web-app>

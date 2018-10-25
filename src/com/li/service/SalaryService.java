@@ -15,5 +15,6 @@ public interface SalaryService {
     public List<Salary> queryByEid(int eId);
     public Salary queryBySid(int sid);
     public List<Salary> querySalaries();
+    public List<Salary> queryByMonth(int sMonth);
     public Salary queryByEidAndMonth(int eId,int month);
 }

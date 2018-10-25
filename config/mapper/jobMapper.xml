@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.li.dao.JobDao">
     <insert id="addJob" parameterType="Job">
-        insert into jobs(p_id,company,addresss,salary_range,duty,requirements,pubdate) values(#{position.pId},#{company},
+        insert into jobs(p_id,company,address,salary_range,duty,requirements,pubdate) values(#{position.pId},#{company},
         #{address},#{salaryRange},#{duty},#{requirements},#{pubdate})
     </insert>
     <update id="updateJob" parameterType="Job">

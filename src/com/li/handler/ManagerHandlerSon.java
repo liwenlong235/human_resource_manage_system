@@ -3,6 +3,8 @@ package com.li.handler;
 import com.alibaba.fastjson.JSON;
 import com.li.entity.*;
 import com.li.service.*;
+import com.li.utils.DateUtil;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,31 +42,74 @@ public class ManagerHandlerSon extends ManagerHandler {
     @Autowired
     private EmployeeService employeeService;
 
+    @RequestMapping("addJobInput")
+    public String addJobInput(ModelMap modelMap){
+        List<Department> departments = departmentService.queryAll();
+        List<Position> positions = positionService.queryAll();
+        modelMap.addAttribute("departments",departments);
+        modelMap.addAttribute("positions",positions);
+        return "manager/addJob";
+    }
+    @RequestMapping("addJob")
+    public String addJob(int pId,String company,String address,String duty,String requirements,String salary,ModelMap modelMap){
+        Date date = new Date();
+        Position position = positionService.queryByPId(pId);
+        Job job = new Job(-1,position,company,address,salary,duty,requirements,date);
+        jobService.addJob(job);
+        modelMap.addAttribute("job","OK");
+        return "manager/manage";
+    }
+    /**
+     * 删除招聘信息
+     * @param jId
+     * @return
+     */
+    @RequestMapping("deleteJob")
+    @ResponseBody
+    public String deleteJob(int jId){
+        jobService.deleteByJId(jId);
+        return "OK";
+    }
+
+    /**
+     * 查看招聘信息
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping("jobsInfo")
+    public String JobsInfo(ModelMap modelMap){
+        List<Job> jobs = jobService.queryJobs();
+        modelMap.addAttribute("jobs",jobs);
+        return "manager/jobsInfo";
+    }
     /**
      * 查看申请记录
-     * @param session
+     * @param modelMap
      * @return
      */
     @RequestMapping("queryCommit")
-    public String commitInfo(HttpSession session){
+    public String commitInfo(ModelMap modelMap){
+        List<Job> jobs = jobService.queryJobs();
+        modelMap.addAttribute("jobs",jobs);
         List<CommitRecord> commitRecords = commitRecordService.queryCommitRecords();
         List<Employee> employees = employeeService.queryEmployees();
-        for(int i=0;i<commitRecords.size();i++){
-            CommitRecord commitRecord = commitRecords.get(i);
-            if(commitRecord.getiId()!=0){
-                commitRecords.remove(i);
-            }
-            for(int j=0;j<employees.size();j++){
-                if(commitRecord.getrId()==employees.get(j).getrId()){
+        if(commitRecords!=null&&commitRecords.size()>0){
+            for(int i=0;i<commitRecords.size();i++){
+                CommitRecord c = commitRecords.get(i);
+                if(c.getiId()!=0){
                     commitRecords.remove(i);
+                    i--;
+                }else {
+                    for(int j=0;j<employees.size();j++){
+                        if(c.getrId()==employees.get(j).getrId()){
+                            commitRecords.remove(i);
+                            i--;
+                        }
+                    }
                 }
             }
+            modelMap.addAttribute("commitRecords",commitRecords);
         }
-        if(commitRecords!=null){
-            session.setAttribute("commitRecords",commitRecords);
-        }
-        List<Job> jobs = jobService.queryJobs();
-        session.setAttribute("jobs",jobs);
         return "manager/commitInfo";
     }
 
@@ -89,12 +134,26 @@ public class ManagerHandlerSon extends ManagerHandler {
      */
     @RequestMapping("addInvitationInput")
     public String addInvitationInput(int cId,ModelMap modelMap){
+        Invitation invitation = invitationService.queryByCId(cId);
+        if(invitation!=null){
+            modelMap.addAttribute("flag","NG");
+            return "manager/addInvitation";
+        }
         modelMap.addAttribute("cId",cId);
         List<Manager> managers = managerService.queryAll();
         modelMap.addAttribute("managers",managers);
         return "manager/addInvitation";
     }
-
+    /*@RequestMapping("dateAjax")
+    @ResponseBody
+    public String dateAjax(String date) throws ParseException {
+        Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        int flag = DateUtil.compareDay(date1,new java.sql.Date(System.currentTimeMillis()));
+        if(flag<=0){
+            return "NG";
+        }
+        return "OK";
+    }*/
     /**
      * 新增面试邀请
      * @param cId
@@ -105,10 +164,10 @@ public class ManagerHandlerSon extends ManagerHandler {
      * @throws ParseException
      */
     @RequestMapping("addInvitation")
-    public String addInvitation(int cId,String inviteTime,String manager,String address) throws ParseException {
+    public String addInvitation(int cId,String inviteTime,String manager,String address,ModelMap modelMap) throws ParseException {
         Date date = new SimpleDateFormat("yyyy-MM-dd").parse(inviteTime);
-        Invitation invitation = new Invitation(-1,cId,date,manager,address,-1,0);
-        invitationService.add(invitation);
+        Invitation invitation2 = new Invitation(-1,cId,date,manager,address,-1,0);
+        invitationService.add(invitation2);
         Invitation invitation1 = invitationService.queryByCId(cId);
         CommitRecord commitRecord = commitRecordService.queryByCId(cId);
         commitRecord.setrStatus(true);
@@ -125,8 +184,10 @@ public class ManagerHandlerSon extends ManagerHandler {
     @RequestMapping("commitAjax")
     @ResponseBody
     public String commitAjax(int id){
-        System.out.println(id);
         CommitRecord commitRecord = commitRecordService.queryByCId(id);
+        if(commitRecord==null){
+            return "NG";
+        }
         commitRecord.setrStatus(true);
         commitRecord.setiId(-1);
         commitRecordService.update(commitRecord);
